@@ -1,31 +1,22 @@
 package com.revature.entity;
-// Generated Nov 7, 2017 9:24:46 PM by Hibernate Tools 5.2.5.Final
-
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-/**
- * <p> </p>
- * @version v6.18.06.13
- */
+/** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_END_CLIENT", schema = "ADMIN")
 //@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 //Logans attempt at getting ehcache working below
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
-public class TfEndClient implements java.io.Serializable {
-
+public class TfEndClient implements java.io.Serializable 
+{
 	private static final long serialVersionUID = -8077675564245631804L;
 	
 	@XmlElement
@@ -50,8 +41,7 @@ public class TfEndClient implements java.io.Serializable {
 	@JsonIgnore
 	private Set<TfInterview> interviews = new HashSet<TfInterview>(0);
 
-	public TfEndClient() {
-	}
+	public TfEndClient() {}
 
 	public TfEndClient(Integer id, String name, Set<TfAssociate> associates, Set<TfPlacement> placements,
 			Set<TfInterview> interviews) {
@@ -63,60 +53,36 @@ public class TfEndClient implements java.io.Serializable {
 		this.interviews = interviews;
 	}
 
-	public Integer getId() {
-		return id;
-	}
+	public Integer getId() { return id; }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	public void setId(Integer id) { this.id = id; }
 
-	public String getName() {
-		return name;
-	}
+	public String getName() { return name; }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name) { this.name = name; }
 
 	@JsonIgnore
-	public Set<TfAssociate> getAssociates() {
-		return associates;
-	}
+	public Set<TfAssociate> getAssociates() { return associates; }
 
 	@JsonIgnore
-	public void setAssociates(Set<TfAssociate> associates) {
-		this.associates = associates;
-	}
+	public void setAssociates(Set<TfAssociate> associates) { this.associates = associates; }
 
 	@JsonIgnore
-	public Set<TfPlacement> getPlacements() {
-		return placements;
-	}
+	public Set<TfPlacement> getPlacements() { return placements; }
 
 	@JsonIgnore
-	public void setPlacements(Set<TfPlacement> placements) {
-		this.placements = placements;
-	}
+	public void setPlacements(Set<TfPlacement> placements) { this.placements = placements; }
 
 	@JsonIgnore
-	public Set<TfInterview> getInterviews() {
-		return interviews;
-	}
+	public Set<TfInterview> getInterviews() { return interviews; }
 
 	@JsonIgnore
-	public void setInterviews(Set<TfInterview> interviews) {
-		this.interviews = interviews;
-	}
+	public void setInterviews(Set<TfInterview> interviews) { this.interviews = interviews; }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	public static long getSerialversionuid() { return serialVersionUID; }
 
 	@Override
-	public String toString() {
-		return "TfEndClient [id=" + id + ", name=" + name + "]";
-	}
+	public String toString() { return "TfEndClient [id=" + id + ", name=" + name + "]"; }
 
 	@Override
 	public int hashCode() {
@@ -166,7 +132,4 @@ public class TfEndClient implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	
-	
-
 }

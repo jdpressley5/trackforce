@@ -1,9 +1,6 @@
 package com.revature.entity;
-// Generated Nov 7, 2017 9:24:46 PM by Hibernate Tools 5.2.5.Final
-
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,17 +9,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-/**
- * <p> </p>
- * @version v6.18.06.13
- */
+/** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_INTERVIEW_TYPE", schema = "ADMIN")
@@ -46,8 +37,7 @@ public class TfInterviewType implements java.io.Serializable {
 	@JsonIgnore
 	private Set<TfInterview> interviews = new HashSet<TfInterview>(0);
 
-	public TfInterviewType() {
-	}
+	public TfInterviewType() {}
 
 	public TfInterviewType(Integer id, String name, Set<TfInterview> interviews) {
 		super();
@@ -56,35 +46,21 @@ public class TfInterviewType implements java.io.Serializable {
 		this.interviews = interviews;
 	}
 
-	public Integer getId() {
-		return id;
-	}
+	public Integer getId() { return id; }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	public void setId(Integer id) { this.id = id; }
 
-	public String getName() {
-		return name;
-	}
+	public String getName() { return name; }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name) { this.name = name; }
 
 	@JsonIgnore
-	public Set<TfInterview> getInterviews() {
-		return interviews;
-	}
+	public Set<TfInterview> getInterviews() { return interviews; }
 
 	@JsonIgnore
-	public void setInterviews(Set<TfInterview> interviews) {
-		this.interviews = interviews;
-	}
+	public void setInterviews(Set<TfInterview> interviews) { this.interviews = interviews; }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	public static long getSerialversionuid() { return serialVersionUID; }
 
 	@Override
 	public int hashCode() {
@@ -124,9 +100,5 @@ public class TfInterviewType implements java.io.Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "TfInterviewType [id=" + id + ", name=" + name + "]";
-	}
-
-	
+	public String toString() { return "TfInterviewType [id=" + id + ", name=" + name + "]"; }
 }

@@ -1,12 +1,8 @@
 package com.revature.services;
-
 import java.util.List;
-
 import javax.persistence.NoResultException;
-
 import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueResultException;
-
 import com.revature.dao.UserDao;
 import com.revature.daoimpl.UserDaoImpl;
 import com.revature.entity.TfRole;
@@ -16,77 +12,45 @@ import com.revature.utils.PasswordStorage;
 import com.revature.utils.PasswordStorage.CannotPerformOperationException;
 import com.revature.utils.PasswordStorage.InvalidHashException;
 
-/**
-
- * @author Adam L. 
- * <p> </p>
- * @version v6.18.06.13
- *
- */
+/** @author Adam L. 
+ * @version v6.18.06.13 */
 public class UserService {
 
 	private UserDao dao = new UserDaoImpl();
 
-	// public so it can be used for testing
-	public UserService() {
-	};
+	public UserService() {};// public so it can be used for testing
 
-	public UserService(UserDao dao) {
-		this.dao = dao;
-	}
+	public UserService(UserDao dao) { this.dao = dao; }
 
-	// used in the submitCredentials
-	private JWTService jwtService;
+	private JWTService jwtService;// used in the submitCredentials
 
-	/**
-	 * @author Adam L.
-	 *         <p>
-	 *         </p>
+	/** @author Adam L.
 	 * @version.date v6.18.06.13
-	 * 
-	 * @return
-	 */
-	public List<TfUser> getAllUsers() {
-		return dao.getAllUsers();
-	}
+	 * @return */
+	public List<TfUser> getAllUsers() { return dao.getAllUsers(); }
 
-	/**
-	 * @author Adam L. 
-	 * <p> </p>
+	/** @author Adam L. 
 	 * @version v6.18.06.13
-	 * 
 	 * @param username
 	 * @return
-	 * 
 	 * Added a new catch exception to handle other exception
 	 * I am not proud of this but it is what was given to me
-	 * -Coder from batch 1806
-	 */
+	 * -Coder from batch 1806 */
 	public TfUser getUser(String username) {
-		try {
-			return dao.getUser(username);
-		} catch (NoResultException nre) {
-			return null;
-		} catch (HibernateException e) {
-			return new TfUser();
-		}
+		try { return dao.getUser(username); } 
+		catch (NoResultException nre) { return null; } 
+		catch (HibernateException e) { return new TfUser(); }
 	}
     
-   /**
-    * @author Adam L. 
-    * <p> </p>
+   /** @author Adam L. 
     * @version v6.18.06.13
-    * 
     * @param newUser
-    * @return
-    */
+    * @return */
 	public boolean insertUser(TfUser newUser) {
 		try {
 			newUser.setPassword(PasswordStorage.createHash(newUser.getPassword()));
 			LogUtil.logger.info("The user with hashed password is " + newUser);
-		} catch (CannotPerformOperationException e) {
-			LogUtil.logger.warn(e.getMessage());
-		}
+		} catch (CannotPerformOperationException e) { LogUtil.logger.warn(e.getMessage()); }
 		return dao.insertUser(newUser);
 	}
 
@@ -97,20 +61,13 @@ public class UserService {
 
 	/**
 	 * @author Adam L.
-	 *         <p>
-	 * 		Allows verification that a given user exists, and has the correct
-	 *         password.
-	 *         </p>
-	 * 
-
+	 * <p> Allows verification that a given user exists, and has the correct password. </p>
 	 * <p>Given the TfUser with only the username and password, find that user by the username.
 	 * If it exists, retrieve it from the database.
 	 * Given their hashed passwords match, return the user from the database.</p>
 	 * @version v6.18.06.13
-	 * 
 	 * @param loginUser
-	 * @return foundUser
-	 */
+	 * @return foundUser */
 	public TfUser submitCredentials(TfUser loginUser) {
 		LogUtil.logger.info("creating query in hibernate..");
 		TfUser foundUser = getUser(loginUser.getUsername());
@@ -124,9 +81,7 @@ public class UserService {
 					LogUtil.logger.info("Password verification successful! Returning " + foundUser.toString());
 					return foundUser;
 				}
-			} catch (CannotPerformOperationException | InvalidHashException e) {
-				LogUtil.logger.warn(e.getMessage());
-			}
+			} catch (CannotPerformOperationException | InvalidHashException e) { LogUtil.logger.warn(e.getMessage()); }
 		}
 		return null;
 	}

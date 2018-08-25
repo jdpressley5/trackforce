@@ -1,9 +1,6 @@
 package com.revature.application;
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.revature.entity.TfAssociate;
 import com.revature.entity.TfBatch;
 import com.revature.entity.TfRole;
@@ -18,26 +15,17 @@ import com.revature.services.MarketingStatusService;
 import com.revature.services.TrainerService;
 import com.revature.services.UserService;
 import com.revature.utils.PasswordStorage;
-
 import java.util.HashSet;
 import java.util.List;
-
 import static com.revature.utils.HibernateUtil.saveToDB;
 import static com.revature.utils.PasswordStorage.createHash;
-
-
 import net.sf.ehcache.CacheManager;
 
-/**
- *
- * @author Adam L.
+/** @author Adam L.
  * <p>Used for a few quick simple tests to ensure hibernate is making the calls it is supposed to</p>
- * @version v6.18.06.13
- *
- */
+ * @version v6.18.06.13 */
 @SuppressWarnings("unused")
 public class Application {
-
 	// You're probably thinking, why would you ever do this? Why not just just make the methods all static in the service class?
 	// This is to allow for Mockito tests, which have problems with static methods
 	// This is here for a reason!
@@ -132,7 +120,6 @@ public class Application {
 		associate.setFirstName("RestAssured");
 		associate.setLastName("Associate");
 		associate.setUser(user);
-		
 		System.out.println(associateService.createAssociate(associate));}}
 
 //		TfInterview interview = new TfInterview();

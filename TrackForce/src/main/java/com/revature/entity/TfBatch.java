@@ -1,34 +1,25 @@
 package com.revature.entity;
-// Generated Nov 7, 2017 9:24:46 PM by Hibernate Tools 5.2.5.Final
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- * <p> </p>
- * @version v6.18.06.13
- */
+/** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_BATCH", schema = "ADMIN")
 //@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 //Logans attempt at getting ehcache working below
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
-public class TfBatch implements java.io.Serializable, Comparable<TfBatch> {
-
-
+public class TfBatch implements java.io.Serializable, Comparable<TfBatch> 
+{
 	private static final long serialVersionUID = 1893469049852289417L;
 	
 	@XmlElement
@@ -74,120 +65,49 @@ public class TfBatch implements java.io.Serializable, Comparable<TfBatch> {
 	@JsonIgnore
 	private List<TfTrainer> coTrainer = new ArrayList<>();
 	
-	public TfBatch() {
-		super();
-	}
+	public TfBatch() { super(); }
 
-	
+	public Integer getId() { return id; }
 
-	public Integer getId() {
-		return id;
-	}
+	public void setId(Integer id) { this.id = id; }
 
+	public TfBatchLocation getLocation() { return location; }
 
+	public void setLocation(TfBatchLocation location) { this.location = location; }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	public TfCurriculum getCurriculumName() { return curriculumName; }
 
+	public void setCurriculumName(TfCurriculum curriculumName) { this.curriculumName = curriculumName; }
 
+	public String getBatchName() { return batchName; }
 
-	public TfBatchLocation getLocation() {
-		return location;
-	}
+	public void setBatchName(String batchName) { this.batchName = batchName; }
 
+	public Timestamp getStartDate() { return startDate; }
 
-	public void setLocation(TfBatchLocation location) {
-		this.location = location;
-	}
+	public void setStartDate(Timestamp startDate) { this.startDate = startDate; }
 
+	public Timestamp getEndDate() { return endDate; }
 
-
-	public TfCurriculum getCurriculumName() {
-		return curriculumName;
-	}
-
-
-
-	public void setCurriculumName(TfCurriculum curriculumName) {
-		this.curriculumName = curriculumName;
-	}
-
-
-
-	public String getBatchName() {
-		return batchName;
-	}
-
-
-
-	public void setBatchName(String batchName) {
-		this.batchName = batchName;
-	}
-
-
-
-	public Timestamp getStartDate() {
-		return startDate;
-	}
-
-
-
-	public void setStartDate(Timestamp startDate) {
-		this.startDate = startDate;
-	}
-
-
-
-	public Timestamp getEndDate() {
-		return endDate;
-	}
-
-
-
-	public void setEndDate(Timestamp endDate) {
-		this.endDate = endDate;
-	}
-
+	public void setEndDate(Timestamp endDate) { this.endDate = endDate; }
 
 	@JsonIgnore
-	public Set<TfAssociate> getAssociates() {
-		return associates;
-	}
-
+	public Set<TfAssociate> getAssociates() { return associates; }
 
 	@JsonIgnore
-	public void setAssociates(Set<TfAssociate> associates) {
-		this.associates = associates;
-	}
+	public void setAssociates(Set<TfAssociate> associates) { this.associates = associates; }
 
+	public TfTrainer getTrainer() { return trainer; }
 
-	public TfTrainer getTrainer() {
-		return trainer;
-	}
-
-
-	public void setTrainer(TfTrainer trainer) {
-		this.trainer = trainer;
-	}
-
+	public void setTrainer(TfTrainer trainer) { this.trainer = trainer; }
 
 	@JsonIgnore
-	public List<TfTrainer> getCoTrainer() {
-		return coTrainer;
-	}
-
+	public List<TfTrainer> getCoTrainer() { return coTrainer; }
 
 	@JsonIgnore
-	public void setCoTrainer(List<TfTrainer> coTrainer) {
-		this.coTrainer = coTrainer;
-	}
+	public void setCoTrainer(List<TfTrainer> coTrainer) { this.coTrainer = coTrainer; }
 
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	public static long getSerialversionuid() { return serialVersionUID; }
 
 	public TfBatch(Integer id, TfBatchLocation location, TfCurriculum curriculumName, String batchName,
 			Timestamp startDate, Timestamp endDate, Set<TfAssociate> associates, TfTrainer trainer,
@@ -210,12 +130,6 @@ public class TfBatch implements java.io.Serializable, Comparable<TfBatch> {
 				+ batchName + ", startDate=" + startDate + ", endDate=" + endDate + ", associates=" + associates + "]";
 	}
 
-
-
 	@Override
-	public int compareTo(TfBatch o) {
-		return this.id-o.getId();
-	}
-	
-	
+	public int compareTo(TfBatch o) { return this.id-o.getId(); }	
 }

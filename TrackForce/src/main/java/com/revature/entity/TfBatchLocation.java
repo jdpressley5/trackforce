@@ -1,10 +1,7 @@
 package com.revature.entity;
-// Generated Nov 7, 2017 9:24:46 PM by Hibernate Tools 5.2.5.Final
-
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,25 +10,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-/**
- * <p> </p>
- * @version v6.18.06.13
- */
+/** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_BATCH_LOCATION", schema = "ADMIN")
 //@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 //Logans attempt at getting ehcache working below
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
-public class TfBatchLocation implements java.io.Serializable {
-
+public class TfBatchLocation implements java.io.Serializable 
+{
 	private static final long serialVersionUID = -213863298550515723L;
 	
 	@XmlElement
@@ -48,12 +39,9 @@ public class TfBatchLocation implements java.io.Serializable {
 	@JsonIgnore
 	private Set<TfBatch> batches = new HashSet<TfBatch>(0);
 
-	public TfBatchLocation() {
-	}
+	public TfBatchLocation() {}
 	
-	public TfBatchLocation(BigDecimal tfBatchLocationId) {
-		this.id = tfBatchLocationId;
-	}
+	public TfBatchLocation(BigDecimal tfBatchLocationId) { this.id = tfBatchLocationId; }
 
 	public TfBatchLocation(BigDecimal tfBatchLocationId, String tfBatchLocationName, Set<TfBatch> tfBatches) {
 		this.id = tfBatchLocationId;
@@ -61,36 +49,20 @@ public class TfBatchLocation implements java.io.Serializable {
 		this.batches = tfBatches;
 	}
 
-	
-	public BigDecimal getTfBatchLocationId() {
-		return this.id;
-	}
+	public BigDecimal getTfBatchLocationId() { return this.id; }
 
-	public void setTfBatchLocationId(BigDecimal tfBatchLocationId) {
-		this.id = tfBatchLocationId;
-	}
+	public void setTfBatchLocationId(BigDecimal tfBatchLocationId) { this.id = tfBatchLocationId; }
 
-	
-	public String getTfBatchLocationName() {
-		return this.name;
-	}
+	public String getTfBatchLocationName() { return this.name; }
 
-	public void setTfBatchLocationName(String tfBatchLocationName) {
-		this.name = tfBatchLocationName;
-	}
+	public void setTfBatchLocationName(String tfBatchLocationName) { this.name = tfBatchLocationName; }
 
 	@JsonIgnore
-	public Set<TfBatch> getTfBatches() {
-		return this.batches;
-	}
-	@JsonIgnore
-	public void setTfBatches(Set<TfBatch> tfBatches) {
-		this.batches = tfBatches;
-	}
+	public Set<TfBatch> getTfBatches() { return this.batches; }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@JsonIgnore
+	public void setTfBatches(Set<TfBatch> tfBatches) { this.batches = tfBatches; }
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -101,9 +73,6 @@ public class TfBatchLocation implements java.io.Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -132,10 +101,6 @@ public class TfBatchLocation implements java.io.Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "TfBatchLocation [tfBatchLocationId=" + id + ", tfBatchLocationName="
-				+ name + "]";
-	}
-	
-
+	public String toString() 
+	{ return "TfBatchLocation [tfBatchLocationId=" + id + ", tfBatchLocationName=" + name + "]"; }
 }

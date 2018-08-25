@@ -1,8 +1,5 @@
 package com.revature.entity;
-// Generated Nov 7, 2017 9:24:46 PM by Hibernate Tools 5.2.5.Final
-
 import java.sql.Timestamp;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,25 +13,19 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-/**
- * <p> </p>
- * @version v6.18.06.13
- */
+/** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_INTERVIEW", schema = "ADMIN")
 //@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 //Logans attempt at getting ehcache working below
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
-public class TfInterview implements java.io.Serializable {
-
+public class TfInterview implements java.io.Serializable 
+{
 	private static final long serialVersionUID = -4148475604579144144L;
 
 	@XmlElement
@@ -104,13 +95,8 @@ public class TfInterview implements java.io.Serializable {
 	@XmlElement
 	@Column(name = "TF_IS_CLIENT_FEEDBACK_VISIABLE")
 	private Integer isClientFeedbackVisible = 0;
-	
-	
 
-	public TfInterview() {
-	}
-
-
+	public TfInterview() {}
 
 	public TfInterview(Integer id, TfAssociate associate, TfClient client, TfEndClient endClient,
 			TfInterviewType interviewType, Timestamp interviewDate, String associateFeedback, String questionGiven,
@@ -135,199 +121,69 @@ public class TfInterview implements java.io.Serializable {
 		this.isClientFeedbackVisible = isClientFeedbackVisible;
 	}
 
+	public Integer getId() { return id; }
 
+	public TfAssociate getAssociate() { return associate; }
 
-	public Integer getId() {
-		return id;
-	}
+	public void setAssociate(TfAssociate associate) { this.associate = associate; }
 
+	public TfClient getClient() { return client; }
 
+	public void setClient(TfClient client) { this.client = client; }
 
-	public TfAssociate getAssociate() {
-		return associate;
-	}
+	public TfEndClient getEndClient() { return endClient; }
 
+	public void setEndClient(TfEndClient endClient) { this.endClient = endClient; }
 
+	public TfInterviewType getInterviewType() { return interviewType; }
 
-	public void setAssociate(TfAssociate associate) {
-		this.associate = associate;
-	}
+	public void setInterviewType(TfInterviewType interviewType) { this.interviewType = interviewType; }
 
+	public Timestamp getInterviewDate() { return interviewDate; }
 
+	public void setInterviewDate(Timestamp interviewDate) { this.interviewDate = interviewDate; }
 
-	public TfClient getClient() {
-		return client;
-	}
+	public String getAssociateFeedback() { return associateFeedback; }
 
+	public void setAssociateFeedback(String associateFeedback) { this.associateFeedback = associateFeedback; }
 
+	public String getQuestionGiven() { return questionGiven; }
 
-	public void setClient(TfClient client) {
-		this.client = client;
-	}
+	public void setQuestionGiven(String questionGiven) { this.questionGiven = questionGiven; }
 
+	public String getClientFeedback() { return clientFeedback; }
 
+	public void setClientFeedback(String clientFeedback) { this.clientFeedback = clientFeedback; }
 
-	public TfEndClient getEndClient() {
-		return endClient;
-	}
+	public String getJobDescription() { return jobDescription; }
 
+	public void setJobDescription(String jobDescription) { this.jobDescription = jobDescription; }
 
+	public Timestamp getDateSalesIssued() { return dateSalesIssued; }
 
-	public void setEndClient(TfEndClient endClient) {
-		this.endClient = endClient;
-	}
+	public void setDateSalesIssued(Timestamp dateSalesIssued) { this.dateSalesIssued = dateSalesIssued; }
 
+	public Timestamp getDateAssociateIssued() { return dateAssociateIssued; }
 
+	public void setDateAssociateIssued(Timestamp dateAssociateIssued) { this.dateAssociateIssued = dateAssociateIssued; }
 
-	public TfInterviewType getInterviewType() {
-		return interviewType;
-	}
+	public Integer getWas24HRNotice() { return was24HRNotice; }
 
+	public void setWas24HRNotice(Integer was24hrNotice) { was24HRNotice = was24hrNotice; }
 
+	public Integer getIsInterviewFlagged() { return isInterviewFlagged; }
 
-	public void setInterviewType(TfInterviewType interviewType) {
-		this.interviewType = interviewType;
-	}
+	public void setIsInterviewFlagged(Integer isInterviewFlagged) { this.isInterviewFlagged = isInterviewFlagged; }
 
+	public String getFlagReason() { return flagReason; }
 
+	public void setFlagReason(String flagReason) { this.flagReason = flagReason; }
 
-	public Timestamp getInterviewDate() {
-		return interviewDate;
-	}
+	public Integer getIsClientFeedbackVisible() { return isClientFeedbackVisible; }
 
+	public void setIsClientFeedbackVisible(Integer isClientFeedbackVisible) { this.isClientFeedbackVisible = isClientFeedbackVisible; }
 
-
-	public void setInterviewDate(Timestamp interviewDate) {
-		this.interviewDate = interviewDate;
-	}
-
-
-
-	public String getAssociateFeedback() {
-		return associateFeedback;
-	}
-
-
-
-	public void setAssociateFeedback(String associateFeedback) {
-		this.associateFeedback = associateFeedback;
-	}
-
-
-
-	public String getQuestionGiven() {
-		return questionGiven;
-	}
-
-
-
-	public void setQuestionGiven(String questionGiven) {
-		this.questionGiven = questionGiven;
-	}
-
-
-
-	public String getClientFeedback() {
-		return clientFeedback;
-	}
-
-
-
-	public void setClientFeedback(String clientFeedback) {
-		this.clientFeedback = clientFeedback;
-	}
-
-
-
-	public String getJobDescription() {
-		return jobDescription;
-	}
-
-
-
-	public void setJobDescription(String jobDescription) {
-		this.jobDescription = jobDescription;
-	}
-
-
-
-	public Timestamp getDateSalesIssued() {
-		return dateSalesIssued;
-	}
-
-
-
-	public void setDateSalesIssued(Timestamp dateSalesIssued) {
-		this.dateSalesIssued = dateSalesIssued;
-	}
-
-
-
-	public Timestamp getDateAssociateIssued() {
-		return dateAssociateIssued;
-	}
-
-
-
-	public void setDateAssociateIssued(Timestamp dateAssociateIssued) {
-		this.dateAssociateIssued = dateAssociateIssued;
-	}
-
-
-
-	public Integer getWas24HRNotice() {
-		return was24HRNotice;
-	}
-
-
-
-	public void setWas24HRNotice(Integer was24hrNotice) {
-		was24HRNotice = was24hrNotice;
-	}
-
-
-
-	public Integer getIsInterviewFlagged() {
-		return isInterviewFlagged;
-	}
-
-
-
-	public void setIsInterviewFlagged(Integer isInterviewFlagged) {
-		this.isInterviewFlagged = isInterviewFlagged;
-	}
-
-
-
-	public String getFlagReason() {
-		return flagReason;
-	}
-
-
-
-	public void setFlagReason(String flagReason) {
-		this.flagReason = flagReason;
-	}
-
-
-
-	public Integer getIsClientFeedbackVisible() {
-		return isClientFeedbackVisible;
-	}
-
-
-
-	public void setIsClientFeedbackVisible(Integer isClientFeedbackVisible) {
-		this.isClientFeedbackVisible = isClientFeedbackVisible;
-	}
-
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-
+	public static long getSerialversionuid() { return serialVersionUID; }
 
 	@Override
 	public int hashCode() {
@@ -351,8 +207,6 @@ public class TfInterview implements java.io.Serializable {
 		result = prime * result + ((was24HRNotice == null) ? 0 : was24HRNotice.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -446,8 +300,6 @@ public class TfInterview implements java.io.Serializable {
 		return true;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "TfInterview [id=" + id + ", associate=" + associate + ", client=" + client + ", endClient=" + endClient
@@ -458,6 +310,4 @@ public class TfInterview implements java.io.Serializable {
 				+ ", isInterviewFlagged=" + isInterviewFlagged + ", flagReason=" + flagReason
 				+ ", isClientFeedbackVisible=" + isClientFeedbackVisible + "]";
 	}
-	
-
 }
