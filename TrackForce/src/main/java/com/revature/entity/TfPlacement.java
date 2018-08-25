@@ -1,34 +1,18 @@
 package com.revature.entity;
-// Generated Nov 7, 2017 9:24:46 PM by Hibernate Tools 5.2.5.Final
-
-import java.sql.Timestamp;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Timestamp;
 
-
-/**
- * <p> </p>
- * @version v6.18.06.13
- */
+/** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_PLACEMENT", schema = "ADMIN")
-//@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
-public class TfPlacement implements java.io.Serializable {
-
+public class TfPlacement implements java.io.Serializable 
+{
 	private static final long serialVersionUID = 6812378121809201089L;
 	
 	@XmlElement
@@ -56,8 +40,7 @@ public class TfPlacement implements java.io.Serializable {
 	@Column(name = "TF_PLACEMENT_END_DATE")
 	private Timestamp end;
 
-	public TfPlacement() {
-	}
+	public TfPlacement() { }
 
 	public TfPlacement(Integer id, TfAssociate associate, TfClient client, TfEndClient endClient, Timestamp start,
 			Timestamp end) {
@@ -70,57 +53,31 @@ public class TfPlacement implements java.io.Serializable {
 		this.end = end;
 	}
 
-	public Integer getId() {
-		return id;
-	}
+	public Integer getId() { return id; }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	public void setId(Integer id) { this.id = id; }
 
-	public TfAssociate getAssociate() {
-		return associate;
-	}
+	public TfAssociate getAssociate() { return associate; }
 
-	public void setAssociate(TfAssociate associate) {
-		this.associate = associate;
-	}
+	public void setAssociate(TfAssociate associate) { this.associate = associate; }
 
-	public TfClient getClient() {
-		return client;
-	}
+	public TfClient getClient() { return client; }
 
-	public void setClient(TfClient client) {
-		this.client = client;
-	}
+	public void setClient(TfClient client) { this.client = client; }
 
-	public TfEndClient getEndClient() {
-		return endClient;
-	}
+	public TfEndClient getEndClient() { return endClient; }
 
-	public void setEndClient(TfEndClient endClient) {
-		this.endClient = endClient;
-	}
+	public void setEndClient(TfEndClient endClient) { this.endClient = endClient; }
 
-	public Timestamp getStart() {
-		return start;
-	}
+	public Timestamp getStart() { return start; }
 
-	public void setStart(Timestamp start) {
-		this.start = start;
-	}
+	public void setStart(Timestamp start) { this.start = start; }
 
-	public Timestamp getEnd() {
-		return end;
-	}
+	public Timestamp getEnd() { return end; }
 
-	public void setEnd(Timestamp end) {
-		this.end = end;
-	}
+	public void setEnd(Timestamp end) { this.end = end; }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	public static long getSerialversionuid() { return serialVersionUID; }
 
 	@Override
 	public int hashCode() {
@@ -170,18 +127,11 @@ public class TfPlacement implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		if (start == null) {
-			if (other.start != null)
-				return false;
-		} else if (!start.equals(other.start))
-			return false;
-		return true;
-	}
+            return other.start == null;
+		} else return start.equals(other.start);
+    }
 
 	@Override
-	public String toString() {
-		return "TfPlacement [id=" + id + ", client=" + client + ", endClient=" + endClient + ", start=" + start
-				+ ", end=" + end + "]";
-	}
-	
-	
+	public String toString() 
+	{ return "TfPlacement [id=" + id + ", client=" + client + ", endClient=" + endClient + ", start=" + start + ", end=" + end + "]"; }
 }

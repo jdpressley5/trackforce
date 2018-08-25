@@ -1,19 +1,14 @@
 package com.revature.dao;
-
+import com.revature.entity.TfBatch;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.revature.entity.TfBatch;
-
-/**
- * Accesses various information for the batches.
- */
-public interface BatchDao {
-
-	public TfBatch getBatch(String batchName);
-	public TfBatch getBatchById(Integer id);
-	public List<TfBatch> getAllBatches();
-	public List<TfBatch> getBatchesForPredictions(String name, Timestamp startDate, Timestamp endDate);
-	public Object getBatchCountsForPredictions(String name, Timestamp startDate, Timestamp endDate);
-
+/** Accesses various information for the batches.*/
+public interface BatchDao 
+{
+	TfBatch getBatch(String batchName);
+	TfBatch getBatchById(Integer id);
+	List<TfBatch> getAllBatches();
+	List<TfBatch> getBatchesForPredictions(String name, Timestamp startDate, Timestamp endDate);
+	Object getBatchCountsForPredictions(String name, Timestamp startDate, Timestamp endDate);
 }

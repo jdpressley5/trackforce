@@ -1,37 +1,22 @@
 package com.revature.entity;
-// Generated Nov 7, 2017 9:24:46 PM by Hibernate Tools 5.2.5.Final
-
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashSet;
+import java.util.Set;
 
 
-/**
- * <p> </p>
- * @version v6.18.06.13
- */
+/** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_CURRICULUM", schema = "ADMIN")
-//@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-//Logans attempt at getting ehcache working below
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
-public class TfCurriculum implements java.io.Serializable {
-
+public class TfCurriculum implements java.io.Serializable 
+{
 	private static final long serialVersionUID = 8213885869880424792L;
 	
 	@XmlElement
@@ -56,44 +41,26 @@ public class TfCurriculum implements java.io.Serializable {
 		this.batches = batches;
 	}
 
-	public TfCurriculum() {
-	}
+	public TfCurriculum() {}
 
-	public Integer getId() {
-		return id;
-	}
+	public Integer getId() { return id; }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	public void setId(Integer id) { this.id = id; }
 
-	public String getName() {
-		return name;
-	}
+	public String getName() { return name; }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name) { this.name = name; }
 
 	@JsonIgnore
-	public Set<TfBatch> getBatches() {
-		return batches;
-	}
+	public Set<TfBatch> getBatches() { return batches; }
 
 	@JsonIgnore
-	public void setBatches(Set<TfBatch> batches) {
-		this.batches = batches;
-	}
+	public void setBatches(Set<TfBatch> batches) { this.batches = batches; }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	public static long getSerialversionuid() { return serialVersionUID; }
 
 	@Override
-	public String toString() {
-
-		return "TfCurriculum [id=" + id + ", name=" + name + "]";
-	}
+	public String toString() { return "TfCurriculum [id=" + id + ", name=" + name + "]"; }
 
 	@Override
 	public int hashCode() {
@@ -125,12 +92,7 @@ public class TfCurriculum implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+			return other.name == null;
+		} else return name.equals(other.name);
 	}
-
-	
 }

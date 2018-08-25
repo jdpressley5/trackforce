@@ -1,30 +1,20 @@
 package com.revature.entity;
-// Generated Nov 7, 2017 9:24:46 PM by Hibernate Tools 5.2.5.Final
-
-import java.util.HashSet;
-import java.util.Set;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
-/**
- * <p> </p>
- * @version v6.18.06.13
- */
+/** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_MARKETING_STATUS", schema = "ADMIN")
-//@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
-public class TfMarketingStatus implements java.io.Serializable {
-
+public class TfMarketingStatus implements java.io.Serializable 
+{
 	private static final long serialVersionUID = -1638800519652509525L;
 	
 	@XmlElement
@@ -41,8 +31,7 @@ public class TfMarketingStatus implements java.io.Serializable {
 	@JsonIgnore
 	private Set<TfAssociate> associates = new HashSet<TfAssociate>(0);
 
-	public TfMarketingStatus() {
-	}
+	public TfMarketingStatus() { }
 
 	public TfMarketingStatus(Integer id, String name, Set<TfAssociate> associates) {
 		super();
@@ -51,35 +40,21 @@ public class TfMarketingStatus implements java.io.Serializable {
 		this.associates = associates;
 	}
 
-	public Integer getId() {
-		return id;
-	}
+	public Integer getId() { return id; }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	public void setId(Integer id) { this.id = id; }
 
-	public String getName() {
-		return name;
-	}
+	public String getName() { return name; }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name) { this.name = name; }
 
 	@JsonIgnore
-	public Set<TfAssociate> getAssociates() {
-		return associates;
-	}
+	public Set<TfAssociate> getAssociates() { return associates; }
 
 	@JsonIgnore
-	public void setAssociates(Set<TfAssociate> associates) {
-		this.associates = associates;
-	}
+	public void setAssociates(Set<TfAssociate> associates) { this.associates = associates; }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	public static long getSerialversionuid() { return serialVersionUID; }
 
 	@Override
 	public int hashCode() {
@@ -111,15 +86,10 @@ public class TfMarketingStatus implements java.io.Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
+            return other.name == null;
+		} else return name.equals(other.name);
+    }
 
 	@Override
-	public String toString() {
-		return "TfMarketingStatus [id=" + id + ", name=" + name + "]";
-	}
+	public String toString() { return "TfMarketingStatus [id=" + id + ", name=" + name + "]"; }
 }
