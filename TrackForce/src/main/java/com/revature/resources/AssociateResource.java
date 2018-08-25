@@ -1,42 +1,22 @@
 package com.revature.resources;
-import static com.revature.utils.LogUtil.logger;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import javax.persistence.NoResultException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import org.hibernate.HibernateException;
-import org.json.JSONObject;
-import com.revature.daoimpl.BatchDaoImpl;
 import com.revature.entity.TfAssociate;
-import com.revature.entity.TfTrainer;
-import com.revature.services.AssociateService;
-import com.revature.services.BatchService;
-import com.revature.services.ClientService;
-import com.revature.services.CurriculumService;
-import com.revature.services.InterviewService;
-import com.revature.services.JWTService;
-import com.revature.services.MarketingStatusService;
-import com.revature.services.TrainerService;
-import com.revature.services.UserService;
+import com.revature.services.*;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.hibernate.HibernateException;
+import org.json.JSONObject;
+import javax.persistence.NoResultException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import static com.revature.utils.LogUtil.logger;
 
 /** @version v6.18.06.13 */
 @Path("/associates")
@@ -51,12 +31,7 @@ public class AssociateResource
 	// This is here for a reason!
 	// - Adam 06.18.06.13
 	AssociateService associateService = new AssociateService();
-	BatchService batchService = new BatchService();
 	ClientService clientService = new ClientService();
-	CurriculumService curriculumService = new CurriculumService();
-	InterviewService interviewService = new InterviewService();
-	TrainerService trainerService = new TrainerService();
-	UserService userService = new UserService();
 	MarketingStatusService marketingStatusService = new MarketingStatusService();
 
 	/** <p>
@@ -142,7 +117,7 @@ public class AssociateResource
 	public Response getAssociateByUserId(@ApiParam(value = "An associate id.") @PathParam("id") int id, @HeaderParam("Authorization") String token) 
 	{
 		logger.info("getAssociateByUserId()...");
-		Status status = null;
+		Status status;
 		Claims payload = JWTService.processToken(token);
 		TfAssociate associateinfo;
 
@@ -168,7 +143,7 @@ public class AssociateResource
 	public Response getAssociate(@ApiParam(value = "An associate id.") @PathParam("id") int id,	
 	                             @HeaderParam("Authorization") String token) {	
 		logger.info("getAssociate()...");	
-		Status status = null;	
+		Status status;
 		Claims payload = JWTService.processToken(token);	
 		TfAssociate associateinfo;	
  		if (payload == null || false)
@@ -201,11 +176,11 @@ public class AssociateResource
 			List<Integer> ids) {
 		logger.info("updateAssociates()...");
 		logger.info(ids);
-		Status status = null;
+		Status status;
 		Claims payload = JWTService.processToken(token);
 
 		List<TfAssociate> associates = new LinkedList<>();
-		TfAssociate toBeUpdated = null;
+		TfAssociate toBeUpdated;
 		for (int associateId : ids) {
 			toBeUpdated = associateService.getAssociate(associateId);
 			if (marketingStatusId != 0) toBeUpdated.setMarketingStatus(marketingStatusService.getMarketingStatusById(marketingStatusId));
@@ -216,8 +191,7 @@ public class AssociateResource
 
 		if (payload == null || payload.getId().equals("2") || payload.getId().equals("5")) 
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else {
-			// marketing status & client id are given as query parameters, ids sent in body
+		else { // marketing status & client id are given as query parameters, ids sent in body
 			AssociateService as = new AssociateService();
 			return as.updateAssociates(associates) ? Response.ok().build() : Response.serverError().build();
 		}
@@ -232,7 +206,7 @@ public class AssociateResource
 	public Response updateAssociate(@PathParam("associateId") Integer id, TfAssociate associate, @HeaderParam("Authorization") String token) 
 	{
 		logger.info("updateAssociate()...");
-		Status status = null;
+		Status status;
 		Claims payload = JWTService.processToken(token);
 		System.out.println(id);
 

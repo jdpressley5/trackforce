@@ -1,12 +1,12 @@
 package com.revature.entity;
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashSet;
+import java.util.Set;
 
 /** @version v6.18.06.13 */
 @XmlRootElement
@@ -86,12 +86,9 @@ public class TfMarketingStatus implements java.io.Serializable
 		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
+            return other.name == null;
+		} else return name.equals(other.name);
+    }
 
 	@Override
 	public String toString() { return "TfMarketingStatus [id=" + id + ", name=" + name + "]"; }

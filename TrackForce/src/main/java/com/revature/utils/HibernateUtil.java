@@ -1,13 +1,15 @@
 package com.revature.utils;
-import static com.revature.utils.LogUtil.logger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import static com.revature.utils.LogUtil.logger;
 
 /** @author Curtis H., Adam L.
  * <p> The abstracted methods for making Hibernate calls to the database </p>
@@ -20,12 +22,11 @@ public class HibernateUtil
 
 	private static SessionFactory sessionFactory = buildSessionFactory();
 
-	private static void addShutdown() {
-		Runtime.getRuntime().addShutdownHook(new Thread() {
+	private static void addShutdown()
+	{ Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
 			public void run() { shutdown(); }
-		});
-	}
+		}); }
 
 	private static SessionFactory buildSessionFactory() 
 	{
@@ -53,7 +54,7 @@ public class HibernateUtil
 		}
 	}
 
-	public static void rollbackTransaction(Transaction transaction) {
+	private static void rollbackTransaction(Transaction transaction) {
 		if (transaction != null) {
 			transaction.rollback();
 			logger.warn("Transaction rolled back");
@@ -89,23 +90,20 @@ public class HibernateUtil
 
 	public static <T> boolean multiTransaction(Sessional<Boolean> sessional, List<T> items) {
 		//Be careful using this method as it can create extreme strain by creating multiple threads
-				//This should be refactored along with a refactor of runHibernateTransaction to both call
-				//on another method that does the work that runs x amount of given times. Or implement a
-				//cache the ensures that flush is not called on a hibernate transaction
-				return HibernateUtil.runHibernateTransaction((Session session, Object... args) -> {
-					for (T a : items) {
-						if (!sessional.operate(session, a)) {
-							return false;
-						}
-					}
-					return true;
-				});
+		//This should be refactored along with a refactor of runHibernateTransaction to both call
+		//on another method that does the work that runs x amount of given times. Or implement a
+		//cache the ensures that flush is not called on a hibernate transaction
+		return HibernateUtil.runHibernateTransaction((Session session, Object... args) -> {
+			for (T a : items)
+			{ if (!sessional.operate(session, a)) return false; }
+			return true;
+		});
 	}
 
 	public static <T> T runHibernate(Sessional<T> ss, Object... args) {
 		Callable<T> caller = () -> {
 			Session session = null;
-			Throwable t = null;
+			Throwable t;
 			try {
 				session = HibernateUtil.getSessionFactory().openSession();
 				return ss.operate(session, args);

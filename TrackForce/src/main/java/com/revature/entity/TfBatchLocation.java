@@ -1,25 +1,18 @@
 package com.revature.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_BATCH_LOCATION", schema = "ADMIN")
-//@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-//Logans attempt at getting ehcache working below
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
 public class TfBatchLocation implements java.io.Serializable 
 {
@@ -93,11 +86,8 @@ public class TfBatchLocation implements java.io.Serializable
 		} else if (!name.equals(other.name))
 			return false;
 		if (batches == null) {
-			if (other.batches != null)
-				return false;
-		} else if (!batches.equals(other.batches))
-			return false;
-		return true;
+			return other.batches == null;
+		} else return batches.equals(other.batches);
 	}
 
 	@Override

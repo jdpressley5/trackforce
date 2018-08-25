@@ -1,32 +1,15 @@
 package com.revature.resources;
-import static com.revature.utils.LogUtil.logger;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.List;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import org.hibernate.HibernateException;
-import com.revature.criteria.GraphedCriteriaResult;
 import com.revature.entity.TfCurriculum;
-import com.revature.services.AssociateService;
-import com.revature.services.BatchService;
-import com.revature.services.ClientService;
-import com.revature.services.CurriculumService;
-import com.revature.services.InterviewService;
-import com.revature.services.JWTService;
-import com.revature.services.TrainerService;
-import com.revature.services.UserService;
+import com.revature.services.*;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import java.util.List;
+import static com.revature.utils.LogUtil.logger;
 
 /** @version v6.18.06.13 */
 @Path("/skillset")
@@ -39,15 +22,8 @@ public class CurriculumResource
 	// This is to allow for Mockito tests, which have problems with static methods
 	// This is here for a reason! 
 	// - Adam 06.18.06.13
-	AssociateService associateService = new AssociateService();
-	BatchService batchService = new BatchService();
-	ClientService clientService = new ClientService();
 	CurriculumService curriculumService = new CurriculumService();
-	InterviewService interviewService = new InterviewService();
-	TrainerService trainerService = new TrainerService();
-	UserService userService = new UserService();
-	
-	
+
 	/** @author Adam L. 
 	 * @version v6.18.06.13 */
 	@GET
@@ -55,12 +31,12 @@ public class CurriculumResource
 	public Response getAllCurriculums(@HeaderParam("Authorization") String token) 
 	{
 		logger.info("getAllCurriculums()...");
-		Status status = null;
+		Status status;
 		List<TfCurriculum> curriculum = curriculumService.getAllCurriculums();
 		Claims payload = JWTService.processToken(token);		
 		if (payload == null) // invalid token
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else if (payload.getId().equals("5")) // wrong roleid
+		else if (payload.getId().equals("5")) // wrong roleID
 			return Response.status(Status.FORBIDDEN).build();
 		else
 			status = curriculum == null || curriculum.isEmpty() ? Status.NO_CONTENT : Status.OK;

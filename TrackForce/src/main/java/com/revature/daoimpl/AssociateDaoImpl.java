@@ -1,7 +1,6 @@
 package com.revature.daoimpl;
 import static com.revature.utils.HibernateUtil.runHibernateTransaction;
 import static com.revature.utils.HibernateUtil.saveToDB;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -9,7 +8,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
-import javax.persistence.Entity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.openqa.selenium.InvalidArgumentException;
@@ -27,13 +25,16 @@ import com.revature.utils.Sessional;
 /** Data Access Object implementation to access the associate entity from the Database */
 public class AssociateDaoImpl implements AssociateDao 
 {
-	
+	private static final String countIdSQL =
+			"select count(tf_associate_id) from admin.tf_associate where tf_marketing_status_id = ";
+
 	/** Gets a single associate with an id
 	 * @param Integer associateId */
 	@Override
 	public TfAssociate getAssociate(Integer id) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
-		session.createQuery("from TfAssociate a where a.id = :id", TfAssociate.class).setParameter("id", id).getSingleResult());
+		session.createQuery("from TfAssociate a where a.id = :id", TfAssociate.class)
+				.setParameter("id", id).getSingleResult());
 	}
 
 	/** Gets an associate by an associated user id
@@ -41,7 +42,8 @@ public class AssociateDaoImpl implements AssociateDao
 	@Override
 	public TfAssociate getAssociateByUserId(int id) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
-				session.createQuery("from TfAssociate where user.id = :id", TfAssociate.class).setParameter("id", id).getSingleResult());
+				session.createQuery("from TfAssociate where user.id = :id", TfAssociate.class)
+						.setParameter("id", id).getSingleResult());
 	}
 
 	/**  Gets all associates */
@@ -56,209 +58,64 @@ public class AssociateDaoImpl implements AssociateDao
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
 				.createQuery("from TfAssociate", TfAssociate.class).setMaxResults(60).getResultList());
 	}
-	
-	@Override
-	public Object getCountUndeployedMapped()
+
+	private Object getCount(String sqlcriteria)
 	{
 		Session session = null;
-		Object undeployedmapped = null;
+		Object countRes = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
-			undeployedmapped = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where (tf_marketing_status_id = 1 or tf_marketing_status_id = 2 or tf_marketing_status_id = 3 " +
-					    "or tf_marketing_status_id = 4)"
-					).getSingleResult();
+			countRes = session.createNativeQuery(sqlcriteria).getSingleResult();
 		} catch(HibernateException e) { e.printStackTrace(); }
 		finally { if ( session != null ) session.close(); }
-		return undeployedmapped;
-	}
-	
-	@Override
-	public Object getCountUndeployedUnmapped()
-	{
-		Session session = null;
-		Object undeployedunmapped = null;
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			undeployedunmapped = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where (tf_marketing_status_id = 6 or tf_marketing_status_id = 7 " +
-					    "or tf_marketing_status_id = 8 or tf_marketing_status_id = 9)"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return undeployedunmapped;
-	}
-	
-	@Override
-	public Object getCountDeployedMapped()
-	{
-		Session session = null;
-		Object deployedmapped = null;
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			deployedmapped = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 5"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return deployedmapped;
-	}
-	
-	@Override
-	public Object getCountDeployedUnmapped()
-	{
-		Session session = null;
-		Object deployedunmapped = null;
-		
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			deployedunmapped = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 10"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return deployedunmapped;
+		return countRes;
 	}
 
 	@Override
-	public Object getCountUnmappedTraining()
-	{
-		Session session = null;
-		Object unmappedtraining = null;
-		
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			unmappedtraining = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 6"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return unmappedtraining;
+	public Object getCountUndeployedMapped() {
+		String sql = "select count(tf_associate_id) from admin.tf_associate " +
+				"where (tf_marketing_status_id = 1 or tf_marketing_status_id = 2 or tf_marketing_status_id = 3 " +
+				"or tf_marketing_status_id = 4)";
+		return getCount(sql);
 	}
 	
 	@Override
-	public Object getCountUnmappedOpen()
-	{
-		Session session = null;
-		Object unmappedopen = null;
-		
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			unmappedopen = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 7"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return unmappedopen;
+	public Object getCountUndeployedUnmapped() {
+		String sql = "select count(tf_associate_id) from admin.tf_associate " +
+				"where (tf_marketing_status_id = 6 or tf_marketing_status_id = 7 " +
+				"or tf_marketing_status_id = 8 or tf_marketing_status_id = 9)";
+		return getCount(sql);
 	}
 	
 	@Override
-	public Object getCountUnmappedSelected()
-	{
-		Session session = null;
-		Object unmappedselected = null;
-		
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			unmappedselected = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 8"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return unmappedselected;
-	}
+	public Object getCountDeployedMapped() { return getCount(countIdSQL + 5); }
 	
 	@Override
-	public Object getCountUnmappedConfirmed()
-	{
-		Session session = null;
-		Object unmappedconfirmed = null;
-		
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			unmappedconfirmed = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 9"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return unmappedconfirmed;
-	}
+	public Object getCountDeployedUnmapped() { return getCount(countIdSQL + 10); }
+
+	@Override
+	public Object getCountUnmappedTraining() { return getCount(countIdSQL + 6); }
 	
 	@Override
-	public Object getCountMappedTraining()
-	{
-		Session session = null;
-		Object mappedtraining = null;
-		
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			mappedtraining = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 1"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return mappedtraining;
-	}
+	public Object getCountUnmappedOpen() { return getCount(countIdSQL + 7); }
 	
 	@Override
-	public Object getCountMappedReserved()
-	{
-		Session session = null;
-		Object mappedreserved = null;
-		
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			mappedreserved = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 2"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return mappedreserved;
-	}
+	public Object getCountUnmappedSelected() { return getCount(countIdSQL + 8); }
 	
 	@Override
-	public Object getCountMappedSelected()
-	{
-		Session session = null;
-		Object mappedselected = null;
-		
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			mappedselected = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 3"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return mappedselected;
-	}
+	public Object getCountUnmappedConfirmed() { return getCount(countIdSQL + 9); }
 	
 	@Override
-	public Object getCountMappedConfirmed()
-	{
-		Session session = null;
-		Object mappedconfirmed = null;
-		
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			mappedconfirmed = session.createNativeQuery(
-					"select count(tf_associate_id) from admin.tf_associate " +
-					"where tf_marketing_status_id = 4"
-					).getSingleResult();
-		} catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
-		return mappedconfirmed;
-	}
+	public Object getCountMappedTraining() { return getCount(countIdSQL + 1); }
+	
+	@Override
+	public Object getCountMappedReserved() { return getCount(countIdSQL + 2); }
+	
+	@Override
+	public Object getCountMappedSelected() { return getCount(countIdSQL + 3); }
+	
+	@Override
+	public Object getCountMappedConfirmed() { return getCount(countIdSQL + 4); }
 
 	@Override
 	public boolean updateAssociatePartial(TfAssociate associate) {

@@ -1,15 +1,12 @@
 package com.revature.entity;
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import java.util.HashSet;
+import java.util.Set;
 
 /** @version v6.18.06.13 */
 @XmlRootElement
@@ -88,12 +85,9 @@ public class TfRole implements java.io.Serializable
 		} else if (!name.equals(other.name))
 			return false;
 		if (users == null) {
-			if (other.users != null)
-				return false;
-		} else if (!users.equals(other.users))
-			return false;
-		return true;
-	}
+            return other.users == null;
+		} else return users.equals(other.users);
+    }
 
 	@Override
 	public String toString() { return "TfRole [tfRoleId=" + id + ", tfRoleName=" + name + "]"; }

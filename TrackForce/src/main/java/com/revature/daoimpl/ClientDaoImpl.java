@@ -8,7 +8,6 @@ import com.revature.utils.HibernateUtil;
 
 public class ClientDaoImpl implements ClientDao 
 {
-
 	@Override
 	public List<TfClient> getAllTfClients() {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session

@@ -1,8 +1,8 @@
 package com.revature.dao;
-import java.util.List;
 import com.revature.entity.TfMarketingStatus;
+import java.util.List;
 
 public interface MarketingStatusDao {
-	public List<TfMarketingStatus> getAllMarketingStatuses();
+	List<TfMarketingStatus> getAllMarketingStatuses();
 	TfMarketingStatus getMarketingStatusById(int id);
 }

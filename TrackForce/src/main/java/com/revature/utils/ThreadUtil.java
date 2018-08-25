@@ -13,12 +13,11 @@ public class ThreadUtil
 	//However, it will be to the detriment of the running server. (Most likely an Amazon EC2)
 	private static ExecutorService executor = Executors.newFixedThreadPool(15);
 	
-	public ThreadUtil() { super(); }
+	ThreadUtil() { super(); }
 	
-	public <T> T submitCallable(Callable<T> caller) {
+	<T> T submitCallable(Callable<T> caller) {
 		Future<T> future = executor.submit(caller);
 		T results = null;
-		
 		try { results = future.get(); } 
 		catch (InterruptedException | ExecutionException e) {
 			if(!future.isCancelled()) { future.cancel(true); }
@@ -29,5 +28,6 @@ public class ThreadUtil
 		return results;
 	}
 	
-	public static int getActiveThreadCount() { return ((ThreadPoolExecutor) executor).getActiveCount(); }
+	private static int getActiveThreadCount()
+	{ return ((ThreadPoolExecutor) executor).getActiveCount(); }
 }

@@ -1,21 +1,19 @@
 package com.revature.services;
-import java.util.List;
 import com.revature.dao.InterviewDao;
 import com.revature.daoimpl.InterviewDaoImpl;
 import com.revature.entity.TfInterview;
+
+import java.util.List;
 
 /**  @author Adam L.  
  * @version v6.18.06.13 */
 public class InterviewService 
 {
-	
 	private InterviewDao dao = new InterviewDaoImpl();
-	
-	// public so it can be used for testing 
-	public InterviewService() {};
-	
-	// Constructor so allow for Mockito
-	public InterviewService(InterviewDao dao) { this.dao = dao; }
+
+	public InterviewService() {super(); }// public so it can be used for testing
+
+	public InterviewService(InterviewDao dao) { this.dao = dao; } // Constructor so allow for Mockito
 
 	/** @author Adam L. 
 	 * <p>Gets all the interviews from the database that match the given associate id</p>

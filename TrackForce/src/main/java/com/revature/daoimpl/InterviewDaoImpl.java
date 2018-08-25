@@ -1,14 +1,12 @@
 package com.revature.daoimpl;
 import java.util.List;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import com.revature.dao.InterviewDao;
 import com.revature.entity.TfInterview;
 import com.revature.utils.HibernateUtil;
 
-public class InterviewDaoImpl implements InterviewDao {
-
+public class InterviewDaoImpl implements InterviewDao
+{
 	@Override
 	public List<TfInterview> getInterviewsByAssociate(int associateId) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
@@ -23,8 +21,8 @@ public class InterviewDaoImpl implements InterviewDao {
 
 	@Override
 	public boolean createInterview(TfInterview interview) {
-//		 HibernateUtil.saveToDB(interview.getAssociate());
-//		 HibernateUtil.saveToDB(interview.getClient());
+		 //HibernateUtil.saveToDB(interview.getAssociate());
+		 //HibernateUtil.saveToDB(interview.getClient());
 		return HibernateUtil.saveToDB(interview);
 	}
 

@@ -1,23 +1,15 @@
 package com.revature.services;
-import static com.revature.utils.LogUtil.logger;
+import com.revature.entity.TfUser;
+import io.jsonwebtoken.*;
+import org.json.JSONObject;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-import org.json.JSONObject;
-import com.revature.entity.TfUser;
-import gherkin.lexer.Da;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
-import io.jsonwebtoken.UnsupportedJwtException;
+import static com.revature.utils.LogUtil.logger;
 
 /** @author Michael Tseng
  * @editors Adam L. 
@@ -25,8 +17,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
  *         found here: https://stormpath.com/blog/jwt-java-create-verify And
  *         resources from Sean Vaeth
  *	@version v6.18.06.13
- *			Note: made minor updates to allow continued use of these tokens
- */
+ *			Note: made minor updates to allow continued use of these tokens */
 public class JWTService 
 {	
 	UserService userService;
@@ -94,8 +85,7 @@ public class JWTService
 	 * @return key string */
 	public static String getKey() {
 		String key = System.getenv("KEY");
-		// in case, someone forgot to set their system environments
-		// this will be the default key
+		// in case, someone forgot to set their system environments this will be the default key
 		if (key == null) { key = "trackforcekey"; }
 		return key;
 	}
@@ -137,7 +127,6 @@ public class JWTService
 	}
 	
 	/**  @author 1806_Austin_Molina
-	 * 
 	 * all 401 errors are expected to include the nature of the error.
 	 * The front end handles errors differently depending on how old 
 	 * the token is.
@@ -154,8 +143,7 @@ public class JWTService
 		body.put("status", "Unauthorized");	
 		final long expiration = getExpiredTokenTime(token);
 		Date now = new Date();
-		if(expiration == -1) {
-			//arbitrary response; number of minutes in a day
+		if(expiration == -1) { //arbitrary response; number of minutes in a day
 			body.put("expirationtime", -1);
 			return body.toString();
 		}

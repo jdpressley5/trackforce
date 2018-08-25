@@ -1,5 +1,4 @@
 package com.revature.services;
-import java.util.List;
 import com.revature.dao.TrainerDao;
 import com.revature.daoimpl.TrainerDaoImpl;
 import com.revature.entity.TfTrainer;
@@ -7,17 +6,17 @@ import com.revature.entity.TfUser;
 import com.revature.utils.LogUtil;
 import com.revature.utils.PasswordStorage;
 import com.revature.utils.PasswordStorage.CannotPerformOperationException;
+import java.util.List;
 
 /** @author Adam L. 
  * @version v6.18.06.13 */
 public class TrainerService 
 {
 	private static TrainerDao dao = new TrainerDaoImpl();
-	
-	// public so it can be used for testing 
-	public TrainerService() {};
-	
-	public TrainerService(TrainerDao dao) { this.dao = dao; }
+
+	public TrainerService() {}// public so it can be used for testing
+
+    public TrainerService(TrainerDao dao) { TrainerService.dao = dao; }
 
 	/** @author Adam L. 
 	 * Given a trainer id, returns a trainer.

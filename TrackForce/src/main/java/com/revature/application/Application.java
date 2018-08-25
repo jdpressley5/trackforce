@@ -1,25 +1,9 @@
 package com.revature.application;
-import java.util.ArrayList;
-import java.util.List;
 import com.revature.entity.TfAssociate;
-import com.revature.entity.TfBatch;
 import com.revature.entity.TfRole;
-import com.revature.entity.TfTrainer;
 import com.revature.entity.TfUser;
-import com.revature.services.AssociateService;
-import com.revature.services.BatchService;
-import com.revature.services.ClientService;
-import com.revature.services.CurriculumService;
-import com.revature.services.InterviewService;
-import com.revature.services.MarketingStatusService;
-import com.revature.services.TrainerService;
-import com.revature.services.UserService;
+import com.revature.services.*;
 import com.revature.utils.PasswordStorage;
-import java.util.HashSet;
-import java.util.List;
-import static com.revature.utils.HibernateUtil.saveToDB;
-import static com.revature.utils.PasswordStorage.createHash;
-import net.sf.ehcache.CacheManager;
 
 /** @author Adam L.
  * <p>Used for a few quick simple tests to ensure hibernate is making the calls it is supposed to</p>
@@ -39,7 +23,7 @@ public class Application {
 	static UserService userService = new UserService();
 	static MarketingStatusService marketingStatusService = new MarketingStatusService();
 
-	public static void main(String[] args) throws PasswordStorage.CannotPerformOperationException {
+	public static void main(String[] args) {
 
 
 //		TfUser u = new TfUser();
@@ -120,7 +104,8 @@ public class Application {
 		associate.setFirstName("RestAssured");
 		associate.setLastName("Associate");
 		associate.setUser(user);
-		System.out.println(associateService.createAssociate(associate));}}
+		System.out.println(associateService.createAssociate(associate));}
+}
 
 //		TfInterview interview = new TfInterview();
 //

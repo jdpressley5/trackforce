@@ -1,33 +1,20 @@
 package com.revature.resources;
-import static com.revature.utils.LogUtil.logger;
-import java.util.List;
-import javax.persistence.NoResultException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import com.revature.entity.TfBatch;
 import com.revature.entity.TfTrainer;
-import com.revature.services.AssociateService;
-import com.revature.services.BatchService;
-import com.revature.services.ClientService;
-import com.revature.services.CurriculumService;
-import com.revature.services.InterviewService;
 import com.revature.services.JWTService;
 import com.revature.services.TrainerService;
-import com.revature.services.UserService;
 import com.revature.utils.LogUtil;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import javax.persistence.NoResultException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import java.util.List;
+import static com.revature.utils.LogUtil.logger;
 
 /** @version v6.18.06.13 */
 @Path("/trainers")
@@ -40,13 +27,7 @@ public class TrainerResource
 	// This is to allow for Mockito tests, which have problems with static methods
 	// This is here for a reason! 
 	// - Adam 06.18.06.13
-	AssociateService associateService = new AssociateService();
-	BatchService batchService = new BatchService();
-	ClientService clientService = new ClientService();
-	CurriculumService curriculumService = new CurriculumService();
-	InterviewService interviewService = new InterviewService();
 	TrainerService trainerService = new TrainerService();
-	UserService userService = new UserService();
 
 	@Path("/{id}/batch")
 	@POST
@@ -58,7 +39,7 @@ public class TrainerResource
 		TfTrainer trainer;
 		List<TfBatch> batches;
 		Claims payload = JWTService.processToken(token);
-		Status status = null;
+		Status status;
 		if (payload == null || payload.getId().equals("5")) 
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
 		else {
@@ -82,7 +63,7 @@ public class TrainerResource
 		TfTrainer trainer;
 		List<TfBatch> batches;
 		Claims payload = JWTService.processToken(token);
-		Status status = null;
+		Status status;
 		if (payload == null || payload.getId().equals("5"))
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
 		else {
@@ -104,7 +85,7 @@ public class TrainerResource
 	public Response getTrainer(@PathParam("id")int id, @HeaderParam("Authorization")String token) {
 		TfTrainer trainer;
 		Claims payload = JWTService.processToken(token);
-		Status status = null;
+		Status status;
 		if (payload == null || payload.getId().equals("5"))
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
 		else {
@@ -124,7 +105,7 @@ public class TrainerResource
 	@ApiOperation(value = "get all trainers")
 	public Response getAllTrainers(@HeaderParam("Authorization") String token) {
 		logger.info("getAllClients()...");
-		Status status = null;
+		Status status;
 		List<TfTrainer> trainers = trainerService.getAllTrainers();
 		Claims payload = JWTService.processToken(token);
 		if (payload == null)

@@ -1,32 +1,16 @@
 package com.revature.resources;
-import static com.revature.utils.LogUtil.logger;
-import java.io.IOException;
-import java.util.List;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import org.hibernate.HibernateException;
 import com.revature.entity.TfInterview;
-import com.revature.services.AssociateService;
-import com.revature.services.BatchService;
-import com.revature.services.ClientService;
-import com.revature.services.CurriculumService;
-import com.revature.services.InterviewService;
-import com.revature.services.JWTService;
-import com.revature.services.TrainerService;
-import com.revature.services.UserService;
+import com.revature.services.*;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.hibernate.HibernateException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import java.util.List;
+import static com.revature.utils.LogUtil.logger;
 
 /** @author Mitchell H's PC, Adam L.
  * @version v6.18.06.13 */
@@ -41,13 +25,7 @@ public class InterviewResource
 	// This is to allow for Mockito tests, which have problems with static methods
 	// This is here for a reason!
 	// - Adam 06.18.06.13
-	AssociateService associateService = new AssociateService();
-	BatchService batchService = new BatchService();
-	ClientService clientService = new ClientService();
-	CurriculumService curriculumService = new CurriculumService();
 	InterviewService interviewService = new InterviewService();
-	TrainerService trainerService = new TrainerService();
-	UserService userService = new UserService();
 
 	/** @author Ian Buitrago, Adam L.
 	 * @version v6.18.06.13 */
@@ -56,7 +34,7 @@ public class InterviewResource
 	public Response getAllInterviews(@HeaderParam("Authorization") String token, @QueryParam("sort") String sort) {
 
 		logger.info("getAllInterviews()...");
-		Status status = null;
+		Status status;
 		Claims payload = JWTService.processToken(token);
 		List<TfInterview> interviews = interviewService.getAllInterviews();
 
@@ -80,7 +58,7 @@ public class InterviewResource
 			@HeaderParam("Authorization") String token, TfInterview interview) 
 	{
 		logger.info("createInterview()...");
-		Status status = null;
+		Status status;
 		Claims payload = JWTService.processToken(token);
 		if (payload == null || !(payload.getId().equals("5")))
 			status = Status.UNAUTHORIZED;
@@ -99,9 +77,9 @@ public class InterviewResource
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Returns all interviews for an associate", notes = "Returns a list of all interviews.")
 	public Response getAllInterviews(@HeaderParam("Authorization") String token,
-			@PathParam("associateid") Integer associateId) throws HibernateException, IOException {
+			@PathParam("associateid") Integer associateId) throws HibernateException {
 		logger.info("getAllInterviews()...");
-		Status status = null;
+		Status status;
 		List<TfInterview> interviews = interviewService.getInterviewsByAssociate(associateId);
 		Claims payload = JWTService.processToken(token);
 
@@ -120,10 +98,9 @@ public class InterviewResource
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Returns an interview by id", notes = "Returns an interview.")
 	public Response getInterviewById(@HeaderParam("Authorization") String token,
-			@PathParam("interviewId") Integer interviewId) throws HibernateException, IOException 
-	{
+			@PathParam("interviewId") Integer interviewId) throws HibernateException {
 		logger.info("getInterviewById()...");
-		Status status = null;
+		Status status;
 		TfInterview interview = interviewService.getInterviewById(interviewId);
 		Claims payload = JWTService.processToken(token);
 
@@ -146,7 +123,7 @@ public class InterviewResource
 			@HeaderParam("Authorization") String token, TfInterview interview) 
 	{
 		logger.info("updateInterview()...");
-		Status status = null;
+		Status status;
 		Claims payload = JWTService.processToken(token);
 		if (payload == null)
 			status = Status.UNAUTHORIZED;// invalid token

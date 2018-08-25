@@ -1,8 +1,4 @@
 package com.revature.services;
-import java.util.List;
-import javax.persistence.NoResultException;
-import org.hibernate.HibernateException;
-import org.hibernate.NonUniqueResultException;
 import com.revature.dao.UserDao;
 import com.revature.daoimpl.UserDaoImpl;
 import com.revature.entity.TfRole;
@@ -11,6 +7,9 @@ import com.revature.utils.LogUtil;
 import com.revature.utils.PasswordStorage;
 import com.revature.utils.PasswordStorage.CannotPerformOperationException;
 import com.revature.utils.PasswordStorage.InvalidHashException;
+import org.hibernate.HibernateException;
+import javax.persistence.NoResultException;
+import java.util.List;
 
 /** @author Adam L. 
  * @version v6.18.06.13 */
@@ -18,7 +17,7 @@ public class UserService {
 
 	private UserDao dao = new UserDaoImpl();
 
-	public UserService() {};// public so it can be used for testing
+	public UserService() {}// public so it can be used for testing
 
 	public UserService(UserDao dao) { this.dao = dao; }
 
@@ -77,7 +76,7 @@ public class UserService {
 				if (PasswordStorage.verifyPassword(loginUser.getPassword(), foundUser.getPassword())) {
 					int role = foundUser.getTfRole().getTfRoleId();
 					foundUser.setRole(role);
-					foundUser.setToken(jwtService.createToken(foundUser.getUsername(), foundUser.getRole()));
+					foundUser.setToken(JWTService.createToken(foundUser.getUsername(), foundUser.getRole()));
 					LogUtil.logger.info("Password verification successful! Returning " + foundUser.toString());
 					return foundUser;
 				}

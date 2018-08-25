@@ -1,38 +1,24 @@
 package com.revature.resources;
-import static com.revature.utils.LogUtil.logger;
-import java.math.BigDecimal;
+import com.revature.daoimpl.BatchDaoImpl;
+import com.revature.entity.TfAssociate;
+import com.revature.entity.TfBatch;
+import com.revature.services.*;
+import io.jsonwebtoken.Claims;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import com.revature.daoimpl.BatchDaoImpl;
-import com.revature.entity.TfAssociate;
-import com.revature.entity.TfBatch;
-import com.revature.services.AssociateService;
-import com.revature.services.BatchService;
-import com.revature.services.ClientService;
-import com.revature.services.CurriculumService;
-import com.revature.services.InterviewService;
-import com.revature.services.JWTService;
-import com.revature.services.TrainerService;
-import com.revature.services.UserService;
-import io.jsonwebtoken.Claims;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import static com.revature.utils.LogUtil.logger;
 
 /** <p>Class that provides RESTful services for the batch listing and batch details page.</p>
  * @version v6.18.06.13 */
@@ -46,13 +32,7 @@ public class BatchResource
 	// This is to allow for Mockito tests, which have problems with static methods
 	// This is here for a reason! 
 	// - Adam 06.18.06.13
-	AssociateService associateService = new AssociateService();
 	BatchService batchService = new BatchService();
-	ClientService clientService = new ClientService();
-	CurriculumService curriculumService = new CurriculumService();
-	InterviewService interviewService = new InterviewService();
-	TrainerService trainerService = new TrainerService();
-	UserService userService = new UserService();
 	
 	/** @author Ian Buitrago, Andy A., Adam L. 
 	 * <p>Gets all batches, optionally filtered by start and end date query parameters
@@ -69,9 +49,9 @@ public class BatchResource
 		Claims payload = JWTService.processToken(token);
 		if (payload == null) return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
 
-		Status status = null;
+		Status status;
 		int role = Integer.parseInt(payload.getId());
-		Set<Integer> authorizedRoles = new HashSet<>(Arrays.asList(new Integer[] { 1, 2, 3, 4 }));
+		Set<Integer> authorizedRoles = new HashSet<>(Arrays.asList(1, 2, 3, 4));
 
 		if (authorizedRoles.contains(role)) {
 			if (startDate != null && endDate != null) {
@@ -108,9 +88,9 @@ public class BatchResource
 		Set<TfAssociate> associates = batchService.getBatchById(id).getAssociates();	
 		Claims payload = JWTService.processToken(token);
 		if (payload == null) return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		Status status = null;
+		Status status;
 		int role = Integer.parseInt(payload.getId());
-		Set<Integer> authorizedRoles = new HashSet<>(Arrays.asList(new Integer[] { 1, 2, 3, 4}));
+		Set<Integer> authorizedRoles = new HashSet<>(Arrays.asList(1, 2, 3, 4));
 
 		if (authorizedRoles.contains(role)) // results and status set in here
 			status = associates == null || associates.isEmpty() ? Status.NO_CONTENT : Status.OK;
@@ -130,7 +110,7 @@ public class BatchResource
 		logger.info("getBatchDetails()...");
 		Claims payload = JWTService.processToken(token);
 		if (payload == null) return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		Status status = null;
+		Status status;
 		status = Status.OK;
 		int role = Integer.parseInt(payload.getId());
 	/*	Set<Integer> authorizedRoles = new HashSet<>(Arrays.asList(new Integer[] { 1, 2, 3, 4}));
@@ -164,7 +144,7 @@ public class BatchResource
 	 * Iterate through set of associates and increment count based on associate status.
 	 * @param associates
 	 * @return count of associates with 'unmapped' status */
-	public Integer getUnmappedCount(Set<TfAssociate> associates) {
+	private Integer getUnmappedCount(Set<TfAssociate> associates) {
 		int n = 0;
 		for(TfAssociate a : associates) { if(a.getMarketingStatus().getId() > 5) n++; }	
 		return n;
@@ -182,10 +162,9 @@ public class BatchResource
 		logger.info("getBatchAssociateCounts...");
 		Claims payload = JWTService.processToken(token);
 		if (payload == null) return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		Status status = null;
-		status = Status.OK;
+		Status status;
 		int role = Integer.parseInt(payload.getId());
-		Set<Integer> authorizedRoles = new HashSet<>(Arrays.asList(new Integer[] { 1, 2, 3, 4}));
+		Set<Integer> authorizedRoles = new HashSet<>(Arrays.asList(1, 2, 3, 4));
 		if (authorizedRoles.contains(role))  status = Status.OK;
 		else status = Status.FORBIDDEN;
 		
@@ -208,10 +187,9 @@ public class BatchResource
 		logger.info("getBatchesWithinDates()...");
 		Claims payload = JWTService.processToken(token);
 		if (payload == null) return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		Status status = null;
-		status = Status.OK;	
+		Status status;
 		int role = Integer.parseInt(payload.getId());
-		Set<Integer> authorizedRoles = new HashSet<>(Arrays.asList(new Integer[] { 1, 2, 3, 4}));
+		Set<Integer> authorizedRoles = new HashSet<>(Arrays.asList(1, 2, 3, 4));
 		if (authorizedRoles.contains(role)) status = Status.OK;
 		else status = Status.FORBIDDEN;
 		System.out.println(new Timestamp(endDate).toString());
@@ -220,10 +198,8 @@ public class BatchResource
 		return Response.status(status).entity(batches).build();
 	}
 	
-	/**
-	 * 1806_Kevin_C
-	 * Gets a batch with the given id
-	 */
+	/** 1806_Kevin_C
+	 * Gets a batch with the given id */
 	@GET
 	@ApiOperation(value = "Returns batch information given a batch id", notes = "Returns batch information based on batch id.")
 	@Path("/batch/{id}")
@@ -231,9 +207,8 @@ public class BatchResource
 		logger.info("getBatchInformation...");
 		Claims payload = JWTService.processToken(token);
 		if (payload == null) return Response.status(Status.UNAUTHORIZED).build();
-		Status status = null;
+		Status status;
 		status = Status.OK;
-		BatchDaoImpl bd = new BatchDaoImpl();
 		TfBatch batch = batchService.getBatchById(id);
 		return Response.status(status).entity(batch).build();
 	}

@@ -1,6 +1,4 @@
 package com.revature.daoimpl;
-
-import java.sql.Timestamp;
 import java.util.List;
 import com.revature.criteria.GraphedCriteriaResult;
 import com.revature.entity.TfAssociate;
@@ -14,7 +12,6 @@ import javax.persistence.criteria.*;
 
 public class CurriculumDaoImpl implements CurriculumDao 
 {
-
 	@Override
 	public List<TfCurriculum> getAllCurriculums() {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->

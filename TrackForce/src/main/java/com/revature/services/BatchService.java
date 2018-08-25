@@ -1,17 +1,17 @@
 package com.revature.services;
-import java.util.List;
 import com.revature.dao.BatchDao;
 import com.revature.daoimpl.BatchDaoImpl;
 import com.revature.entity.TfBatch;
+
+import java.util.List;
 
 /** @author Adam L. 
  * @version v6.18.06.13 */
 public class BatchService {
 	
 	private BatchDao dao;
-	
-	// public so it can be used for testing 
-	public BatchService() { dao = new BatchDaoImpl(); }
+
+	public BatchService() { dao = new BatchDaoImpl(); }// public so it can be used for testing
 	
 	public BatchService(BatchDao dao) {this.dao = dao;}
 

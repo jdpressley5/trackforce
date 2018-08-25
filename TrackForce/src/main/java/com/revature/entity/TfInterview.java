@@ -1,28 +1,15 @@
 package com.revature.entity;
-import java.sql.Timestamp;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Timestamp;
 
 /** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_INTERVIEW", schema = "ADMIN")
-//@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-//Logans attempt at getting ehcache working below
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
 public class TfInterview implements java.io.Serializable 
 {
@@ -293,11 +280,8 @@ public class TfInterview implements java.io.Serializable
 		} else if (!questionGiven.equals(other.questionGiven))
 			return false;
 		if (was24HRNotice == null) {
-			if (other.was24HRNotice != null)
-				return false;
-		} else if (!was24HRNotice.equals(other.was24HRNotice))
-			return false;
-		return true;
+			return other.was24HRNotice == null;
+		} else return was24HRNotice.equals(other.was24HRNotice);
 	}
 
 	@Override

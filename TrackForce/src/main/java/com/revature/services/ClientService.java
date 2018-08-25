@@ -1,21 +1,21 @@
 package com.revature.services;
-import java.util.List;
 import com.revature.dao.ClientDao;
 import com.revature.daoimpl.ClientDaoImpl;
 import com.revature.entity.TfClient;
 import com.revature.entity.TfEndClient;
+import java.util.List;
 
 /** @author Adam L. 
  * @version v6.18.06.13 */
 public class ClientService {
    
 	private ClientDao dao;
-	
-	// public so it can be used for testing 
-	public ClientService() {dao = new ClientDaoImpl();};
-	public ClientService(ClientDao dao) {this.dao = dao;};
-	
-	/** @author Adam L. 
+
+	public ClientService() {dao = new ClientDaoImpl();}// public so it can be used for testing
+
+    public ClientService(ClientDao dao) {this.dao = dao;}
+
+    /** @author Adam L.
 	 * <p>Gets all the clients in the database</p>
 	 * @version v6.18.06.13
 	 * @return List<TfClient> */

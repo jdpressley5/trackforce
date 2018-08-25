@@ -1,36 +1,18 @@
 package com.revature.resources;
-import static com.revature.utils.LogUtil.logger;
-import java.io.IOException;
-import javax.persistence.NoResultException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import com.google.gson.JsonObject;
-import com.revature.entity.TfAssociate;
-import com.revature.entity.TfRole;
-import com.revature.entity.TfTrainer;
-import com.revature.entity.TfUser;
-import com.revature.entity.TfUserAndCreatorRoleContainer;
-import com.revature.services.AssociateService;
-import com.revature.services.BatchService;
-import com.revature.services.ClientService;
-import com.revature.services.CurriculumService;
-import com.revature.services.InterviewService;
-import com.revature.services.JWTService;
-import com.revature.services.MarketingStatusService;
-import com.revature.services.TrainerService;
-import com.revature.services.UserService;
+import com.revature.entity.*;
+import com.revature.services.*;
 import com.revature.utils.HibernateUtil;
 import com.revature.utils.LogUtil;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.persistence.NoResultException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import static com.revature.utils.LogUtil.logger;
 
 /** @version v6.18.06.13 */
 @Path("/users")
@@ -45,13 +27,9 @@ public class UserResource
 	// This is here for a reason!
 	// - Adam 06.18.06.13
 	AssociateService associateService = new AssociateService();
-	BatchService batchService = new BatchService();
-	ClientService clientService = new ClientService();
-	CurriculumService curriculumService = new CurriculumService();
-	InterviewService interviewService = new InterviewService();
 	TrainerService trainerService = new TrainerService();
 	UserService userService = new UserService();
-	MarketingStatusService marketingStatusService = new MarketingStatusService();
+
 	private static final String TEMP = "placeholder"; 
 	private static final String ASSC = "Associate";
 	
@@ -66,14 +44,13 @@ public class UserResource
 		TfUser newUser = container.getUser();
 		int creatorRole = container.getCreatorRole();
 		logger.info("creating new user..." + newUser);
-		
-		// any user created by an admin is approved
-		if(creatorRole == 1) newUser.setIsApproved(1);
+
+		if(creatorRole == 1) newUser.setIsApproved(1); // any user created by an admin is approved
 		else if (creatorRole > 4) return Response.status(Status.EXPECTATION_FAILED).build();
 
 		boolean works = true;// get the role being passed in
 		int role = newUser.getRole();
-		TfRole tfrole = null;
+		TfRole tfrole;
 		switch (role) 
 		{
 			case 1:
@@ -167,8 +144,8 @@ public class UserResource
 		LogUtil.logger.info(newAssociate);
 		if (newAssociate.getUser().getRole() == 5) 
 		{
-			boolean works = false;
-			TfRole tfrole = null;
+			boolean works;
+			TfRole tfrole;
 			tfrole = new TfRole(5, ASSC);
 			newAssociate.getUser().setTfRole(tfrole);
 			logger.info(newAssociate.getUser().getTfRole());
@@ -192,8 +169,8 @@ public class UserResource
 		LogUtil.logger.info(newTrainer);
 		if (newTrainer.getTfUser().getRole() == 2) 
 		{
-			boolean works = false;
-			TfRole tfrole = null;
+			boolean works;
+			TfRole tfrole;
 			tfrole = new TfRole(5, ASSC);
 			newTrainer.getTfUser().setIsApproved(0);
 			newTrainer.getTfUser().setTfRole(tfrole);
@@ -212,7 +189,8 @@ public class UserResource
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	@ApiOperation(value = "login method", notes = "The method takes login inforation and verifies whether or not it is valid. returns 200 if valid, 403 if invalid.")
+	@ApiOperation(value = "login method", notes = "The method takes login inforation and " +
+			"verifies whether or not it is valid. returns 200 if valid, 403 if invalid.")
 	public Response submitCredentials(TfUser loginUser) 
 	{
 		logger.info("submitCredentials()...");

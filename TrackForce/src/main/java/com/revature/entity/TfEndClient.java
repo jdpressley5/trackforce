@@ -1,19 +1,17 @@
 package com.revature.entity;
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashSet;
+import java.util.Set;
 
 /** @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_END_CLIENT", schema = "ADMIN")
-//@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-//Logans attempt at getting ehcache working below
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
 public class TfEndClient implements java.io.Serializable 
 {
@@ -126,10 +124,7 @@ public class TfEndClient implements java.io.Serializable
 		} else if (!name.equals(other.name))
 			return false;
 		if (placements == null) {
-			if (other.placements != null)
-				return false;
-		} else if (!placements.equals(other.placements))
-			return false;
-		return true;
+			return other.placements == null;
+		} else return placements.equals(other.placements);
 	}
 }

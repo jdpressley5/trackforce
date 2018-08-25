@@ -1,17 +1,10 @@
 package com.revature.entity;
-import java.sql.Timestamp;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Timestamp;
 
 /** @version v6.18.06.13 */
 @XmlRootElement
@@ -134,12 +127,9 @@ public class TfPlacement implements java.io.Serializable
 		} else if (!id.equals(other.id))
 			return false;
 		if (start == null) {
-			if (other.start != null)
-				return false;
-		} else if (!start.equals(other.start))
-			return false;
-		return true;
-	}
+            return other.start == null;
+		} else return start.equals(other.start);
+    }
 
 	@Override
 	public String toString() 

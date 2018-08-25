@@ -1,27 +1,25 @@
 package com.revature.services;
-import java.util.ArrayList;
-import java.util.List;
 import com.revature.criteria.GraphedCriteriaResult;
 import com.revature.dao.AssociateDao;
 import com.revature.daoimpl.AssociateDaoImpl;
 import com.revature.entity.TfAssociate;
-import com.revature.entity.TfClient;
 import com.revature.entity.TfUser;
 import com.revature.utils.LogUtil;
 import com.revature.utils.PasswordStorage;
 import com.revature.utils.PasswordStorage.CannotPerformOperationException;
+import java.util.List;
 
 /** @author Adam L. 
  * @version v6.18.06.13 */
 public class AssociateService 
 {	
 	private AssociateDao dao;
-	
-	// public so it can be used for testing 
-	public AssociateService() {dao = new AssociateDaoImpl();};
-	public AssociateService(AssociateDao dao) {this.dao = dao;};
 
-	/** @author Adam L. 
+	public AssociateService() {dao = new AssociateDaoImpl();}// public so it can be used for testing
+
+    public AssociateService(AssociateDao dao) {this.dao = dao;}
+
+    /** @author Adam L.
 	 * <p>Gets the associate given by their associate Id.</p>
 	 * @version v6.18.06.13 */
 	public TfAssociate getAssociate(int associateid) { return dao.getAssociate(associateid); }
