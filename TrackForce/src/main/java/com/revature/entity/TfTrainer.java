@@ -119,40 +119,4 @@ public class TfTrainer implements Serializable
 	 * argument; {@code false} otherwise. */
 	@Override
 	public boolean equals(Object obj) { return super.equals(obj); }
-
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		TfTrainer other = (TfTrainer) obj;
-//		if (coTrainer == null) {
-//			if (other.coTrainer != null)
-//				return false;
-//		} else if (!coTrainer.equals(other.coTrainer))
-//			return false;
-//		if (firstName == null) {
-//			if (other.firstName != null)
-//				return false;
-//		} else if (!firstName.equals(other.firstName))
-//			return false;
-//		if (id != other.id)
-//			return false;
-//		if (lastName == null) {
-//			if (other.lastName != null)
-//				return false;
-//		} else if (!lastName.equals(other.lastName))
-//			return false;
-//		if (primary == null) {
-//			if (other.primary != null)
-//				return false;
-//		} else if (!primary.equals(other.primary))
-//			return false;
-//		if (user == null) {
-//            return other.user == null;
-//		} else return user.equals(other.user);
-//    }
 }

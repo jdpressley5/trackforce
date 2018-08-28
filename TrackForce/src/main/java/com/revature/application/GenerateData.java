@@ -17,6 +17,7 @@ class GenerateData {
         }
         return salt.toString();
     }
+	
 	public static int getRandomInt(int min, int max)
     { return ThreadLocalRandom.current().nextInt(min, max + 1); }
 }

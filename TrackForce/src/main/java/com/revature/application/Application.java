@@ -1,7 +1,4 @@
 package com.revature.application;
-import com.revature.entity.TfAssociate;
-import com.revature.entity.TfRole;
-import com.revature.entity.TfUser;
 import com.revature.services.*;
 
 /** @author Adam L.
@@ -23,24 +20,21 @@ public class Application
 	static UserService userService = new UserService();
 	static MarketingStatusService marketingStatusService = new MarketingStatusService();
 
-	public static void main(String[] args) {
-		
-		TfRole role = userService.getRole(1);
-
-		TfUser user = new TfUser();
-		user.setIsApproved(1);
-		user.setPassword("password");
-		user.setUsername("TestUsername");
-		user.setTfRole(role);
-		user.setRole(1);
-		
-		TfAssociate associate = new TfAssociate();
-		associate.setFirstName("RestAssured");
-		associate.setLastName("Associate");
-		associate.setUser(user);
-		System.out.println(associateService.createAssociate(associate));
-		
-	}//end main
+	public static void main(String[] args) { }
+//		TfRole role = userService.getRole(1);
+//
+//		TfUser user = new TfUser();
+//		user.setIsApproved(1);
+//		user.setPassword("password");
+//		user.setUsername("TestUsername");
+//		user.setTfRole(role);
+//		user.setRole(1);
+//
+//		TfAssociate associate = new TfAssociate();
+//		associate.setFirstName("RestAssured");
+//		associate.setLastName("Associate");
+//		associate.setUser(user);
+//		System.out.println(associateService.createAssociate(associate));}
 //		TfUser u = new TfUser();
 //		u.setRole(5);
 //		u.setUsername("AssociateTest");

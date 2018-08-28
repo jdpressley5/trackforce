@@ -20,10 +20,6 @@ public class CurriculumService{
 	 * @version v6.18.06.13 */
 	public List<TfCurriculum> getAllCurriculums(){ return dao.getAllCurriculums(); }
 
-
 	/** Generates statistics for the expanded view of the home page unmapped chart */
 	public List<GraphedCriteriaResult> getUnmappedInfo(int statusId) { return dao.getUnmapped(statusId); }
-
-//	public List<GraphedCriteriaResult> getAssociateCountByCurriculum(Timestamp timestamp, Timestamp timestamp2)
-// { return dao.getAssociateCountByCurriculum(timestamp, timestamp2); }
 }

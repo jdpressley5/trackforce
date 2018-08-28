@@ -1,7 +1,7 @@
 package com.revature.dao;
-import java.util.List;
 import com.revature.entity.TfClient;
 import com.revature.entity.TfEndClient;
+import java.util.List;
 
 public interface ClientDao {
 	List<TfClient> getAllTfClients();

@@ -6,7 +6,8 @@ import java.util.List;
 
 /** @author Adam L. 
  * @version v6.18.06.13 */
-public class BatchService {
+public class BatchService
+{
 	private BatchDao dao;
 
 	public BatchService() { dao = new BatchDaoImpl(); }// public so it can be used for testing

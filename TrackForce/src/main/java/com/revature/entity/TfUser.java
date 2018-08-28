@@ -101,46 +101,6 @@ public class TfUser implements java.io.Serializable
 	@Override
 	public boolean equals(Object obj) { return super.equals(obj); }
 
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj) {
-//			System.out.println(this.toString() + "and" + obj.toString());
-//			return true;}
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		TfUser other = (TfUser) obj;
-//		if (TfRole == null) {
-//			if (other.TfRole != null)
-//				return false;
-//		} else if (!TfRole.equals(other.TfRole))
-//			return false;
-//		if (id != other.id)
-//			return false;
-//		if (isApproved != other.isApproved)
-//			return false;
-//		if (password == null) {
-//			if (other.password != null)
-//				return false;
-//		} else if (!password.equals(other.password))
-//			return false;
-//		if (!Objects.equals(role, other.role))
-//			return false;
-//		if (token == null) {
-//			if (other.token != null)
-//				return false;
-//		} else if (!token.equals(other.token))
-//			return false;
-//		if (username == null) {
-//			if (other.username != null)
-//				return false;
-//		} else if (!username.equals(other.username))
-//			return false;
-//		System.out.println("You Passed!");
-//		return true;
-//	}
-
 	@Override
 	public String toString() {
 		return "TfUser [id=" + id + ", username=" + username + ", password=" + password + ", isApproved=" + isApproved

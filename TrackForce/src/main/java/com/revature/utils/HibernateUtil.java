@@ -14,25 +14,30 @@ import static com.revature.utils.LogUtil.logger;
  * @version v6.18.06.13 */
 public class HibernateUtil {
 
+	private static Sessional<Boolean> dbSave = (Session session, Object... args) -> {
+		session.save(args[0]);
+		return true;
+	};
+	
+	public static boolean saveToDB(Object o) { return runHibernateTransaction(dbSave, o); }
+
+	public static <T> boolean saveToDB(List<T> o) { return multiTransaction(dbSave, o); }
+
+	private static Sessional<Boolean> detachedUpdate = (Session session, Object... args) -> {
+		session.update(args[0]);
+		return true;
+	};
+	
 	private static ThreadUtil threadUtil = new ThreadUtil();
 	
 	private HibernateUtil() { }
 
 	private static SessionFactory sessionFactory = buildSessionFactory();
 
-	private static void addShutdown() {
-//		Runtime.getRuntime().addShutdownHook(new Thread() {
-//			@Override
-//			public void run() {
-//				shutdown();
-//			}
-//		});
+	private static void addShutdown() 
+	{ Runtime.getRuntime().addShutdownHook(new Thread(HibernateUtil::shutdown)); }
 
-		//JAVA 8 intellisense simplification (Untested) -Josh Pressley 1807
-		Runtime.getRuntime().addShutdownHook(new Thread(HibernateUtil::shutdown));
-	}
-
-	private static SessionFactory buildSessionFactory() {
+	public static SessionFactory buildSessionFactory() {
 		try {
 			Configuration cfg = new Configuration();
 			cfg.setProperty("hibernate.connection.url", System.getenv("TRACKFORCE_DB_URL"));
@@ -57,7 +62,7 @@ public class HibernateUtil {
 		}
 	}
 
-	private static void rollbackTransaction(Transaction transaction) {
+	public static void rollbackTransaction(Transaction transaction) {
 		if (transaction != null) {
 			transaction.rollback();
 			logger.warn("Transaction rolled back");
@@ -130,24 +135,4 @@ public class HibernateUtil {
 		};
 		return threadUtil.submitCallable(caller);
 	}
-
-	private static Sessional<Boolean> dbSave = (Session session, Object... args) -> {
-		session.save(args[0]);
-		return true;
-	};
-
-	public static boolean saveToDB(Object o) { return runHibernateTransaction(dbSave, o); }
-
-	public static <T> boolean saveToDB(List<T> o) { return multiTransaction(dbSave, o); }
-
-	private static Sessional<Boolean> detachedUpdate = (Session session, Object... args) -> {
-		session.update(args[0]);
-		return true;
-	};
-
-	//UNUSED??
-	public static <T> boolean updateDetached(T det) { return runHibernateTransaction(detachedUpdate, det); }
-
-	//UNUSED??
-	public static <T> boolean updateDetached(List<T> det) { return multiTransaction(detachedUpdate, det); }
 }

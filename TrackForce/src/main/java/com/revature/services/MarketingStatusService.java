@@ -9,6 +9,7 @@ public class MarketingStatusService {
 
 	public MarketingStatusService(){}
 
+	//UNUSED??
 	public List<TfMarketingStatus> getAllMarketingStatuses() { return dao.getAllMarketingStatuses(); }
 
 	public TfMarketingStatus getMarketingStatusById(int id) { return dao.getMarketingStatusById(id); }

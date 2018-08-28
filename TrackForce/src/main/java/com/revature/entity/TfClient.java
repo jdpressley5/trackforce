@@ -101,44 +101,6 @@ public class TfClient implements java.io.Serializable
 	@Override
 	public boolean equals(Object obj) { return super.equals(obj); }
 
-	//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		TfClient other = (TfClient) obj;
-//		if (associate == null) {
-//			if (other.associate != null)
-//				return false;
-//		} else if (!associate.equals(other.associate)) {
-//			return false;
-//		}
-//		if (interview == null) {
-//			if (other.interview != null)
-//				return false;
-//		} else if (!interview.equals(other.interview)) {
-//			return false;
-//		}
-//		if (placement == null) {
-//			if (other.placement != null)
-//				return false;
-//		} else if (!placement.equals(other.placement)) {
-//			return false;
-//		}
-//		if (id == null) {
-//			if (other.id != null)
-//				return false;
-//		} else if (!id.equals(other.id)) {
-//			return false;
-//		}
-//		if (name == null) {
-//            return other.name == null;
-//		} else return name.equals(other.name);
-//    }
-
 	@Override
 	public String toString() {
 		return "TfClient [id=" + id + ", name=" + name + "]";

@@ -12,6 +12,7 @@ public class MarketingStatusDaoImpl implements MarketingStatusDao
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 		session.createQuery("from TfMarketingStatus", TfMarketingStatus.class).getResultList());
 	}
+
 	@Override
 	public TfMarketingStatus getMarketingStatusById(int id) {
 		return HibernateUtil.runHibernate((Session session, Object... args) ->

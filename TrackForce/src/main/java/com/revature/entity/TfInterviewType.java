@@ -75,30 +75,6 @@ public class TfInterviewType implements java.io.Serializable
 	@Override
 	public boolean equals(Object obj) { return super.equals(obj); }
 
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		TfInterviewType other = (TfInterviewType) obj;
-//		if (id == null) {
-//			if (other.id != null)
-//				return false;
-//		} else if (!id.equals(other.id))
-//			return false;
-//		if (interviews == null) {
-//			if (other.interviews != null)
-//				return false;
-//		} else if (!interviews.equals(other.interviews))
-//			return false;
-//		if (name == null) {
-//            return other.name == null;
-//		} else return name.equals(other.name);
-//    }
-
 	@Override
 	public String toString() { return "TfInterviewType [id=" + id + ", name=" + name + "]"; }	
 }
