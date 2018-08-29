@@ -5,7 +5,12 @@ import com.revature.services.JWTService;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -34,11 +39,15 @@ public class CurriculumResource
 		List<TfCurriculum> curriculum = curriculumService.getAllCurriculums();
 		Claims payload = JWTService.processToken(token);
 		if (payload == null)  // invalid token
+		{
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else if (payload.getId().equals("5"))  // wrong roleid
-			return Response.status(Status.FORBIDDEN).build();
-		else
-			status = curriculum == null || curriculum.isEmpty() ? Status.NO_CONTENT : Status.OK;
+		} else {
+			if (payload.getId().equals("5")) {  // wrong roleid
+				return Response.status(Status.FORBIDDEN).build();
+			} else {
+				status = curriculum == null || curriculum.isEmpty() ? Status.NO_CONTENT : Status.OK;
+			}
+		}
 		return Response.status(status).entity(curriculum).build();
 	}
 
@@ -51,10 +60,14 @@ public class CurriculumResource
 		Claims payload = JWTService.processToken(token);
 		
 		if (payload == null)  // invalid token
+		{
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else if (!(payload.getId().equals("1") || payload.getId().equals("3") || payload.getId().equals("4")))
-			return Response.status(Status.FORBIDDEN).build(); // wrong roleid
-		else
-			return Response.ok(curriculumService.getUnmappedInfo(statusId)).build();
+		} else {
+			if (!(payload.getId().equals("1") || payload.getId().equals("3") || payload.getId().equals("4"))) {
+				return Response.status(Status.FORBIDDEN).build(); // wrong roleid
+			} else {
+				return Response.ok(curriculumService.getUnmappedInfo(statusId)).build();
+			}
+		}
 	}
 }

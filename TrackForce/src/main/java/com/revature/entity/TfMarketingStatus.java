@@ -2,7 +2,12 @@ package com.revature.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
@@ -33,7 +38,8 @@ public class TfMarketingStatus implements java.io.Serializable
 
 	//---------------------
 
-	public TfMarketingStatus() { super(); }
+	public TfMarketingStatus()
+	{ super(); }
 
 	public TfMarketingStatus(Integer id, String name, Set<TfAssociate> associates) {
 		super();
@@ -44,21 +50,28 @@ public class TfMarketingStatus implements java.io.Serializable
 
 	//---------------------
 
-	public Integer getId() { return id; }
+	public Integer getId()
+	{ return id; }
 
-	public void setId(Integer id) { this.id = id; }
+	public void setId(Integer id)
+	{ this.id = id; }
 
-	public String getName() { return name; }
+	public String getName()
+	{ return name; }
 
-	public void setName(String name) { this.name = name; }
+	public void setName(String name)
+	{ this.name = name; }
 
 	@JsonIgnore
-	public Set<TfAssociate> getAssociates() { return associates; }
+	public Set<TfAssociate> getAssociates()
+	{ return associates; }
 
 	@JsonIgnore
-	public void setAssociates(Set<TfAssociate> associates) { this.associates = associates; }
+	public void setAssociates(Set<TfAssociate> associates)
+	{ this.associates = associates; }
 
-	public static long getSerialversionuid() { return serialVersionUID; }
+	public static long getSerialversionuid()
+	{ return serialVersionUID; }
 
 	@Override
 	public int hashCode() {
@@ -74,7 +87,8 @@ public class TfMarketingStatus implements java.io.Serializable
 	 * @return {@code true} if this object is the same as the obj
 	 * argument; {@code false} otherwise. */
 	@Override
-	public boolean equals(Object obj) { return super.equals(obj); }
+	public boolean equals(Object obj)
+	{ return super.equals(obj); }
 
 	@Override
 	public String toString() 

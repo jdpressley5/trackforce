@@ -1,6 +1,13 @@
 package com.revature.services;
 import com.revature.entity.TfUser;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.json.JSONObject;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -23,6 +30,7 @@ public class JWTService {
 	
 	private static final String SECRET_KEY = getKey();
 
+	//UNUSED??
 	/** Validates a token
 	 * @return true if the token is valid, otherwise false
 	 * @throws IOException because of the use of connection pools that requires some files */
@@ -32,14 +40,18 @@ public class JWTService {
 		Claims claims = null;
 		boolean verified = false;
 
-		if (token != null)
+		if (token != null) {
 			claims = processToken(token);
-		if (claims != null)
+		}
+		if (claims != null) {
 			tokenUsername = claims.getSubject();
-		if (tokenUsername != null)
+		}
+		if (tokenUsername != null) {
 			tfUser = this.userService.getUser(tokenUsername);
-		if (tfUser != null) // makes sure the token is fresh and usernames are equal
+		}
+		if (tfUser != null) { // makes sure the token is fresh and usernames are equal
 			verified = (!isTokenExpired(token) && tfUser.getUsername().equals(tokenUsername));
+		}
 		return verified;
 	}
 
@@ -58,12 +70,13 @@ public class JWTService {
 	public static Claims processToken(String token) {
 		Claims payload = null;
 		try {
-			if (token == null)
+			if (token == null) {
 				throw new UnsupportedJwtException("token null");
+			}
 			payload = Jwts.parser().setSigningKey(getSecret()).parseClaimsJws(token).getBody();
 		} catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException |
 				IllegalArgumentException | NullPointerException e) {
-//			e.printStackTrace();
+			//e.printStackTrace();
 			logger.info("Invalid token.");
 		}
 		return payload;
@@ -75,8 +88,12 @@ public class JWTService {
 		Date expiration = null;
 		try {
 			final Claims claims = processToken(token);
-			if (claims != null) expiration = claims.getExpiration();
-		} catch (Exception e) { logger.error(e); }
+			if (claims != null) {
+				expiration = claims.getExpiration();
+			}
+		} catch (Exception e) {
+			logger.error(e);
+		}
 		return expiration;
 	}
 
@@ -85,7 +102,9 @@ public class JWTService {
 	private static String getKey() {
 		String key = System.getenv("KEY");
 		// in case, someone forgot to set their system environments this will be the default key
-		if (key == null) key = "trackforcekey";
+		if (key == null) {
+			key = "trackforcekey";
+		}
 		return key;
 	}
 
@@ -97,9 +116,8 @@ public class JWTService {
 
 	/** Creates the expiration date for the JWT
 	 * @return expiration Date object */
-	private static Date generateExpirationDate()
-	{ //expiration time in minutes
-		Long EXPIRATION = 30L;
+	private static Date generateExpirationDate() {
+		Long EXPIRATION = 30L; //expiration time in minutes
 		return new Date(System.currentTimeMillis() + EXPIRATION * 1000 * 60); }
 
 	/** Check to see if token is expired
@@ -115,10 +133,15 @@ public class JWTService {
 	 * exception when attempting to decode a web token.
 	 * @return expiration time of token in milliseconds */
 	private static long getExpiredTokenTime(String token) {
-		if(token == null) return -1L;
+		if(token == null) {
+			return -1L;
+		}
 		Base64.Decoder decoder = Base64.getUrlDecoder();
 		String[] parts = token.split("\\."); // Splitting header, payload and signature
-		if(parts.length < 2) return -1;
+
+		if(parts.length < 2) {
+			return -1;
+		}
 		JSONObject payload = new JSONObject(new String(decoder.decode(parts[1])));
 		long exp = payload.getLong("exp");
 		return exp*1000;

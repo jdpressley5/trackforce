@@ -2,7 +2,18 @@ package com.revature.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.*;
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -50,36 +61,50 @@ public class TfUser implements java.io.Serializable
     @Transient
     private Integer role;
 
-	public int getId() { return id; }
+	public int getId()
+	{ return id; }
 
-	public void setId(int id) { this.id = id; }
+	public void setId(int id)
+	{ this.id = id; }
 
 	@JsonIgnore
-	public TfRole getTfRole() { return TfRole; }
+	public TfRole getTfRole()
+	{ return TfRole; }
 
 	@JsonIgnore
-	public void setTfRole(TfRole tfRole) { TfRole = tfRole; }
+	public void setTfRole(TfRole tfRole)
+	{ TfRole = tfRole; }
 
-	public String getUsername() { return username; }
+	public String getUsername()
+	{ return username; }
 
-	public void setUsername(String username) { this.username = username; }
+	public void setUsername(String username)
+	{ this.username = username; }
 	
 	@JsonIgnore
-	public String getPassword() { return password; }
+	public String getPassword()
+	{ return password; }
 
-	public void setPassword(String password) { this.password = password; }
+	public void setPassword(String password)
+	{ this.password = password; }
 
-	public int getIsApproved() { return isApproved; }
+	public int getIsApproved()
+	{ return isApproved; }
 
-	public void setIsApproved(int isApproved) { this.isApproved = isApproved; }
+	public void setIsApproved(int isApproved)
+	{ this.isApproved = isApproved; }
 
-	public String getToken() { return token; }
+	public String getToken()
+	{ return token; }
 
-	public void setToken(String token) { this.token = token; }
+	public void setToken(String token)
+	{ this.token = token; }
 
-	public Integer getRole() { return role; }
+	public Integer getRole()
+	{ return role; }
 
-	public void setRole(Integer role) { this.role = role; }
+	public void setRole(Integer role)
+	{ this.role = role; }
 
 	@Override
 	public int hashCode() {
@@ -99,11 +124,12 @@ public class TfUser implements java.io.Serializable
 	 * @return {@code true} if this object is the same as the obj
 	 * argument; {@code false} otherwise. */
 	@Override
-	public boolean equals(Object obj) { return super.equals(obj); }
+	public boolean equals(Object obj)
+	{ return super.equals(obj); }
 
 	@Override
 	public String toString() {
-		return "TfUser [id=" + id + ", username=" + username + ", password=" + password + ", isApproved=" + isApproved
-				+ ", token=" + token + ", role=" + role + "]";
+		return "TfUser [id=" + id + ", username=" + username + ", password=" + password +
+				", isApproved=" + isApproved + ", token=" + token + ", role=" + role + "]";
 	}
 }

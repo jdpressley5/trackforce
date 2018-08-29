@@ -1,7 +1,8 @@
 package com.revature.dao;
-import java.util.List;
 import com.revature.criteria.GraphedCriteriaResult;
 import com.revature.entity.TfAssociate;
+
+import java.util.List;
 
 public interface AssociateDao 
 {
@@ -22,7 +23,7 @@ public interface AssociateDao
 	Object getCountMappedConfirmed();
 	boolean updateAssociatePartial(TfAssociate associate);
 	boolean approveAssociate(int associateId);
-	boolean approveAssociates(List<Integer> associateIds);
+	boolean approveAssociates(List<Integer> associateIds); //NEVER CALLED
 	boolean createAssociate(TfAssociate newassociate);
 	TfAssociate getAssociateByUserId(int id);
 	List<GraphedCriteriaResult> getMapped(int id);

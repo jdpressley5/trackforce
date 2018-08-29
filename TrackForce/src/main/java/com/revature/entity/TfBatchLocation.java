@@ -2,7 +2,12 @@ package com.revature.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
@@ -50,19 +55,25 @@ public class TfBatchLocation implements java.io.Serializable
 
 	//----------------------------
 	
-	public BigDecimal getTfBatchLocationId() { return this.id;}
+	public BigDecimal getTfBatchLocationId()
+	{ return this.id;}
 
-	public void setTfBatchLocationId(BigDecimal tfBatchLocationId) { this.id = tfBatchLocationId; }
+	public void setTfBatchLocationId(BigDecimal tfBatchLocationId)
+	{ this.id = tfBatchLocationId; }
 
-	public String getTfBatchLocationName() { return this.name; }
+	public String getTfBatchLocationName()
+	{ return this.name; }
 
-	public void setTfBatchLocationName(String tfBatchLocationName) { this.name = tfBatchLocationName; }
+	public void setTfBatchLocationName(String tfBatchLocationName)
+	{ this.name = tfBatchLocationName; }
 
 	@JsonIgnore
-	public Set<TfBatch> getTfBatches() { return this.batches; }
+	public Set<TfBatch> getTfBatches()
+	{ return this.batches; }
 
 	@JsonIgnore
-	public void setTfBatches(Set<TfBatch> tfBatches) { this.batches = tfBatches; }
+	public void setTfBatches(Set<TfBatch> tfBatches)
+	{ this.batches = tfBatches; }
 
 	@Override
 	public int hashCode() {
@@ -78,7 +89,8 @@ public class TfBatchLocation implements java.io.Serializable
 	 * @return {@code true} if this object is the same as the obj
 	 * argument; {@code false} otherwise. */
 	@Override
-	public boolean equals(Object obj) { return super.equals(obj); }
+	public boolean equals(Object obj)
+	{ return super.equals(obj); }
 
 	@Override
 	public String toString()

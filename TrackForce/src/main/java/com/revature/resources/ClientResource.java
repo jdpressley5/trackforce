@@ -6,7 +6,12 @@ import com.revature.services.JWTService;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -37,10 +42,11 @@ public class ClientResource
 		List<TfClient> clients = clientService.getAllTfClients();
 		Claims payload = JWTService.processToken(token);
 
-		if (payload == null) // invalid token
+		if (payload == null) {// invalid token
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else
+		} else {
 			status = clients == null || clients.isEmpty() ? Status.NO_CONTENT : Status.OK;
+		}
 		return Response.status(status).entity(clients).build();
 	}
 
@@ -48,8 +54,9 @@ public class ClientResource
 	@Path("/associates/get/{client_id}")
 	public Response getMappedAssociatesByClientId(@PathParam("client_id") Long client_id) {
 		Long[] response = new Long[4];
-		for (int i = 0; i < response.length; i++)
+		for (int i = 0; i < response.length; i++) {
 			response[i] = associateService.getMappedAssociateCountByClientId(client_id, i + 1);
+		}
 		return Response.status(200).entity(response).build();
 	}
 	

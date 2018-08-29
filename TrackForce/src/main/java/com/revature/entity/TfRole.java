@@ -2,7 +2,12 @@ package com.revature.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
@@ -33,7 +38,8 @@ public class TfRole implements java.io.Serializable
 
 	//----------------------
 
-	public TfRole() { super(); }
+	public TfRole()
+	{ super(); }
 
 	public TfRole(Integer tfRoleId) { 
 		super();
@@ -48,19 +54,25 @@ public class TfRole implements java.io.Serializable
 
 	//----------------------
 
-	public Integer getTfRoleId() { return this.id; }
+	public Integer getTfRoleId()
+	{ return this.id; }
 
-	public void setTfRoleId(Integer roleId) { this.id = roleId; }
+	public void setTfRoleId(Integer roleId)
+	{ this.id = roleId; }
 	
-	public String getTfRoleName() { return this.name; }
+	public String getTfRoleName()
+	{ return this.name; }
 
-	public void setTfRoleName(String tfRoleName) { this.name = tfRoleName; }
+	public void setTfRoleName(String tfRoleName)
+	{ this.name = tfRoleName; }
 
 	@JsonIgnore
-	public Set<TfUser> getTfUsers() { return this.users; }
+	public Set<TfUser> getTfUsers()
+	{ return this.users; }
 
 	@JsonIgnore
-	public void setTfUsers(Set<TfUser> users) { this.users = users;	}
+	public void setTfUsers(Set<TfUser> users)
+	{ this.users = users;	}
 
 	@Override
 	public int hashCode() {
@@ -76,10 +88,10 @@ public class TfRole implements java.io.Serializable
 	 * @return {@code true} if this object is the same as the obj
 	 * argument; {@code false} otherwise. */
 	@Override
-	public boolean equals(Object obj) { return super.equals(obj); }
+	public boolean equals(Object obj)
+	{ return super.equals(obj); }
 
 	@Override
-	public String toString() {
-		return "TfRole [tfRoleId=" + id + ", tfRoleName=" + name + "]";
-	}
+	public String toString()
+	{ return "TfRole [tfRoleId=" + id + ", tfRoleName=" + name + "]"; }
 }

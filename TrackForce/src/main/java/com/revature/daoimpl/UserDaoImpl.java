@@ -22,9 +22,8 @@ public class UserDaoImpl implements UserDao
 	}
     
 	@Override
-	public boolean insertUser(TfUser newUser) {
-		return HibernateUtil.saveToDB(newUser);
-	}
+	public boolean insertUser(TfUser newUser)
+	{ return HibernateUtil.saveToDB(newUser); }
 
 	@Override
 	public TfRole getRole(int roleId) {

@@ -1,6 +1,9 @@
 package com.revature.resources;
 import com.revature.entity.TfAssociate;
-import com.revature.services.*;
+import com.revature.services.AssociateService;
+import com.revature.services.ClientService;
+import com.revature.services.JWTService;
+import com.revature.services.MarketingStatusService;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -8,7 +11,15 @@ import io.swagger.annotations.ApiParam;
 import org.hibernate.HibernateException;
 import org.json.JSONObject;
 import javax.persistence.NoResultException;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -48,9 +59,9 @@ public class AssociateResource
 		List<TfAssociate> associates = associateService.getAllAssociates();
 		Claims payload = JWTService.processToken(token);
 
-		if (payload == null || payload.getId().equals("5"))
+		if (payload == null || payload.getId().equals("5")) {
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else {
+		} else {
 //			if (payload.getId().equals("2")) {
 //				List<TfAssociate> assoc = new ArrayList<TfAssociate>();
 //				for (TfAssociate a : associates) {
@@ -82,8 +93,9 @@ public class AssociateResource
 	public Response getCountAssociates(@HeaderParam("Authorization") String token) {
 		logger.info("getCountAssociates...");
 		Claims payload = JWTService.processToken(token);
-		if (payload == null)
+		if (payload == null) {
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
+		}
 		Status status = Status.OK;
 		JSONObject associateCounts = new JSONObject();
 		List<Integer> counts = new ArrayList<>();
@@ -116,11 +128,12 @@ public class AssociateResource
 		Status status;
 		Claims payload = JWTService.processToken(token);
 		TfAssociate associateInfo;
-		if (payload == null)
+		if (payload == null) {
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else {
-			try {  associateInfo = associateService.getAssociateByUserId(id); }
-			catch (NoResultException nre) {
+		} else {
+			try {
+				associateInfo = associateService.getAssociateByUserId(id);
+			} catch (NoResultException nre) {
 				logger.info("No associate found...");
 				return Response.status(Status.NO_CONTENT).build();
 			}
@@ -143,11 +156,12 @@ public class AssociateResource
 		Status status;
 		Claims payload = JWTService.processToken(token);	
 		TfAssociate associateInfo;
- 		if (payload == null)
+ 		if (payload == null) {
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else {	
-			try {  associateInfo = associateService.getAssociate(id); }
-			catch (NoResultException nre) {
+		} else {
+			try {
+				associateInfo = associateService.getAssociate(id);
+			}catch (NoResultException nre) {
 				logger.info("No associate found...");	
 				return Response.status(Status.NO_CONTENT).build();	
 			}	
@@ -181,18 +195,21 @@ public class AssociateResource
 		TfAssociate toBeUpdated;
 		for (int associateId : ids) {
 			toBeUpdated = associateService.getAssociate(associateId);
-			if (marketingStatusId != 0)
+			if (marketingStatusId != 0) {
 				toBeUpdated.setMarketingStatus(marketingStatusService.getMarketingStatusById(marketingStatusId));
-			if (clientId != 0)
+			}
+			if (clientId != 0) {
 				toBeUpdated.setClient(clientService.getClient(clientId));
-			if (isApproved >= 0)
+			}
+			if (isApproved >= 0) {
 				toBeUpdated.getUser().setIsApproved(isApproved);
+			}
 			associates.add(toBeUpdated);
 		}
 
-		if (payload == null || payload.getId().equals("2") || payload.getId().equals("5"))
+		if (payload == null || payload.getId().equals("2") || payload.getId().equals("5")) {
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else {
+		} else {
 			// marketing status & client id are given as query parameters, ids sent in body
 			AssociateService as = new AssociateService();
 			return as.updateAssociates(associates) ? Response.ok().build() : Response.serverError().build();
@@ -214,12 +231,13 @@ public class AssociateResource
 		Claims payload = JWTService.processToken(token);
 		System.out.println(id);
 
-		if (payload == null)
+		if (payload == null) {
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else if (payload.getId().equals("5"))
+		} else if (payload.getId().equals("5")) {
 			status = associateService.updateAssociatePartial(associate) ? Status.OK : Status.INTERNAL_SERVER_ERROR;
-		else
+		} else {
 			status = associateService.updateAssociate(associate) ? Status.OK : Status.INTERNAL_SERVER_ERROR;
+		}
 		return Response.status(status).build();
 	}
 

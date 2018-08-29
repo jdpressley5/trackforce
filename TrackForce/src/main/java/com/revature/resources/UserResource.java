@@ -1,6 +1,10 @@
 package com.revature.resources;
 import com.google.gson.JsonObject;
-import com.revature.entity.*;
+import com.revature.entity.TfAssociate;
+import com.revature.entity.TfRole;
+import com.revature.entity.TfTrainer;
+import com.revature.entity.TfUser;
+import com.revature.entity.TfUserAndCreatorRoleContainer;
 import com.revature.services.AssociateService;
 import com.revature.services.JWTService;
 import com.revature.services.TrainerService;
@@ -11,7 +15,12 @@ import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.persistence.NoResultException;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -45,10 +54,11 @@ public class UserResource
 		int creatorRole = container.getCreatorRole();
 		logger.info("creating new user..." + newUser);
 
-		if(creatorRole == 1)// any user created by an admin is approved
+		if(creatorRole == 1) { // any user created by an admin is approved
 			newUser.setIsApproved(1);
-		else if (creatorRole > 4)
+		} else if (creatorRole > 4) {
 			return Response.status(Status.EXPECTATION_FAILED).build();
+		}
 
 		boolean works = true;// get the role being passed in
 		int role = newUser.getRole();
@@ -56,7 +66,7 @@ public class UserResource
 
 		switch (role) {
 			case 1:
-				if (userService.getUser(newUser.getUsername()) == null){
+				if (userService.getUser(newUser.getUsername()) == null) {
 					tfrole = new TfRole(1, "Admin");
 					newUser.setTfRole(tfrole);
 					works = userService.insertUser(newUser);
@@ -109,10 +119,11 @@ public class UserResource
 				logger.warn("Role is zero");
 				break;
 		}//end switch
-		if (works)
+		if (works) {
 			return Response.status(Status.CREATED).build();
-		else
+		} else {
 			return Response.status(Status.EXPECTATION_FAILED).build();
+		}
 	}
 	
 	@Path("/checkUsername")
@@ -122,10 +133,11 @@ public class UserResource
 	public Response checkUsername(String username) {
 		final String varName = "result";
 		JsonObject json = new JsonObject();
-		if(userService.getUser(username) == null)
+		if(userService.getUser(username) == null) {
 			json.addProperty(varName, "true");
-		else
+		} else {
 			json.addProperty(varName, "false");
+		}
 		String message = json.toString();
 		return Response.ok(message,MediaType.TEXT_PLAIN).build();
 	}
@@ -148,9 +160,13 @@ public class UserResource
 			logger.info("creating new associate..." + newAssociate);
 			works = associateService.createAssociate(newAssociate);
 
-			if (works) return Response.status(Status.CREATED).build();
+			if (works) {
+				return Response.status(Status.CREATED).build();
+			}
 			return Response.status(Status.EXPECTATION_FAILED).build();
-		} else return Response.status(Status.FORBIDDEN).build();
+		} else {
+			return Response.status(Status.FORBIDDEN).build();
+		}
 	}
 
 	/** @author Adam L.
@@ -172,9 +188,13 @@ public class UserResource
 			logger.info("creating new trainer..." + newTrainer);
 			works = trainerService.createTrainer(newTrainer);
 
-			if (works) return Response.status(Status.CREATED).build();
+			if (works) {
+				return Response.status(Status.CREATED).build();
+			}
 			return Response.status(Status.EXPECTATION_FAILED).build();
-		} else return Response.status(Status.FORBIDDEN).build();
+		} else {
+			return Response.status(Status.FORBIDDEN).build();
+		}
 	}
 
 	/** @author Adam L.
@@ -216,10 +236,11 @@ public class UserResource
 	public Response checkCredentials(@HeaderParam("Authorization") String token) {
 		logger.info("checkCredentials()...");
 		Claims payload = JWTService.processToken(token);
-		if (payload == null) 
+		if (payload == null) {
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else
+		} else {
 			return Response.status(Status.OK).build();
+		}
 	}
 	
 	@Path("/init")

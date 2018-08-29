@@ -20,15 +20,22 @@ public class TfUserAndCreatorRoleContainer implements Serializable
 		this.creatorRole = creatorRole;
 	}
 
-	public TfUserAndCreatorRoleContainer() { super(); } //UNUSED??
+	//UNUSED??
+	public TfUserAndCreatorRoleContainer()
+	{ super(); }
 	
-	public TfUser getUser() { return user; }
+	public TfUser getUser()
+	{ return user; }
 
-	public void setUser(TfUser user) { this.user = user; }
+	public void setUser(TfUser user)
+	{ this.user = user; }
 
-	public int getCreatorRole() { return creatorRole; }
+	public int getCreatorRole()
+	{ return creatorRole; }
 
-	public void setCreatorRole(int creatorRole) { this.creatorRole = creatorRole; } //UNUSED??
+	//UNUSED??
+	public void setCreatorRole(int creatorRole)
+	{ this.creatorRole = creatorRole; }
 	
 	@Override
 	public String toString() 

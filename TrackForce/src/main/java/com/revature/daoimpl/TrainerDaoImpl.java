@@ -28,9 +28,8 @@ public class TrainerDaoImpl implements TrainerDao
 	}
 
 	@Override
-	public boolean createTrainer(TfTrainer trainer) {
-		return HibernateUtil.saveToDB(trainer);
-	}
+	public boolean createTrainer(TfTrainer trainer)
+	{ return HibernateUtil.saveToDB(trainer); }
 
 	@Override
 	public boolean updateTrainer(TfTrainer trainer) {

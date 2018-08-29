@@ -2,7 +2,12 @@ package com.revature.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
@@ -57,31 +62,43 @@ public class TfClient implements java.io.Serializable
 
 	//----------------------------
 
-	public Integer getId() { return id; }
+	public Integer getId()
+	{ return id; }
 
-	public void setId(Integer id) { this.id = id; }
+	public void setId(Integer id)
+	{ this.id = id; }
 
-	public String getName() { return name; }
+	public String getName()
+	{ return name; }
 
-	public void setName(String name) { this.name = name; }
+	public void setName(String name)
+	{ this.name = name; }
+
+	//UNUSED
+	@JsonIgnore
+	public Set<TfPlacement> getPlacement()
+	{ return placement; }
+
+	//UNUSED
+	@JsonIgnore
+	public void setPlacement(Set<TfPlacement> placement)
+	{ this.placement = placement; }
 
 	@JsonIgnore
-	public Set<TfPlacement> getPlacement() { return placement; }
+	public Set<TfAssociate> getAssociate()
+	{ return associate; }
 
 	@JsonIgnore
-	public void setPlacement(Set<TfPlacement> placement) { this.placement = placement; }
+	public void setAssociate(Set<TfAssociate> associate)
+	{ this.associate = associate; }
 
 	@JsonIgnore
-	public Set<TfAssociate> getAssociate() { return associate; }
+	public Set<TfInterview> getInterview()
+	{ return interview; }
 
 	@JsonIgnore
-	public void setAssociate(Set<TfAssociate> associate) { this.associate = associate; }
-
-	@JsonIgnore
-	public Set<TfInterview> getInterview() { return interview; }
-
-	@JsonIgnore
-	public void setInterview(Set<TfInterview> interview) { this.interview = interview; }
+	public void setInterview(Set<TfInterview> interview)
+	{ this.interview = interview; }
 
 	@Override
 	public int hashCode() {
@@ -99,10 +116,10 @@ public class TfClient implements java.io.Serializable
 	 * @return {@code true} if this object is the same as the obj
 	 * argument; {@code false} otherwise. */
 	@Override
-	public boolean equals(Object obj) { return super.equals(obj); }
+	public boolean equals(Object obj)
+	{ return super.equals(obj); }
 
 	@Override
-	public String toString() {
-		return "TfClient [id=" + id + ", name=" + name + "]";
-	}
+	public String toString()
+	{ return "TfClient [id=" + id + ", name=" + name + "]"; }
 }

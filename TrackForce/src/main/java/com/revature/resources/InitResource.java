@@ -1,5 +1,5 @@
 package com.revature.resources;
-import com.revature.services.*;
+import com.revature.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.ws.rs.Consumes;
@@ -19,7 +19,8 @@ import javax.ws.rs.core.Response.Status;
 @Produces(MediaType.APPLICATION_JSON)
 public class InitResource
 {
-	// You're probably thinking, why would you ever do this? Why not just just make the methods all static in the service class?
+	// You're probably thinking, why would you ever do this? Why not just just make the
+	// methods all static in the service class?
 	// This is to allow for Mockito tests, which have problems with static methods
 	// - Adam 06.18.06.13
 	private UserService userService = new UserService();

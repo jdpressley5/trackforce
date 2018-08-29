@@ -18,8 +18,7 @@ public class ClientDaoImpl implements ClientDao
 	public List<TfClient> getFirstFiftyTfClients() {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
 				.createQuery("from TfClient order by tf_client_name ", TfClient.class)
-				.setMaxResults(50)
-				.getResultList());
+				.setMaxResults(50).getResultList());
 	}
 
 	@Override

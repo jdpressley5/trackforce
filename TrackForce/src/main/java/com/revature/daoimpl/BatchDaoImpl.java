@@ -87,8 +87,13 @@ public class BatchDaoImpl implements BatchDao
 					.setParameter("endDate", endDate.toString())
 					.getSingleResult();
 		}
-		catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
+		catch(HibernateException e) {
+			e.printStackTrace();
+		}
+		finally {
+			if ( session != null )
+				session.close();
+		}
 		return tacobell;
 	}
 }

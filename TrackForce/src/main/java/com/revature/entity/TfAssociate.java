@@ -2,7 +2,16 @@ package com.revature.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
@@ -105,60 +114,85 @@ public class TfAssociate implements java.io.Serializable
 	}
 
 	//UNUSED??
-	public String getStagingFeedback() { return stagingFeedback; }
+	public String getStagingFeedback()
+	{ return stagingFeedback; }
 
 	//UNUSED??
-	public void setStagingFeedback(String stagingFeedback) { this.stagingFeedback = stagingFeedback; }
+	public void setStagingFeedback(String stagingFeedback)
+	{ this.stagingFeedback = stagingFeedback; }
 
-	public Integer getId() { return id; }
+	public Integer getId()
+	{ return id; }
 
-	public void setId(Integer id) { this.id = id; }
+	public void setId(Integer id)
+	{ this.id = id; }
 
-	public TfUser getUser() { return user; }
+	public TfUser getUser()
+	{ return user; }
 
-	public void setUser(TfUser user) { this.user = user; }
+	public void setUser(TfUser user)
+	{ this.user = user; }
 
-	public TfBatch getBatch() { return batch; }
+	public TfBatch getBatch()
+	{ return batch; }
 
-	public void setBatch(TfBatch batch) { this.batch = batch; }
+	public void setBatch(TfBatch batch)
+	{ this.batch = batch; }
 
-	public TfMarketingStatus getMarketingStatus() { return marketingStatus; }
+	public TfMarketingStatus getMarketingStatus()
+	{ return marketingStatus; }
 
-	public void setMarketingStatus(TfMarketingStatus marketingStatus) { this.marketingStatus = marketingStatus; }
+	public void setMarketingStatus(TfMarketingStatus marketingStatus)
+	{ this.marketingStatus = marketingStatus; }
 
-	public TfClient getClient() { return client; }
+	public TfClient getClient()
+	{ return client; }
 
-	public void setClient(TfClient client) { this.client = client; }
+	public void setClient(TfClient client)
+	{ this.client = client; }
 
-	public TfEndClient getEndClient() { return endClient; }
+	public TfEndClient getEndClient()
+	{ return endClient; }
 
-	public void setEndClient(TfEndClient endClient) { this.endClient = endClient; }
+	public void setEndClient(TfEndClient endClient)
+	{ this.endClient = endClient; }
 
-	public String getFirstName() { return firstName; }
+	public String getFirstName()
+	{ return firstName; }
 
-	public void setFirstName(String firstName) { this.firstName = firstName; }
+	public void setFirstName(String firstName)
+	{ this.firstName = firstName; }
 
-	public String getLastName() { return lastName; }
+	public String getLastName()
+	{ return lastName; }
 
-	public void setLastName(String lastName) { this.lastName = lastName; }
+	public void setLastName(String lastName)
+	{ this.lastName = lastName; }
 
 	@JsonIgnore
-	public Set<TfInterview> getInterview() { return interview; }
+	public Set<TfInterview> getInterview()
+	{ return interview; }
 
 	@JsonIgnore
-	public void setInterview(Set<TfInterview> interview) { this.interview = interview; }
+	public void setInterview(Set<TfInterview> interview)
+	{ this.interview = interview; }
 
 	@JsonIgnore
-	public Set<TfPlacement> getPlacement() { return placement; }
+	public Set<TfPlacement> getPlacement()
+	{ return placement; }
 
 	@JsonIgnore
-	public void setPlacement(Set<TfPlacement> placement) { this.placement = placement; }
+	public void setPlacement(Set<TfPlacement> placement)
+	{ this.placement = placement; }
 
-	public Timestamp getClientStartDate() {	return clientStartDate; }
+	public Timestamp getClientStartDate()
+	{	return clientStartDate; }
 
-	public void setClientStartDate(Timestamp clientStartDate) {	this.clientStartDate = clientStartDate; }
+	public void setClientStartDate(Timestamp clientStartDate)
+	{	this.clientStartDate = clientStartDate; }
 
-	public static long getSerialversionuid() { return serialVersionUID; }
+	public static long getSerialversionuid()
+	{ return serialVersionUID; }
 
 	@Override
 	public String toString() {

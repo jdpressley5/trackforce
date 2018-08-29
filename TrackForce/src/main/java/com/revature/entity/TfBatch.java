@@ -2,7 +2,15 @@ package com.revature.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
@@ -84,47 +92,66 @@ public class TfBatch implements java.io.Serializable, Comparable<TfBatch>
 
 	//---------------------------------------------------
 
-	public Integer getId() { return id; }
+	public Integer getId()
+	{ return id; }
 
-	public void setId(Integer id) { this.id = id; }
+	public void setId(Integer id)
+	{ this.id = id; }
 
-	public TfBatchLocation getLocation() { return location; }
+	public TfBatchLocation getLocation()
+	{ return location; }
 
-	public void setLocation(TfBatchLocation location) { this.location = location; }
+	public void setLocation(TfBatchLocation location)
+	{ this.location = location; }
 
-	public TfCurriculum getCurriculumName() { return curriculumName; }
+	public TfCurriculum getCurriculumName()
+	{ return curriculumName; }
 
-	public void setCurriculumName(TfCurriculum curriculumName) { this.curriculumName = curriculumName; }
+	public void setCurriculumName(TfCurriculum curriculumName)
+	{ this.curriculumName = curriculumName; }
 
-	public String getBatchName() { return batchName; }
+	public String getBatchName()
+	{ return batchName; }
 
-	public void setBatchName(String batchName) { this.batchName = batchName; }
+	public void setBatchName(String batchName)
+	{ this.batchName = batchName; }
 
-	public Timestamp getStartDate() { return startDate; }
+	public Timestamp getStartDate()
+	{ return startDate; }
 
-	public void setStartDate(Timestamp startDate) { this.startDate = startDate; }
+	public void setStartDate(Timestamp startDate)
+	{ this.startDate = startDate; }
 
-	public Timestamp getEndDate() { return endDate; }
+	public Timestamp getEndDate()
+	{ return endDate; }
 
-	public void setEndDate(Timestamp endDate) { this.endDate = endDate; }
+	public void setEndDate(Timestamp endDate)
+	{ this.endDate = endDate; }
 
 	@JsonIgnore
-	public Set<TfAssociate> getAssociates() { return associates; }
+	public Set<TfAssociate> getAssociates()
+	{ return associates; }
 
 	@JsonIgnore
-	public void setAssociates(Set<TfAssociate> associates) { this.associates = associates; }
+	public void setAssociates(Set<TfAssociate> associates)
+	{ this.associates = associates; }
 
-	public TfTrainer getTrainer() { return trainer; }
+	public TfTrainer getTrainer()
+	{ return trainer; }
 
-	public void setTrainer(TfTrainer trainer) { this.trainer = trainer; }
+	public void setTrainer(TfTrainer trainer)
+	{ this.trainer = trainer; }
 
 	@JsonIgnore
-	public List<TfTrainer> getCoTrainer() { return coTrainer; }
+	public List<TfTrainer> getCoTrainer()
+	{ return coTrainer; }
 
 	@JsonIgnore
-	public void setCoTrainer(List<TfTrainer> coTrainer) { this.coTrainer = coTrainer; }
+	public void setCoTrainer(List<TfTrainer> coTrainer)
+	{ this.coTrainer = coTrainer; }
 
-	public static long getSerialversionuid() { return serialVersionUID; }
+	public static long getSerialversionuid()
+	{ return serialVersionUID; }
 
 	@Override
 	public String toString() {
@@ -133,5 +160,6 @@ public class TfBatch implements java.io.Serializable, Comparable<TfBatch>
 	}
 
 	@Override
-	public int compareTo(TfBatch o) { return this.id-o.getId(); }
+	public int compareTo(TfBatch o)
+	{ return this.id-o.getId(); }
 } 

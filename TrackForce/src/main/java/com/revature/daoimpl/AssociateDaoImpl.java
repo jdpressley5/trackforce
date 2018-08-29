@@ -69,9 +69,13 @@ public class AssociateDaoImpl implements AssociateDao
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			counting = session.createNativeQuery(sql).getSingleResult();
+		} catch(HibernateException e) {
+			e.printStackTrace();
 		}
-		catch(HibernateException e) { e.printStackTrace(); }
-		finally { if ( session != null ) session.close(); }
+		finally {
+			if ( session != null )
+				session.close();
+		}
 		return counting;
 	}//end getCountOf()
 
@@ -119,40 +123,52 @@ public class AssociateDaoImpl implements AssociateDao
 
 	//---------------------------------------------------
 	@Override
-	public Object getCountUndeployedMapped() { return getCountStringMapper(1); }
+	public Object getCountUndeployedMapped()
+	{ return getCountStringMapper(1); }
 	
 	@Override
-	public Object getCountUndeployedUnmapped() { return getCountStringMapper(2); }
+	public Object getCountUndeployedUnmapped()
+	{ return getCountStringMapper(2); }
 	
 	@Override
-	public Object getCountDeployedMapped() { return getCountStringMapper(3); }
+	public Object getCountDeployedMapped()
+	{ return getCountStringMapper(3); }
 	
 	@Override
-	public Object getCountDeployedUnmapped() { return getCountStringMapper(4); }
+	public Object getCountDeployedUnmapped()
+	{ return getCountStringMapper(4); }
 
 	@Override
-	public Object getCountUnmappedTraining() { return getCountStringMapper(5); }
+	public Object getCountUnmappedTraining()
+	{ return getCountStringMapper(5); }
 	
 	@Override
-	public Object getCountUnmappedOpen() { return getCountStringMapper(6); }
+	public Object getCountUnmappedOpen()
+	{ return getCountStringMapper(6); }
 	
 	@Override
-	public Object getCountUnmappedSelected() { return getCountStringMapper(7); }
+	public Object getCountUnmappedSelected()
+	{ return getCountStringMapper(7); }
 	
 	@Override
-	public Object getCountUnmappedConfirmed() { return getCountStringMapper(8); }
+	public Object getCountUnmappedConfirmed()
+	{ return getCountStringMapper(8); }
 	
 	@Override
-	public Object getCountMappedTraining() { return getCountStringMapper(9); }
+	public Object getCountMappedTraining()
+	{ return getCountStringMapper(9); }
 	
 	@Override
-	public Object getCountMappedReserved() { return getCountStringMapper(10); }
+	public Object getCountMappedReserved()
+	{ return getCountStringMapper(10); }
 	
 	@Override
-	public Object getCountMappedSelected() { return getCountStringMapper(11); }
+	public Object getCountMappedSelected()
+	{ return getCountStringMapper(11); }
 
 	@Override
-	public Object getCountMappedConfirmed() { return getCountStringMapper(12); }
+	public Object getCountMappedConfirmed()
+	{ return getCountStringMapper(12); }
 
 	@Override
 	public boolean updateAssociatePartial(TfAssociate associate) {
@@ -189,9 +205,8 @@ public class AssociateDaoImpl implements AssociateDao
 	/** Creates new associate with a given associate object.
 	 * @param newassociate the new associate you wish to persist */
 	@Override
-	public boolean createAssociate(TfAssociate newassociate) {
-		return saveToDB(newassociate);
-	}
+	public boolean createAssociate(TfAssociate newassociate)
+	{ return saveToDB(newassociate); }
 
 	/** Does something */
 	@Override
@@ -269,8 +284,11 @@ public class AssociateDaoImpl implements AssociateDao
 	public <T> T countMappedAssociatesByValue(String column, T value, Integer mappedStatus) {
 		Sessional<T> ss = (Session session, Object... args) -> {
 			String condition;
-			if (Integer.valueOf(value.toString()) != -1) condition = column + " = " + args[0] + " AND ";
-			else condition = "";
+			if (Integer.valueOf(value.toString()) != -1) {
+				condition = column + " = " + args[0] + " AND ";
+			} else {
+				condition = "";
+			}
 
 			String hql = "SELECT COUNT(TF_ASSOCIATE_ID) FROM TfAssociate WHERE " +
 					condition + "TF_MARKETING_STATUS_ID = :status";

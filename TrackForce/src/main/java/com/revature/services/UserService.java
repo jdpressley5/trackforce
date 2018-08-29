@@ -19,11 +19,13 @@ public class UserService {
 
 	public UserService() { }// public so it can be used for testing
 
-    public UserService(UserDao dao) { this.dao = dao; }
+    public UserService(UserDao dao)
+	{ this.dao = dao; }
 
 	/** @author Adam L.
 	 * @version v6.18.06.13 */
-	public List<TfUser> getAllUsers() { return dao.getAllUsers(); }
+	public List<TfUser> getAllUsers()
+	{ return dao.getAllUsers(); }
 
 	/** @author Adam L.
 	 * @version v6.18.06.13
@@ -31,9 +33,15 @@ public class UserService {
 	 * I am not proud of this but it is what was given to me
 	 * -Coder from batch 1806 */
 	public TfUser getUser(String username) {
-		try { return dao.getUser(username); }
-		catch (NoResultException nre) { return null; }
-		catch (HibernateException e) { return new TfUser(); }
+		try {
+			return dao.getUser(username);
+		}
+		catch (NoResultException nre) {
+			return null;
+		}
+		catch (HibernateException e) {
+			return new TfUser();
+		}
 	}
     
    /** @author Adam L.
@@ -42,11 +50,14 @@ public class UserService {
 		try {
 			newUser.setPassword(PasswordStorage.createHash(newUser.getPassword()));
 			LogUtil.logger.info("The user with hashed password is " + newUser);
-		} catch (CannotPerformOperationException e) { LogUtil.logger.warn(e.getMessage()); }
+		} catch (CannotPerformOperationException e) {
+			LogUtil.logger.warn(e.getMessage());
+		}
 		return dao.insertUser(newUser);
 	}
 
-	public TfRole getRole(int roleId) { return dao.getRole(roleId); }
+	public TfRole getRole(int roleId)
+	{ return dao.getRole(roleId); }
 
 	/** @author Adam L.
 	 * <p> Allows verification that a given user exists, and has the correct password. </p>
@@ -67,8 +78,9 @@ public class UserService {
 					LogUtil.logger.info("Password verification successful! Returning " + foundUser.toString());
 					return foundUser;
 				}
-			} catch (CannotPerformOperationException | InvalidHashException e)
-            { LogUtil.logger.warn(e.getMessage()); }
+			} catch (CannotPerformOperationException | InvalidHashException e) {
+            	LogUtil.logger.warn(e.getMessage());
+			}
 		}
 		return null;
 	}

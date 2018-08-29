@@ -8,7 +8,11 @@ import org.hibernate.Session;
 import com.revature.dao.CurriculumDao;
 import com.revature.entity.TfCurriculum;
 import com.revature.utils.HibernateUtil;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 public class CurriculumDaoImpl implements CurriculumDao
 {

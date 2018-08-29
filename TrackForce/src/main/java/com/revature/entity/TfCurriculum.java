@@ -2,7 +2,12 @@ package com.revature.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
@@ -40,24 +45,32 @@ public class TfCurriculum implements java.io.Serializable
 
 	public TfCurriculum() { super(); }
 
-	public Integer getId() { return id; }
+	public Integer getId()
+	{ return id; }
 
-	public void setId(Integer id) { this.id = id; }
+	public void setId(Integer id)
+	{ this.id = id; }
 
-	public String getName() { return name; }
+	public String getName()
+	{ return name; }
 
-	public void setName(String name) { this.name = name; }
+	public void setName(String name)
+	{ this.name = name; }
 
 	@JsonIgnore
-	public Set<TfBatch> getBatches() { return batches; }
+	public Set<TfBatch> getBatches()
+	{ return batches; }
 
 	@JsonIgnore
-	public void setBatches(Set<TfBatch> batches) { this.batches = batches; }
+	public void setBatches(Set<TfBatch> batches)
+	{ this.batches = batches; }
 
-	public static long getSerialversionuid() { return serialVersionUID; }
+	public static long getSerialversionuid()
+	{ return serialVersionUID; }
 
 	@Override
-	public String toString() { return "TfCurriculum [id=" + id + ", name=" + name + "]"; }
+	public String toString()
+	{ return "TfCurriculum [id=" + id + ", name=" + name + "]"; }
 
 	@Override
 	public int hashCode() {
@@ -73,5 +86,6 @@ public class TfCurriculum implements java.io.Serializable
 	 * @return {@code true} if this object is the same as the obj
 	 * argument; {@code false} otherwise. */
 	@Override
-	public boolean equals(Object obj) { return super.equals(obj); }
+	public boolean equals(Object obj)
+	{ return super.equals(obj); }
 }

@@ -15,15 +15,21 @@ public class ThreadUtil {
 	public <T> T submitCallable(Callable<T> caller) {
 		Future<T> future = executor.submit(caller);
 		T results = null;
-		try { results = future.get(); }
+		try {
+			results = future.get();
+		}
 		catch (InterruptedException | ExecutionException e) {
-			if(!future.isCancelled()) future.cancel(true);
-			else logger.info("Call was canceled");
+			if(!future.isCancelled()) {
+				future.cancel(true);
+			} else {
+				logger.info("Call was canceled");
+			}
 			logger.debug(e);
 		}
 		logger.debug("Current Active Threads: " + getActiveThreadCount());
 		return results;
 	}
 	
-	private static int getActiveThreadCount() { return ((ThreadPoolExecutor) executor).getActiveCount(); }
+	private static int getActiveThreadCount()
+	{ return ((ThreadPoolExecutor) executor).getActiveCount(); }
 }

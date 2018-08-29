@@ -15,43 +15,61 @@ public class AssociateService
 {
 	private AssociateDao dao;
 
-	public AssociateService() { dao = new AssociateDaoImpl(); }// public so it can be used for testing
+	public AssociateService() // public so it can be used for testing
+	{ dao = new AssociateDaoImpl(); }
 
-	public AssociateService(AssociateDao dao) { this.dao = dao; }
+	public AssociateService(AssociateDao dao)
+	{ this.dao = dao; }
 	
 	//----------------------------------
 	
-	public List<TfAssociate> getNAssociates(){ return dao.getNAssociates(); }
+	public List<TfAssociate> getNAssociates()
+	{ return dao.getNAssociates(); }
 	
-	public Object getCountUndeployedMapped() { return dao.getCountUndeployedMapped(); }
+	public Object getCountUndeployedMapped()
+	{ return dao.getCountUndeployedMapped(); }
 	
-	public Object getCountUndeployedUnmapped() { return dao.getCountUndeployedUnmapped(); }
+	public Object getCountUndeployedUnmapped()
+	{ return dao.getCountUndeployedUnmapped(); }
 	
-	public Object getCountDeployedMapped() { return dao.getCountDeployedMapped(); }
+	public Object getCountDeployedMapped()
+	{ return dao.getCountDeployedMapped(); }
 	
-	public Object getCountDeployedUnmapped() { return dao.getCountDeployedUnmapped(); }
+	public Object getCountDeployedUnmapped()
+	{ return dao.getCountDeployedUnmapped(); }
 
-	public Object getCountUnmappedTraining() { return dao.getCountUnmappedTraining(); }
+	public Object getCountUnmappedTraining()
+	{ return dao.getCountUnmappedTraining(); }
 	
-	public Object getCountUnmappedOpen() { return dao.getCountUnmappedOpen(); }
+	public Object getCountUnmappedOpen()
+	{ return dao.getCountUnmappedOpen(); }
 	
-	public Object getCountUnmappedSelected() { return dao.getCountUnmappedSelected(); }
+	public Object getCountUnmappedSelected()
+	{ return dao.getCountUnmappedSelected(); }
 	
-	public Object getCountUnmappedConfirmed() { return dao.getCountUnmappedConfirmed(); }
+	public Object getCountUnmappedConfirmed()
+	{ return dao.getCountUnmappedConfirmed(); }
 	
-	public Object getCountMappedTraining() { return dao.getCountMappedTraining(); }
+	public Object getCountMappedTraining()
+	{ return dao.getCountMappedTraining(); }
 	
-	public Object getCountMappedReserved() { return dao.getCountMappedReserved(); }
+	public Object getCountMappedReserved()
+	{ return dao.getCountMappedReserved(); }
 	
-	public Object getCountMappedSelected() { return dao.getCountMappedSelected(); }
+	public Object getCountMappedSelected()
+	{ return dao.getCountMappedSelected(); }
 	
-	public Object getCountMappedConfirmed() { return dao.getCountMappedConfirmed(); }
+	public Object getCountMappedConfirmed()
+	{ return dao.getCountMappedConfirmed(); }
 
-	public List<GraphedCriteriaResult> getUndeployed(String which) { return dao.getUndeployed(which); }
+	public List<GraphedCriteriaResult> getUndeployed(String which)
+	{ return dao.getUndeployed(which); }
 
-	public boolean approveAssociate(int associateId) { return dao.approveAssociate(associateId); }
+	public boolean approveAssociate(int associateId)
+	{ return dao.approveAssociate(associateId); }
 
-	public boolean updateAssociate(TfAssociate associate) { return dao.updateAssociate(associate); }
+	public boolean updateAssociate(TfAssociate associate)
+	{ return dao.updateAssociate(associate); }
 
 	public Long getMappedAssociateCountByClientId(Long client_id, Integer mappedStatus) 
 	{ return dao.countMappedAssociatesByValue("TF_CLIENT_ID",client_id,mappedStatus); }
@@ -59,17 +77,20 @@ public class AssociateService
 	 /** @author Adam L.
 	 * <p>Gets the associate given by their associate Id.</p>
 	 * @version v6.18.06.13 */
-	public TfAssociate getAssociate(int associateid) { return dao.getAssociate(associateid); }
+	public TfAssociate getAssociate(int associateid)
+	{ return dao.getAssociate(associateid); }
 
 	/** @author Curtis H.
 	 * <p>Gets the associate given by their associate Id.</p>
      * @version v6.18.06.13*/
-	public TfAssociate getAssociateByUserId(int id) { return dao.getAssociateByUserId(id); }
+	public TfAssociate getAssociateByUserId(int id)
+	{ return dao.getAssociateByUserId(id); }
 
 	/** @author Adam L.
 	 * <p>Gets all associates in the database.</p>
 	 * @version v6.18.06.13 */
-	public List<TfAssociate> getAllAssociates(){ return dao.getAllAssociates(); }
+	public List<TfAssociate> getAllAssociates()
+	{ return dao.getAllAssociates(); }
 	
 	/** @author Adam L.
 	 * <p>Updates an associate based on their Id, which should not change.
@@ -87,7 +108,8 @@ public class AssociateService
 	 * <p>Note: if you leave some fields empty in the TfAssociate parameter, 
 	 * 	it will be saved as such!</p>
 	 * @version v6.18.06.13 */
-	public boolean updateAssociates(List<TfAssociate> associates) { return dao.updateAssociates(associates); }
+	public boolean updateAssociates(List<TfAssociate> associates)
+	{ return dao.updateAssociates(associates); }
 	
 	/** @author Adam L. 
 	 * <p>Creates an associate in the database.</p>
@@ -102,11 +124,14 @@ public class AssociateService
 			int maxid = associates.size();
 			newassociate.setId(4951 + maxid); // Late game fix for non-functional Seq gen
 			LogUtil.logger.info("The associate with hashed password is " + newassociate);
-		} catch (CannotPerformOperationException e) { LogUtil.logger.warn(e.getMessage()); }		
+		} catch (CannotPerformOperationException e) {
+			LogUtil.logger.warn(e.getMessage());
+		}
 		return dao.createAssociate(newassociate);
 	}
 
 	/** @author Curtis H.
 	 * @since v6.18.06.16 */
-	public List<GraphedCriteriaResult> getMappedInfo(int status) { return dao.getMapped(status); }
+	public List<GraphedCriteriaResult> getMappedInfo(int status)
+	{ return dao.getMapped(status); }
 }

@@ -13,13 +13,16 @@ public class CurriculumService{
 
 	public CurriculumService() {} // public so it can be used for testing
 
-    public CurriculumService(CurriculumDao dao) { CurriculumService.dao = dao; }
+    public CurriculumService(CurriculumDao dao)
+	{ CurriculumService.dao = dao; }
 	
 	/** @author Adam L.
 	 * <p>Gets all the curricula</p>
 	 * @version v6.18.06.13 */
-	public List<TfCurriculum> getAllCurriculums(){ return dao.getAllCurriculums(); }
+	public List<TfCurriculum> getAllCurriculums()
+	{ return dao.getAllCurriculums(); }
 
 	/** Generates statistics for the expanded view of the home page unmapped chart */
-	public List<GraphedCriteriaResult> getUnmappedInfo(int statusId) { return dao.getUnmapped(statusId); }
+	public List<GraphedCriteriaResult> getUnmappedInfo(int statusId)
+	{ return dao.getUnmapped(statusId); }
 }

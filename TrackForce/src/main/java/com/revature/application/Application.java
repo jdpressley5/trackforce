@@ -1,6 +1,4 @@
 package com.revature.application;
-import com.revature.services.*;
-
 /** @author Adam L.
  * <p>Used for a few quick simple tests to ensure hibernate is making the calls it is supposed to</p>
  * @version v6.18.06.13 */
@@ -11,16 +9,16 @@ public class Application
 	// This is to allow for Mockito tests, which have problems with static methods
 	// This is here for a reason!
 	// - Adam 06.18.06.13
-	static AssociateService associateService = new AssociateService();
-	static BatchService batchService = new BatchService();
-	static ClientService clientService = new ClientService();
-	static CurriculumService curriculumService = new CurriculumService();
-	static InterviewService interviewService = new InterviewService();
-	static TrainerService trainerService = new TrainerService();
-	static UserService userService = new UserService();
-	static MarketingStatusService marketingStatusService = new MarketingStatusService();
+//	static AssociateService associateService = new AssociateService();
+//	static BatchService batchService = new BatchService();
+//	static ClientService clientService = new ClientService();
+//	static CurriculumService curriculumService = new CurriculumService();
+//	static InterviewService interviewService = new InterviewService();
+//	static TrainerService trainerService = new TrainerService();
+//	static UserService userService = new UserService();
+//	static MarketingStatusService marketingStatusService = new MarketingStatusService();
 
-	public static void main(String[] args) { }
+//	public static void main(String[] args) { }
 //		TfRole role = userService.getRole(1);
 //
 //		TfUser user = new TfUser();

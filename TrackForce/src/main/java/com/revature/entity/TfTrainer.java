@@ -2,7 +2,17 @@ package com.revature.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -51,7 +61,8 @@ public class TfTrainer implements Serializable
 
 	//----------------------
 
-	public TfTrainer() { super(); }
+	public TfTrainer()
+	{ super(); }
 
 	public TfTrainer(int id) {
 		super();
@@ -69,37 +80,51 @@ public class TfTrainer implements Serializable
 
 	//----------------------
 
-	public TfUser getTfUser() { return user; }
+	public TfUser getTfUser()
+	{ return user; }
 
-	public void setTfUser(TfUser tfUser) { this.user = tfUser; }
+	public void setTfUser(TfUser tfUser)
+	{ this.user = tfUser; }
 
-	public int getId() { return id; }
+	public int getId()
+	{ return id; }
 
-	public void setId(int id) { this.id = id; }
+	public void setId(int id)
+	{ this.id = id; }
 
-	public String getFirstName() { return firstName; }
+	public String getFirstName()
+	{ return firstName; }
 
-	public void setFirstName(String firstName) { this.firstName = firstName; }
+	public void setFirstName(String firstName)
+	{ this.firstName = firstName; }
 
-	public String getLastName() { return lastName; }
+	public String getLastName()
+	{ return lastName; }
 
-	public void setLastName(String lastName) { this.lastName = lastName; }
+	public void setLastName(String lastName)
+	{ this.lastName = lastName; }
 
 	@JsonIgnore
-	public List<TfBatch> getPrimary() { return primary; }
+	public List<TfBatch> getPrimary()
+	{ return primary; }
 
 	@JsonIgnore
-	public void setPrimary(List<TfBatch> primary) { this.primary = primary; }
+	public void setPrimary(List<TfBatch> primary)
+	{ this.primary = primary; }
 
 	@JsonIgnore
-	public List<TfBatch> getCoTrainer() { return coTrainer; }
+	public List<TfBatch> getCoTrainer()
+	{ return coTrainer; }
 
 	@JsonIgnore
-	public void setCoTrainer(List<TfBatch> coTrainer) { this.coTrainer = coTrainer; }
+	public void setCoTrainer(List<TfBatch> coTrainer)
+	{ this.coTrainer = coTrainer; }
 
 	@Override
-	public String toString() 
-	{ return "TfTrainer [id=" + id + ", user=" + user + ", firstName=" + firstName + ", lastName=" + lastName + "]"; }
+	public String toString() {
+		return "TfTrainer [id=" + id + ", user=" + user + ", firstName=" + firstName +
+			", lastName=" + lastName + "]";
+	}
 	
 	@Override
 	public int hashCode() {
@@ -118,5 +143,6 @@ public class TfTrainer implements Serializable
 	 * @return {@code true} if this object is the same as the obj
 	 * argument; {@code false} otherwise. */
 	@Override
-	public boolean equals(Object obj) { return super.equals(obj); }
+	public boolean equals(Object obj)
+	{ return super.equals(obj); }
 }

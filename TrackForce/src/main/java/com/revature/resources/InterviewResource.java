@@ -6,7 +6,15 @@ import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.hibernate.HibernateException;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -37,11 +45,11 @@ public class InterviewResource
 		Claims payload = JWTService.processToken(token);
 		List<TfInterview> interviews = interviewService.getAllInterviews();
 
-		if (payload == null) // invalid token
+		if (payload == null) {// invalid token
 			return Response.status(Status.UNAUTHORIZED).entity(JWTService.invalidTokenBody(token)).build();
-		else if (payload.getId().equals("5"))
+		} else if (payload.getId().equals("5")) {
 			return Response.status(Status.FORBIDDEN).build();
-		else {
+		} else {
 			status = interviews == null || interviews.isEmpty() ? Status.NO_CONTENT : Status.OK;
 			logger.info("	interviews.size() = " + interviews.size());
 		}
@@ -60,9 +68,9 @@ public class InterviewResource
 		Status status;
 		Claims payload = JWTService.processToken(token);
 
-		if (payload == null || !(payload.getId().equals("5")))
+		if (payload == null || !(payload.getId().equals("5"))) {
 			status = Status.UNAUTHORIZED;
-		else {
+		} else {
 			interview.setJobDescription("No current description.");
 			interviewService.createInterview(interview);
 			status = Status.CREATED;
@@ -82,9 +90,9 @@ public class InterviewResource
 		Status status;
 		List<TfInterview> interviews = interviewService.getInterviewsByAssociate(associateId);
 		Claims payload = JWTService.processToken(token);
-		if (payload == null) // invalid token
+		if (payload == null) {// invalid token
 			status = Status.UNAUTHORIZED;
-		else {
+		} else {
 			logger.info(interviews);
 			status = interviews == null || interviews.isEmpty() ? Status.NO_CONTENT : Status.OK;
 		}
@@ -104,11 +112,12 @@ public class InterviewResource
 		TfInterview interview = interviewService.getInterviewById(interviewId);
 		Claims payload = JWTService.processToken(token);
 
-		if (payload == null) // invalid token
+		if (payload == null) { // invalid token
 			status = Status.UNAUTHORIZED;
-		else if (!(payload.getId().equals("1") || payload.getId().equals("5") || payload.getId().equals("3")))
-			status = Status.FORBIDDEN; // wrong roleid
-		else {
+		} else if (!(payload.getId().equals("1") || payload.getId().equals("5") ||
+				payload.getId().equals("3"))) { // wrong roleid
+			status = Status.FORBIDDEN;
+		} else {
 			logger.info(interview);
 			status = interview == null ? Status.NO_CONTENT : Status.OK;
 		}
@@ -126,11 +135,12 @@ public class InterviewResource
 		Status status;
 		Claims payload = JWTService.processToken(token);
 
-		if (payload == null) // invalid token
+		if (payload == null) { // invalid token
 			status = Status.UNAUTHORIZED;
-		else if (!(payload.getId().equals("1") || payload.getId().equals("5") || payload.getId().equals("3")))
+		} else if (!(payload.getId().equals("1") || payload.getId().equals("5") ||
+				payload.getId().equals("3"))) {
 			status = Status.FORBIDDEN;// wrong roleid
-		else {
+		} else {
 			interviewService.updateInterview(interview);
 			status = Status.ACCEPTED;
 		}
