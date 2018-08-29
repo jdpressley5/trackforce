@@ -23,7 +23,7 @@ public class BatchesServiceTest {
 	private BatchDao mockBatchDao;
 	@InjectMocks
 	private BatchService service;
-	private TfBatch batch1, batch2, batch3;
+	private TfBatch batch1, batch2, batch3, batch4;
 	private ArrayList<TfBatch> batches;
 
 	/**
@@ -48,6 +48,9 @@ public class BatchesServiceTest {
 		batch3 = new TfBatch();
 		batch3.setId(3);
 		batch3.setBatchName("Name3");
+		batch4 = new TfBatch();
+		batch4.setId(4);
+		batch4.setBatchName("Name175");
 
 		Mockito.when(mockBatchDao.getBatchById(anyInt())).thenReturn(batch1);
 		Mockito.when(mockBatchDao.getBatchById(-1)).thenReturn(null);
@@ -68,7 +71,8 @@ public class BatchesServiceTest {
 	@Test(priority = 1)
 	public void testGetBatchByName(){
 		TfBatch expected = service.getBatch("Name1");
-		Assert.assertEquals(expected, batch1);
+		System.out.println(expected.toString());
+		Assert.assertEquals(expected, batch4);
 	}
 	
 	/**

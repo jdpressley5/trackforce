@@ -23,6 +23,7 @@ public class ClientDaoImpl implements ClientDao
 
 	@Override
 	public List<TfClient> getAllClientsWithMappedAssociates(){
+		System.out.println("getallclientswithmappedassocuiates(");
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> 
 			session.createQuery(
 					  "FROM TfClient c WHERE "

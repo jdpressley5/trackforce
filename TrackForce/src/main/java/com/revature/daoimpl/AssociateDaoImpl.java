@@ -2,6 +2,8 @@ package com.revature.daoimpl;
 import static com.revature.utils.HibernateUtil.runHibernateTransaction;
 import static com.revature.utils.HibernateUtil.saveToDB;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -32,6 +34,22 @@ public class AssociateDaoImpl implements AssociateDao
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 			session.createQuery("from TfAssociate a where a.id = :id", TfAssociate.class)
 			.setParameter("id", id).getSingleResult());
+	}
+	
+	public List<TfAssociate> getNAssociateMatchingCriteria(int startIdx, int numRes, int mktStatus, int clientId)
+	{
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<TfAssociate> criteria = builder.createQuery(TfAssociate.class);
+			Root<TfAssociate> root = criteria.from(TfAssociate.class);
+			criteria.where(builder.equal(root.get("TfAssociate_.marketingStatus"), mktStatus));
+			criteria.where(builder.equal(root.get("TfAssociate_.client"), clientId));
+			List<TfAssociate> results = session.createQuery(criteria).getResultList();
+			System.out.println("SQL> " + session.createQuery(criteria).getQueryString());
+			System.out.println("RESULTS> " + results);
+			results = results.subList(startIdx, startIdx+numRes);
+			System.out.println("RESULTS FINAL > " + results);
+			return results;
 	}
 
 	/** Gets an associate by an associated user id
