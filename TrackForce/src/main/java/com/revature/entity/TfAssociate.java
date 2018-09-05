@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @XmlRootElement
 @Entity
 @Table(name = "TF_ASSOCIATE", schema = "ADMIN")
-@Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="Associate")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
 public class TfAssociate implements java.io.Serializable {
 
 	private static final long serialVersionUID = -2324082555924677252L;

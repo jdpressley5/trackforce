@@ -3,19 +3,41 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Environment;
+import com.revature.entity.TfAssociate;
+import com.revature.entity.TfBatch;
+import com.revature.entity.TfBatchLocation;
+import com.revature.entity.TfClient;
+import com.revature.entity.TfCurriculum;
+import com.revature.entity.TfEndClient;
+import com.revature.entity.TfInterview;
+import com.revature.entity.TfInterviewType;
+import com.revature.entity.TfMarketingStatus;
+import com.revature.entity.TfPlacement;
+import com.revature.entity.TfRole;
+import com.revature.entity.TfTrainer;
+import com.revature.entity.TfUser;
+import com.revature.entity.TfUserAndCreatorRoleContainer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import static com.revature.utils.LogUtil.logger;
 
-/** @author Curtis H., Adam L., Josh P
+/** @author Curtis H. & Adam L. & Josh P. & Chris S.
  * <p> The abstracted methods for making Hibernate calls to the database </p>
  * @version v6.18.06.13 */
 public class HibernateUtil {
 	private static ThreadUtil threadUtil = new ThreadUtil();
 
 	private static SessionFactory sessionFactory = buildSessionFactory();
+	
+	private static StandardServiceRegistry registry;
 
 	private static Sessional<Boolean> detachedUpdate = (Session session, Object... args) -> {
 		session.update(args[0]);
@@ -35,13 +57,42 @@ public class HibernateUtil {
 
 	private static SessionFactory buildSessionFactory() {
 		try {
-			Configuration cfg = new Configuration();
-			cfg.setProperty("hibernate.connection.url", System.getenv("TRACKFORCE_DB_URL"));
-			cfg.setProperty("hibernate.connection.username", System.getenv("TRACKFORCE_DB_USERNAME"));
-			cfg.setProperty("hibernate.connection.password", System.getenv("HBM_PW_ENV"));
+			StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
+			Map<String, Object> cfg = new HashMap<>();
+			
+			// connection configuration
+            cfg.put(Environment.URL, System.getenv("TRACKFORCE_DB_URL"));
+            cfg.put(Environment.USER, System.getenv("TRACKFORCE_DB_USERNAME"));
+            cfg.put(Environment.PASS, System.getenv("HBM_PW_ENV"));
+            cfg.put(Environment.DRIVER, "oracle.jdbc.OracleDriver");
+            cfg.put(Environment.HBM2DDL_AUTO, "validate");
+            // c3p0 configuration
+            cfg.put(Environment.C3P0_MIN_SIZE, 5);         //Minimum size of pool
+            cfg.put(Environment.C3P0_MAX_SIZE, 20);        //Maximum size of pool
+            cfg.put(Environment.C3P0_ACQUIRE_INCREMENT, 1);//Number of connections acquired at a time when pool is exhausted 
+            cfg.put(Environment.C3P0_TIMEOUT, 1800);       //Connection idle time
+            cfg.put(Environment.C3P0_MAX_STATEMENTS, 150); //PreparedStatement cache size
+            cfg.put(Environment.C3P0_CONFIG_PREFIX+".initialPoolSize", 5);
 
-			return cfg.configure().buildSessionFactory();
+            registryBuilder.applySettings(cfg);    
+            registry = registryBuilder.build();
+            MetadataSources sources = new MetadataSources(registry)
+            	.addAnnotatedClass(TfAssociate.class).addAnnotatedClass(TfBatch.class)
+            	.addAnnotatedClass(TfBatchLocation.class).addAnnotatedClass(TfClient.class)
+            	.addAnnotatedClass(TfCurriculum.class).addAnnotatedClass(TfEndClient.class)
+            	.addAnnotatedClass(TfInterview.class).addAnnotatedClass(TfInterviewType.class)
+            	.addAnnotatedClass(TfMarketingStatus.class)
+            	.addAnnotatedClass(TfPlacement.class).addAnnotatedClass(TfRole.class)
+            	.addAnnotatedClass(TfTrainer.class).addAnnotatedClass(TfUser.class)
+            	.addAnnotatedClass(TfUserAndCreatorRoleContainer.class);
+            Metadata metadata = sources.getMetadataBuilder().build();
+            sessionFactory = metadata.getSessionFactoryBuilder().build(); 
+		}catch (Exception e) {
+             if (registry != null)
+            	 StandardServiceRegistryBuilder.destroy(registry);
+             e.printStackTrace();
 		} finally { addShutdown(); }
+		return sessionFactory;
 	}
 
 	public static SessionFactory getSessionFactory()
