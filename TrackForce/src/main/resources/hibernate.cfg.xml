@@ -35,7 +35,7 @@
        	<!-- Tells Hibernate which class to use for caching, exposed from the org.hibernate.ehcache dependency -->
 		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
 		<property name="net.sf.ehcache.configurationResourceName">/ehcache.xml</property>
-
+		 <property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
         
         <!-- Mapped entities -->
         <mapping class="com.revature.entity.TfAssociate"/>
