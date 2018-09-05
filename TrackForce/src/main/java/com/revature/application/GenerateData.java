@@ -1,8 +1,6 @@
 package com.revature.application;
-
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
 
 /**
  * @author Adam L. 
@@ -16,14 +14,13 @@ public class GenerateData {
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
         while (salt.length() < 15) { 
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            int index = (rnd.nextInt() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }
-        String saltStr = salt.toString();
-        return saltStr;
+        return salt.toString();
     }
+	
 	public static int getRandomInt(int min, int max) {
-		int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
-		return randomNum;
+		return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 }

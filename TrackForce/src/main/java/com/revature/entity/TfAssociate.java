@@ -1,9 +1,7 @@
 package com.revature.entity;
-
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,12 +14,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 /**
  * @category Integer tfAssociateId
@@ -36,13 +31,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @category Set<TfPlacement> tfPlacements
  * @category Timestamp clientStartDate
  * 
- * @author Adam L. 
- * @version v6.18.06.13
- */
+ * @author Adam L. & Joshua P. & Chris S.
+ * @version v6.18.06.13 */
 @XmlRootElement
 @Entity
 @Table(name = "TF_ASSOCIATE", schema = "ADMIN")
-@Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="TrackForce")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="Associate")
 public class TfAssociate implements java.io.Serializable {
 
 	private static final long serialVersionUID = -2324082555924677252L;
@@ -58,7 +52,7 @@ public class TfAssociate implements java.io.Serializable {
 	private TfUser user;
 	
 	@XmlElement
-	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "TF_BATCH_ID")
 	private TfBatch batch;
 
@@ -68,12 +62,12 @@ public class TfAssociate implements java.io.Serializable {
 	private TfMarketingStatus marketingStatus;
 
 	@XmlElement
-	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "TF_CLIENT_ID")
 	private TfClient client;
 
 	@XmlElement
-	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "TF_END_CLIENT_ID")
 	private TfEndClient endClient;
 

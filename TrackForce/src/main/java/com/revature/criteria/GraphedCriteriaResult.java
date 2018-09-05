@@ -5,20 +5,20 @@ public class GraphedCriteriaResult {
 	private int id;
 	private String name;
 
-	public GraphedCriteriaResult() {
+	public GraphedCriteriaResult() { 
+		super(); 
 	}
 
 	public GraphedCriteriaResult(long count, int id, String name) {
+		super();
 		this.count = count;
 		this.id = id;
 		this.name = name;
 	}
 
 	public long getCount() {
-
 		return count;
 	}
-
 	public void setCount(long count) {
 		this.count = count;
 	}
@@ -26,7 +26,6 @@ public class GraphedCriteriaResult {
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -34,7 +33,6 @@ public class GraphedCriteriaResult {
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}

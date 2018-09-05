@@ -1,6 +1,5 @@
 package com.revature.application;
 import java.util.ArrayList;
-import java.util.List;
 import com.revature.entity.TfAssociate;
 import com.revature.entity.TfBatch;
 import com.revature.entity.TfRole;
@@ -14,12 +13,10 @@ import com.revature.services.InterviewService;
 import com.revature.services.MarketingStatusService;
 import com.revature.services.TrainerService;
 import com.revature.services.UserService;
-import com.revature.utils.PasswordStorage;
 import java.util.HashSet;
 import java.util.List;
 import static com.revature.utils.HibernateUtil.saveToDB;
 import static com.revature.utils.PasswordStorage.createHash;
-import net.sf.ehcache.CacheManager;
 
 /**<p>Use the main mehthod for testing only. This class is unused in "production". 
  *  Old testing code is commented out below the class for reference. 
@@ -65,7 +62,6 @@ public class Application {
 //		for(TfInterview i : interviews)
 //			System.out.println(i);
 		
-		
 //		TfTrainer t = new TfTrainer();
 //		t.setFirstName("Ava");
 //		t.setLastName("Trains");
@@ -106,7 +102,6 @@ public class Application {
 //		//a.setInterview(new HashSet<>());
 //		associateService.createAssociate(a);
 
-
 //		for (TfTrainer tt : trainerService.getAllTrainers()) {
 //			System.out.println(t);
 		
@@ -128,7 +123,6 @@ public class Application {
 		// System.out.println(associateService.createAssociate(associate));}
 
 //		TfInterview interview = new TfInterview();
-//
 
 //		TfAssociate a = new TfAssociate();
 //		a = associateService.getAssociate(392);
@@ -149,7 +143,6 @@ public class Application {
 //		TfEndClient ec = clientService.getEndClient(250);
 //				
 //		TfInterviewType it = interviewService.getInterviewById(1).getInterviewType();
-
 
 //		interview.setAssociate(a);
 //		interview.setClient(c);
@@ -206,15 +199,9 @@ public class Application {
 
 //		System.out.println(interviewService.createInterview(interview));
 
-
 //		associateService.updateAssociate(a);
 
-
-		//System.out.println(associateService.getAssociate(920));
-//				
-		
-		
-	
+		//System.out.println(associateService.getAssociate(920));			
 		
 //		List<TfUser> users = userService.getAllUsers();
 //		for(TfUser u : users)
@@ -293,9 +280,8 @@ public class Application {
 
 		// make a user to be used by max in testing login
 
-
-//TfAssociate associate = new TfAssociate();
-//associate.setId(1);
-//associate.setFirstName("Greg");
-//
-//System.out.println(associateService.updateAssociate(associate));
+		//TfAssociate associate = new TfAssociate();
+		//associate.setId(1);
+		//associate.setFirstName("Greg");
+		//
+		//System.out.println(associateService.updateAssociate(associate));
