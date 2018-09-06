@@ -18,7 +18,6 @@ public class InterviewDaoImpl implements InterviewDao {
 		session.createQuery("from TfInterview i where i.associate.id like :associateId", TfInterview.class).setParameter("associateId", associateId).getResultList());
 	}
 	
-
 	@Override
 	public List<TfInterview> getAllInterviews() {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
@@ -27,8 +26,6 @@ public class InterviewDaoImpl implements InterviewDao {
 
 	@Override
 	public boolean createInterview(TfInterview interview) {
-//		 HibernateUtil.saveToDB(interview.getAssociate());
-//		 HibernateUtil.saveToDB(interview.getClient());
 		return HibernateUtil.saveToDB(interview);
 	}
 
@@ -63,6 +60,4 @@ public class InterviewDaoImpl implements InterviewDao {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 		session.createQuery("from TfInterview i where i.id like :interviewId", TfInterview.class).setParameter("interviewId", interviewId).getSingleResult());
 	}
-	
-
 }

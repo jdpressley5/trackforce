@@ -7,10 +7,8 @@ import com.revature.dao.BatchDao;
 import com.revature.entity.TfBatch;
 import com.revature.utils.HibernateUtil;
 
-/**
- * Implementation of the BatchDao interface that uses Hibernate to retrieve
- * batch information from the database.
- */
+/** Implementation of the BatchDao interface that uses Hibernate to retrieve
+ * batch information from the database.*/
 public class BatchDaoImpl implements BatchDao {
 
 	@Override
@@ -44,6 +42,7 @@ public class BatchDaoImpl implements BatchDao {
 				TfBatch.class).setParameter("startdate", startDate)
 				.setParameter("enddate", endDate).getResultList());
 	}
+	
 	/**
 	 * 1806_Chris_P: This method retrieves all of the batches that match the technology 
 	 * 	and fall between the dates selected in the Predictions page.
