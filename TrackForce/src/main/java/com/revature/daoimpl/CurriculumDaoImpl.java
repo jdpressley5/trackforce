@@ -1,18 +1,13 @@
 package com.revature.daoimpl;
-
-import java.sql.Timestamp;
 import java.util.List;
-
 import com.revature.criteria.GraphedCriteriaResult;
 import com.revature.entity.TfAssociate;
 import com.revature.entity.TfBatch;
 import com.revature.entity.TfMarketingStatus;
 import org.hibernate.Session;
-
 import com.revature.dao.CurriculumDao;
 import com.revature.entity.TfCurriculum;
 import com.revature.utils.HibernateUtil;
-
 import javax.persistence.criteria.*;
 
 public class CurriculumDaoImpl implements CurriculumDao {
@@ -45,6 +40,4 @@ public class CurriculumDaoImpl implements CurriculumDao {
 				}, id
 		);
 	}
-	
-	
 }

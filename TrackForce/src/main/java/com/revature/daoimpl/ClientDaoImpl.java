@@ -1,10 +1,7 @@
 package com.revature.daoimpl;
-
 import java.util.List;
-
 import com.revature.entity.TfEndClient;
 import org.hibernate.Session;
-
 import com.revature.dao.ClientDao;
 import com.revature.entity.TfClient;
 import com.revature.utils.HibernateUtil;
@@ -66,5 +63,4 @@ public class ClientDaoImpl implements ClientDao {
 				.setParameter("id", id)
 				.getSingleResult());
 	}
-
 }
