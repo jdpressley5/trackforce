@@ -1,12 +1,8 @@
 package com.revature.daoimpl;
-
 import com.revature.dao.TrainerDao;
 import com.revature.entity.TfTrainer;
 import com.revature.utils.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import java.util.List;
 
 public class TrainerDaoImpl implements TrainerDao{
@@ -39,7 +35,6 @@ public class TrainerDaoImpl implements TrainerDao{
 		return HibernateUtil.runHibernateTransaction((Session session, Object ... args)->
 		{
 			TfTrainer temp = session.get(TfTrainer.class, trainer.getId());
-
 			temp.setCoTrainer(trainer.getCoTrainer());
 			temp.setFirstName(trainer.getFirstName());
 			temp.setLastName(trainer.getLastName());
@@ -49,7 +44,4 @@ public class TrainerDaoImpl implements TrainerDao{
 			return true;
 		});
 	}
-
-
-
 }
