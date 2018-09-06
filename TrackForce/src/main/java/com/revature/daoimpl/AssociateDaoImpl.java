@@ -22,7 +22,8 @@ import com.revature.entity.TfUser;
 import com.revature.utils.HibernateUtil;
 import com.revature.utils.Sessional;
 
-/** Data Access Object implementation to access the associate entity from the Database */
+/** Data Access Object implementation to access the associate entity from the Database 
+ * @author Josh P. Chris S. Paul C. -1807 iteration */
 public class AssociateDaoImpl implements AssociateDao {
 	
 	/** Gets list of associates matching criteria. Used by updated angular front end to perform 

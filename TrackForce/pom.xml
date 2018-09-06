@@ -16,6 +16,15 @@
 		<skip.unit.tests>false</skip.unit.tests>
 		<skip.integration.tests>false</skip.integration.tests>
 	</properties>
+	
+	<repositories>
+		<repository>
+			<id>terracotta-releases</id>
+			<url>http://www.terracotta.org/download/reflector/releases</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet -->
