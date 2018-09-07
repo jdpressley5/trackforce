@@ -65,7 +65,7 @@ public class TfTrainer implements Serializable{
 	private List<TfBatch> primary;
 	
 	@XmlElement
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="COTRAINER_BATCH",joinColumns= {@JoinColumn(name="TRAINER_ID")},inverseJoinColumns = {@JoinColumn(name="BATCH_ID")}, schema="ADMIN")
 	@JsonIgnore
 	private List<TfBatch> coTrainer = new ArrayList<>();
