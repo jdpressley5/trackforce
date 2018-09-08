@@ -63,6 +63,7 @@ public class TfBatch implements java.io.Serializable, Comparable<TfBatch> {
 	public TfBatch() {
 		super();
 	}
+	
 	public TfBatch(Integer id, TfBatchLocation location, TfCurriculum curriculumName, String batchName,
 			Timestamp startDate, Timestamp endDate, Set<TfAssociate> associates, TfTrainer trainer,
 			List<TfTrainer> coTrainer) {

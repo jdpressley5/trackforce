@@ -1,12 +1,9 @@
 package com.revature.entity;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlRootElement
@@ -17,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class TfUser implements java.io.Serializable {
 
     private static final long serialVersionUID = 706405344864879997L;
-    
 	public static final int APPROVED = 1;
 	public static final int NOTAPPROVED = 0;
     

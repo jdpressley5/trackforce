@@ -21,8 +21,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- * @category Integer tfAssociateId
+/** @category Integer tfAssociateId
  * @category TfUser tfUser
  * @category TfBatch tfBatch
  * @category TfMarketingStatus tfMarketingStatus
@@ -33,10 +32,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @category Set<TfInterview> tfInterviews
  * @category Set<TfPlacement> tfPlacements
  * @category Timestamp clientStartDate
- * 
  * @author Adam L. 
- * @version v6.18.06.13
- */
+ * @version v6.18.06.13*/
 @XmlRootElement
 @Entity
 @Table(name = "TF_ASSOCIATE", schema = "ADMIN")
