@@ -8,6 +8,7 @@ import com.revature.utils.HibernateUtil;
 
 public class ClientDaoImpl implements ClientDao {
 
+	/** Gets all clients ordered by client name.*/
 	@Override
 	public List<TfClient> getAllTfClients() {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
@@ -15,13 +16,14 @@ public class ClientDaoImpl implements ClientDao {
 				.getResultList());
 	}
 	
+	/** Gets the first 50 clients. */
 	public List<TfClient> getFirstFiftyTfClients() {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
 				.createQuery("from TfClient order by tf_client_name ", TfClient.class)
-				.setMaxResults(50)
-				.getResultList());
+				.setMaxResults(50).getResultList());
 	}
 
+	/** Gets clients with mapped associates. */
 	@Override
 	public List<TfClient> getAllClientsWithMappedAssociates(){
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> 
@@ -33,6 +35,7 @@ public class ClientDaoImpl implements ClientDao {
 		);
 	}
 	
+	/** Gets all clients. */
 	@Override
 	public List<TfClient> getAllTfClients(String[] columns) {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
@@ -40,27 +43,27 @@ public class ClientDaoImpl implements ClientDao {
 				.getResultList());
 	}
 
+	/** Gets client matching name. */
 	@Override
 	public TfClient getClient(String name) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
 				.createQuery("from TfClient c where c.name like :name", TfClient.class)
-				.setParameter("name", name)
-				.getSingleResult());
+				.setParameter("name", name).getSingleResult());
 	}
 
+	/** Gets client by ID */
 	@Override
 	public TfClient getClient(Integer id) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
 				.createQuery("from TfClient c where c.id like :id", TfClient.class)
-				.setParameter("id", id)
-				.getSingleResult());
+				.setParameter("id", id).getSingleResult());
 	}
 
+	/** Gets end client */
 	@Override
 	public TfEndClient getEndClient(int id) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
 				.createQuery("from TfEndClient c where c.id like :id", TfEndClient.class)
-				.setParameter("id", id)
-				.getSingleResult());
+				.setParameter("id", id).getSingleResult());
 	}
 }

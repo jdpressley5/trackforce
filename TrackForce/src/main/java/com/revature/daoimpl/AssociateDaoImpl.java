@@ -44,11 +44,9 @@ public class AssociateDaoImpl implements AssociateDao {
 		
 		if (clientId == -1 && mktStatus != -1) {
 			criteria.where(builder.equal(root.get("marketingStatus"), mktStatus));
-		} 
-		else if (mktStatus == -1 && clientId != -1) {
+		} else if (mktStatus == -1 && clientId != -1) {
 			criteria.where(builder.equal(root.get("client"), clientId));
-		} 
-		else if (mktStatus != -1 && clientId != -1) {
+		} else if (mktStatus != -1 && clientId != -1) {
 			criteria.where(builder.and(
 					builder.equal(root.get("marketingStatus"), mktStatus),
 					builder.equal(root.get("client"), clientId)));
@@ -70,7 +68,8 @@ public class AssociateDaoImpl implements AssociateDao {
 	@Override
 	public TfAssociate getAssociate(Integer id) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
-		session.createQuery("from TfAssociate a where a.id = :id", TfAssociate.class).setParameter("id", id).getSingleResult());
+		session.createQuery("from TfAssociate a where a.id = :id", TfAssociate.class)
+		.setParameter("id", id).getSingleResult());
 	}
 
 	/** Gets an associate by an associated user id
@@ -78,8 +77,8 @@ public class AssociateDaoImpl implements AssociateDao {
 	@Override
 	public TfAssociate getAssociateByUserId(int id) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
-				session.createQuery("from TfAssociate where user.id = :id", TfAssociate.class).setParameter("id", id).getSingleResult());
-
+				session.createQuery("from TfAssociate where user.id = :id", TfAssociate.class)
+				.setParameter("id", id).getSingleResult());
 	}
 
 	/** Gets all associates */
@@ -89,18 +88,18 @@ public class AssociateDaoImpl implements AssociateDao {
 				.createQuery("from TfAssociate", TfAssociate.class).getResultList());
 	}
 	
+	/** Gets n number of associates. */
 	@Override
 	public List<TfAssociate> getNAssociates() {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
 				.createQuery("from TfAssociate", TfAssociate.class)
-				.setMaxResults(60)
-				.getResultList());
+				.setMaxResults(60).getResultList());
 	}
 	
 	/** getCount uses CriteriaQuery and a switch statement to return count which 
 	 *  matches the marketingStatus. Special query for cases 11 and 12.
 	 *  Called by all getCount methods
-	 *  @author Paul Capellan - 1807
+	 *  @author Paul C. - 1807
 	 *  @param tfmsid is marketing status to be compared
 	 *  @return returns count based on marketingStatus equivalent to tfmsid for case 1 to 10,
 	 *  or statement used for case 11 and 12 */
@@ -110,7 +109,6 @@ public class AssociateDaoImpl implements AssociateDao {
 		 
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
-			
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<Long> qr = builder.createQuery(Long.class);
 			Root<TfAssociate> root = qr.from(TfAssociate.class);
@@ -145,66 +143,80 @@ public class AssociateDaoImpl implements AssociateDao {
 		return count;
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountUndeployedMapped() {
 		return getCount(11);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountUndeployedUnmapped() {
 		return getCount(12);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountDeployedMapped() {
 		return getCount(5);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountDeployedUnmapped() {
 		return getCount(10);
 	}
 
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountUnmappedTraining() {
 		return getCount(6);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountUnmappedOpen() {
 		return getCount(7);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountUnmappedSelected() {
 		return getCount(8);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountUnmappedConfirmed() {
 		return getCount(9);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountMappedTraining() {
 		return getCount(1);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountMappedReserved() {
 		return getCount(2);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountMappedSelected() {
 		return getCount(3);
 	}
 	
+	/** Gets count matching this marketing status */
 	@Override
 	public Object getCountMappedConfirmed() {
 		return getCount(4);
 	}
 
+	/** Update associate partially. This method updates first and last name only. 
+	 * @param associate the associate values to update. */
 	@Override
 	public boolean updateAssociatePartial(TfAssociate associate) {
 		return HibernateUtil.runHibernateTransaction((Session session, Object ... args)-> {
@@ -267,8 +279,8 @@ public class AssociateDaoImpl implements AssociateDao {
 		}, id);
 	}
 	
-	/** Optimized getUndeployed to remove redundancy
-	 * @author Paul C.-1807*/
+	/** Gets undeployed (mapped or unmapped).
+	 * Optimized to remove redundancy @author Paul C.-1807*/
 	@Override
 	public List<GraphedCriteriaResult> getUndeployed(String which) {
 		if(which.equals("mapped") || which.equals("unmapped")) {
@@ -309,6 +321,7 @@ public class AssociateDaoImpl implements AssociateDao {
 		throw new InvalidArgumentException("getUndeployed(): NOT MAPPED OR UNMAPPED");
 	}//end getUndeployed()
 
+	/** Updates an associate. */
 	@Override
 	public boolean updateAssociate(TfAssociate associate) {
 		return runHibernateTransaction((Session session, Object... args) -> {
@@ -317,6 +330,7 @@ public class AssociateDaoImpl implements AssociateDao {
 		});
 	}
 
+	/** Updates multiple associates */
 	@Override
 	public boolean updateAssociates(List<TfAssociate> associates) {
 		associates.forEach(this::updateAssociate);
@@ -336,7 +350,6 @@ public class AssociateDaoImpl implements AssociateDao {
 			}
 			String hql = "SELECT COUNT(TF_ASSOCIATE_ID) FROM TfAssociate WHERE "
 					+ condition + "TF_MARKETING_STATUS_ID = :status";
-			
 			Query query = session.createQuery(hql);
 			return (T) query.setParameter("status", args[1]).getSingleResult();
 		};

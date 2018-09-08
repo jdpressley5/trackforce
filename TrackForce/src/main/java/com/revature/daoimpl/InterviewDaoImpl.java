@@ -1,34 +1,33 @@
 package com.revature.daoimpl;
-
 import java.util.List;
-
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import com.revature.dao.InterviewDao;
 import com.revature.entity.TfInterview;
 import com.revature.utils.HibernateUtil;
 
 public class InterviewDaoImpl implements InterviewDao {
 
+	/** Gets interview matching associate ID. */
 	@Override
 	public List<TfInterview> getInterviewsByAssociate(int associateId) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 		session.createQuery("from TfInterview i where i.associate.id like :associateId", TfInterview.class).setParameter("associateId", associateId).getResultList());
 	}
 	
+	/** Gets all interviews. */
 	@Override
 	public List<TfInterview> getAllInterviews() {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 		session.createQuery("from TfInterview", TfInterview.class).getResultList());
 	}
 
+	/** Creates an interview. */
 	@Override
 	public boolean createInterview(TfInterview interview) {
 		return HibernateUtil.saveToDB(interview);
 	}
 
+	/** Updates an interview. */
 	@Override
 	public boolean updateInterview(TfInterview interview) {
 		return HibernateUtil.runHibernateTransaction((Session session, Object ... args) -> {
@@ -49,12 +48,12 @@ public class InterviewDaoImpl implements InterviewDao {
 			temp.setJobDescription(interview.getJobDescription());
 			temp.setQuestionGiven(interview.getQuestionGiven());
 			temp.setWas24HRNotice(interview.getWas24HRNotice());
-
 			session.update(temp);
 			return true;
 		});
 	}
 
+	/** Gets interview by interview ID. */
 	@Override
 	public TfInterview getInterviewById(int interviewId) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->

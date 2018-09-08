@@ -7,12 +7,14 @@ import com.revature.utils.HibernateUtil;
 
 public class MarketingStatusDaoImpl implements MarketingStatusDao {
 
+	/** Gets all statuses. */
 	@Override
 	public List<TfMarketingStatus> getAllMarketingStatuses() {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 		session.createQuery("from TfMarketingStatus", TfMarketingStatus.class).getResultList());
 	}
 	
+	/** Gets a status by its ID. */
 	@Override
 	public TfMarketingStatus getMarketingStatusById(int id) {
 		return HibernateUtil.runHibernate((Session session, Object... args) ->

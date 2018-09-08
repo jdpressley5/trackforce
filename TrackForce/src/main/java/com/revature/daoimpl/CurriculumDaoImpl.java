@@ -12,6 +12,7 @@ import javax.persistence.criteria.*;
 
 public class CurriculumDaoImpl implements CurriculumDao {
 
+	/** Gets all curriculums */
 	@Override
 	public List<TfCurriculum> getAllCurriculums() {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
@@ -37,7 +38,6 @@ public class CurriculumDaoImpl implements CurriculumDao {
 					query.groupBy(curriculumid, curriculumName);
 					query.multiselect(cb.count(root), curriculumid, curriculumName);
 					return session.createQuery(query).getResultList();
-				}, id
-		);
+				}, id );
 	}
 }

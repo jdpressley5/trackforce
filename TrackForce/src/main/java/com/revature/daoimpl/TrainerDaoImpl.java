@@ -7,29 +7,34 @@ import java.util.List;
 
 public class TrainerDaoImpl implements TrainerDao{
 
+	/** Gets a trainer. */
 	@Override
 	public TfTrainer getTrainer(int trainerId) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 			session.createQuery("from TfTrainer t where t.id like :trainerId", TfTrainer.class).setParameter("trainerId", trainerId).getSingleResult());
 	}
 
+	/** Gets a trainer by ID. */
 	@Override
 	public TfTrainer getTrainerByUserId(int id) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 			session.createQuery("from TfTrainer t where t.user.id = :id", TfTrainer.class).setParameter("id", id).getSingleResult());
 	}
 
+	/** Gets all Trainers */
 	@Override
 	public List<TfTrainer> getAllTrainers() {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 		session.createQuery("from TfTrainer", TfTrainer.class).getResultList());
 	}
 
+	/** Creates a trainer. */
 	@Override
 	public boolean createTrainer(TfTrainer trainer) {
 		return HibernateUtil.saveToDB(trainer);
 	}
 
+	/** Updates a trainer. */
 	@Override
 	public boolean updateTrainer(TfTrainer trainer) {
 		return HibernateUtil.runHibernateTransaction((Session session, Object ... args)->
@@ -39,7 +44,6 @@ public class TrainerDaoImpl implements TrainerDao{
 			temp.setFirstName(trainer.getFirstName());
 			temp.setLastName(trainer.getLastName());
 			temp.setPrimary(trainer.getPrimary());
-
 			session.update(temp);
 			return true;
 		});

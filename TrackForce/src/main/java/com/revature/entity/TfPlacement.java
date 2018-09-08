@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /** @version v6.18.06.13 */
 @XmlRootElement
@@ -168,5 +167,4 @@ public class TfPlacement implements java.io.Serializable {
 		return "TfPlacement [id=" + id + ", client=" + client + ", endClient=" + endClient + ", start=" + start
 				+ ", end=" + end + "]";
 	}
-	
 }
