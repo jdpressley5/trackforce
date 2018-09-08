@@ -47,7 +47,7 @@ public class TfBatch implements java.io.Serializable, Comparable<TfBatch> {
 	private Timestamp endDate;
 	
 	@XmlElement
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "batch")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "batch")
 	@JsonIgnore
 	private Set<TfAssociate> associates = new HashSet<TfAssociate>(0);
 
