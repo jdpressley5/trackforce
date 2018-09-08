@@ -86,7 +86,6 @@ public class BatchDaoImpl implements BatchDao {
 					).setParameter("curriculumName", name)
 					.setParameter("startDate", startDate.toString())
 					.setParameter("endDate", endDate.toString())
-					.setCacheable(true)
 					.getSingleResult();
 		}catch(HibernateException e) {
 			e.printStackTrace();
