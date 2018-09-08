@@ -11,14 +11,15 @@ public class InterviewDaoImpl implements InterviewDao {
 	@Override
 	public List<TfInterview> getInterviewsByAssociate(int associateId) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
-		session.createQuery("from TfInterview i where i.associate.id like :associateId", TfInterview.class).setParameter("associateId", associateId).getResultList());
+		session.createQuery("from TfInterview i where i.associate.id like :associateId", TfInterview.class)
+		.setParameter("associateId", associateId).setCacheable(true).getResultList());
 	}
 	
 	/** Gets all interviews. */
 	@Override
 	public List<TfInterview> getAllInterviews() {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
-		session.createQuery("from TfInterview", TfInterview.class).getResultList());
+		session.createQuery("from TfInterview", TfInterview.class).setCacheable(true).getResultList());
 	}
 
 	/** Creates an interview. */
@@ -57,6 +58,7 @@ public class InterviewDaoImpl implements InterviewDao {
 	@Override
 	public TfInterview getInterviewById(int interviewId) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
-		session.createQuery("from TfInterview i where i.id like :interviewId", TfInterview.class).setParameter("interviewId", interviewId).getSingleResult());
+		session.createQuery("from TfInterview i where i.id like :interviewId", TfInterview.class)
+		.setParameter("interviewId", interviewId).setCacheable(true).getSingleResult());
 	}
 }

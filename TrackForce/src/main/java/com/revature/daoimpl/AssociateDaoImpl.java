@@ -70,7 +70,7 @@ public class AssociateDaoImpl implements AssociateDao {
 	public TfAssociate getAssociate(Integer id) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 		session.createQuery("from TfAssociate a where a.id = :id", TfAssociate.class)
-		.setParameter("id", id).getSingleResult());
+		.setParameter("id", id).setCacheable(true).getSingleResult());
 	}
 
 	/** Gets an associate by an associated user id
@@ -79,7 +79,7 @@ public class AssociateDaoImpl implements AssociateDao {
 	public TfAssociate getAssociateByUserId(int id) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 				session.createQuery("from TfAssociate where user.id = :id", TfAssociate.class)
-				.setParameter("id", id).getSingleResult());
+				.setParameter("id", id).setCacheable(true).getSingleResult());
 	}
 
 	/** Gets all associates */
@@ -94,7 +94,7 @@ public class AssociateDaoImpl implements AssociateDao {
 	public List<TfAssociate> getNAssociates() {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
 				.createQuery("from TfAssociate", TfAssociate.class)
-				.setMaxResults(60).getResultList());
+				.setMaxResults(60).setCacheable(true).getResultList());
 	}
 	
 	/** getCount uses CriteriaQuery and a switch statement to return count which 
@@ -132,7 +132,7 @@ public class AssociateDaoImpl implements AssociateDao {
 						break;
 			}//end switch
 			
-			results = session.createQuery(qr).getResultList();
+			results = session.createQuery(qr).setCacheable(true).getResultList();
 			count = results.get(0);
 			//System.out.println(tfmsid + " > " + count);
 		}catch(HibernateException e) {
@@ -276,7 +276,7 @@ public class AssociateDaoImpl implements AssociateDao {
 			query.where(cb.equal(msJoin.get("id"), args[0]));
 			query.groupBy(clientId, clientName);
 			query.multiselect(cb.count(root), clientId, clientName);
-			return session.createQuery(query).getResultList();
+			return session.createQuery(query).setCacheable(true).getResultList();
 		}, id);
 	}
 	
@@ -316,7 +316,7 @@ public class AssociateDaoImpl implements AssociateDao {
 					query.groupBy(curriculumid, curriculumName);
 					query.multiselect(cb.count(root), curriculumid, curriculumName);
 				}
-				return session.createQuery(query).getResultList();
+				return session.createQuery(query).setCacheable(true).getResultList();
 			});
 		}
 		throw new InvalidArgumentException("getUndeployed(): NOT MAPPED OR UNMAPPED");
@@ -351,7 +351,7 @@ public class AssociateDaoImpl implements AssociateDao {
 			}
 			String hql = "SELECT COUNT(TF_ASSOCIATE_ID) FROM TfAssociate WHERE "
 					+ condition + "TF_MARKETING_STATUS_ID = :status";
-			Query query = session.createQuery(hql);
+			Query query = session.createQuery(hql).setCacheable(true);
 			return (T) query.setParameter("status", args[1]).getSingleResult();
 		};
 		return HibernateUtil.runHibernate(ss, value, mappedStatus);

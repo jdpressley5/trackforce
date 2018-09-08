@@ -16,7 +16,7 @@ public class BatchDaoImpl implements BatchDao {
 	public TfBatch getBatch(String batchName) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
 				.createQuery("from TfBatch b WHERE b.batchName = :batchName ", TfBatch.class)
-				.getResultList()).get(0);
+				.setCacheable(true).getResultList()).get(0);
 	}
 
 	/** Gets a batch by ID. */
@@ -24,14 +24,14 @@ public class BatchDaoImpl implements BatchDao {
 	public TfBatch getBatchById(Integer id) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
 				.createQuery("from TfBatch b where b.id = :id", TfBatch.class).setParameter("id", id)
-				.getSingleResult());
+				.setCacheable(true).getSingleResult());
 	}
 
 	/** Gets all batches. */
 	@Override
 	public List<TfBatch> getAllBatches() {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
-				.createQuery("from TfBatch", TfBatch.class).getResultList());
+				.createQuery("from TfBatch", TfBatch.class).setCacheable(true).getResultList());
 	}
 
 	/* @author 1806_Andrew_H
@@ -51,7 +51,7 @@ public class BatchDaoImpl implements BatchDao {
 	public List<TfBatch> getBatchesForPredictions(String name, Timestamp startDate, Timestamp endDate) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session.createQuery(
 				"from TfBatch b WHERE b.curriculumName.name = :name AND b.startDate >= :startdate AND b.endDate <= :enddate ORDER BY b.endDate",
-				TfBatch.class).setParameter("name", name).setParameter("startdate", startDate)
+				TfBatch.class).setParameter("name", name).setParameter("startdate", startDate).setCacheable(true)
 				.setParameter("enddate", endDate).getResultList());
 	}
 
@@ -60,7 +60,7 @@ public class BatchDaoImpl implements BatchDao {
 	 *  and is used for the Associate Breakdown table. */
 	public Object getBatchCountsForPredictions(String name, Timestamp startDate, Timestamp endDate) {
 		Session session = null;
-		Object tacobell = null;
+		Object results = null;
 		//1806_Chris_P: So, this monster here was a nightmare to get to work
 		// but it works like a charm. :) Due to the TfBatch returning a set of TfAssociates
 		// getting the actual count of all of those associates was a bit tricky. A for-loop could have been used,
@@ -68,7 +68,7 @@ public class BatchDaoImpl implements BatchDao {
 		// Credit also goes to Andrew H, Cyril M, Austin D and Austin M for their assistance in making this thing finally work
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
-			tacobell = session.createNativeQuery(
+			results = session.createNativeQuery(
 					"select count(a.tf_associate_id) " + 
 					"from admin.tf_associate a where a.tf_marketing_status_id > 5 AND a.tf_batch_id IN " + 
 					"(" + 
@@ -86,12 +86,13 @@ public class BatchDaoImpl implements BatchDao {
 					).setParameter("curriculumName", name)
 					.setParameter("startDate", startDate.toString())
 					.setParameter("endDate", endDate.toString())
+					.setCacheable(true)
 					.getSingleResult();
 		}catch(HibernateException e) {
 			e.printStackTrace();
 		}finally {
 			session.close();
 		}
-		return tacobell;
+		return results;
 	}
 }

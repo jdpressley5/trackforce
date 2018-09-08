@@ -13,14 +13,14 @@ public class ClientDaoImpl implements ClientDao {
 	public List<TfClient> getAllTfClients() {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
 				.createQuery("from TfClient order by tf_client_name ", TfClient.class)
-				.getResultList());
+				.setCacheable(true).getResultList());
 	}
 	
 	/** Gets the first 50 clients. */
 	public List<TfClient> getFirstFiftyTfClients() {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
 				.createQuery("from TfClient order by tf_client_name ", TfClient.class)
-				.setMaxResults(50).getResultList());
+				.setMaxResults(50).setCacheable(true).getResultList());
 	}
 
 	/** Gets clients with mapped associates. */
@@ -31,7 +31,7 @@ public class ClientDaoImpl implements ClientDao {
 					  "FROM TfClient c WHERE "
 					+ "(SELECT COUNT(tf_associate_id) FROM TfAssociate a "
 					+ "WHERE a.client.id = c.id AND a.marketingStatus.id < 5) > 0", 
-			TfClient.class).getResultList()
+			TfClient.class).setCacheable(true).getResultList()
 		);
 	}
 	
@@ -40,7 +40,7 @@ public class ClientDaoImpl implements ClientDao {
 	public List<TfClient> getAllTfClients(String[] columns) {
 		return HibernateUtil.runHibernate((Session session, Object ...args) -> session
 				.createQuery("SELECT " + String.join(" ", (String[]) args[0]) + "FROM TfClient ", TfClient.class)
-				.getResultList());
+				.setCacheable(true).getResultList());
 	}
 
 	/** Gets client matching name. */
@@ -48,7 +48,7 @@ public class ClientDaoImpl implements ClientDao {
 	public TfClient getClient(String name) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
 				.createQuery("from TfClient c where c.name like :name", TfClient.class)
-				.setParameter("name", name).getSingleResult());
+				.setParameter("name", name).setCacheable(true).getSingleResult());
 	}
 
 	/** Gets client by ID */
@@ -56,7 +56,7 @@ public class ClientDaoImpl implements ClientDao {
 	public TfClient getClient(Integer id) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
 				.createQuery("from TfClient c where c.id like :id", TfClient.class)
-				.setParameter("id", id).getSingleResult());
+				.setParameter("id", id).setCacheable(true).getSingleResult());
 	}
 
 	/** Gets end client */
@@ -64,6 +64,6 @@ public class ClientDaoImpl implements ClientDao {
 	public TfEndClient getEndClient(int id) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
 				.createQuery("from TfEndClient c where c.id like :id", TfEndClient.class)
-				.setParameter("id", id).getSingleResult());
+				.setParameter("id", id).setCacheable(true).getSingleResult());
 	}
 }

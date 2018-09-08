@@ -14,14 +14,14 @@ public class UserDaoImpl implements UserDao {
 	public TfUser getUser(String username) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 		session.createQuery("from TfUser u where u.username like :username", TfUser.class)
-		.setParameter("username", username).getSingleResult());
+		.setParameter("username", username).setCacheable(true).getSingleResult());
 	}
     
 	/** Gets all users */
     @Override
 	public List<TfUser> getAllUsers() {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
-				session.createQuery("from TfUser ", TfUser.class).getResultList());
+				session.createQuery("from TfUser ", TfUser.class).setCacheable(true).getResultList());
 	}
     
     /** Inserts a user */
@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
 	public TfRole getRole(int roleId) {
 		return HibernateUtil.runHibernate((Session session, Object ... args) ->
 				session.createQuery("from TfRole u where u.id = :id", TfRole.class)
-				.setParameter("id", roleId).getSingleResult());
+				.setParameter("id", roleId).setCacheable(true).getSingleResult());
 	}
 
 	/** Updates a user */
