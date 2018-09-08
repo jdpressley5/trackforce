@@ -54,6 +54,7 @@ public class AssociateDaoImpl implements AssociateDao {
 		
 		if (startIdx==1) { startIdx = 0; }		
 		results = session.createQuery(criteria)
+				.setCacheable(true)
 				.setFirstResult(startIdx)
 				.setMaxResults(numRes)
 				.getResultList();
@@ -85,7 +86,7 @@ public class AssociateDaoImpl implements AssociateDao {
 	@Override
 	public List<TfAssociate> getAllAssociates() {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session
-				.createQuery("from TfAssociate", TfAssociate.class).getResultList());
+				.createQuery("from TfAssociate", TfAssociate.class).setCacheable(true).getResultList());
 	}
 	
 	/** Gets n number of associates. */
