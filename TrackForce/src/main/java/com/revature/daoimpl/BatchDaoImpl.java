@@ -39,7 +39,7 @@ public class BatchDaoImpl implements BatchDao {
 	public List<TfBatch> getBatchesWithinDates(Timestamp startDate, Timestamp endDate) {
 		return HibernateUtil.runHibernate((Session session, Object... args) -> session.createQuery(
 				"from TfBatch b WHERE b.startDate >= :startdate AND b.endDate <= :enddate",
-				TfBatch.class).setParameter("startdate", startDate)
+				TfBatch.class).setParameter("startdate", startDate).setCacheable(true)
 				.setParameter("enddate", endDate).getResultList());
 	}
 	
