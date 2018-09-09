@@ -33,7 +33,7 @@ public class TfInterviewType implements java.io.Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "interviewType")
 	@JsonIgnore
-	private Set<TfInterview> interviews = new HashSet<TfInterview>(0);
+	private Set<TfInterview> interviews = new HashSet<>(0);
 
 	public TfInterviewType() {
 	}
@@ -94,18 +94,23 @@ public class TfInterviewType implements java.io.Serializable {
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
+		
 		if (interviews == null) {
 			if (other.interviews != null)
 				return false;
-		} else if (!interviews.equals(other.interviews))
+		} else if (!interviews.equals(other.interviews)) {
 			return false;
+		}
+			
 		if (name == null) {
 			if (other.name != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!name.equals(other.name)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -113,5 +118,4 @@ public class TfInterviewType implements java.io.Serializable {
 	public String toString() {
 		return "TfInterviewType [id=" + id + ", name=" + name + "]";
 	}
-	
 }

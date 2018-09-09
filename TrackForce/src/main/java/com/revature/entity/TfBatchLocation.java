@@ -35,7 +35,7 @@ public class TfBatchLocation implements java.io.Serializable {
 	@XmlElement
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "location")
 	@JsonIgnore
-	private Set<TfBatch> batches = new HashSet<TfBatch>(0);
+	private Set<TfBatch> batches = new HashSet<>(0);
 
 	public TfBatchLocation() {
 		super();
@@ -96,18 +96,23 @@ public class TfBatchLocation implements java.io.Serializable {
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
+		
 		if (name == null) {
 			if (other.name != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!name.equals(other.name)) { 
 			return false;
+		}
+		
 		if (batches == null) {
 			if (other.batches != null)
 				return false;
-		} else if (!batches.equals(other.batches))
+		} else if (!batches.equals(other.batches)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -116,5 +121,4 @@ public class TfBatchLocation implements java.io.Serializable {
 		return "TfBatchLocation [tfBatchLocationId=" + id + ", tfBatchLocationName="
 				+ name + "]";
 	}
-	
 }

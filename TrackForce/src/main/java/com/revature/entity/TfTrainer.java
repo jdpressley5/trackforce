@@ -76,8 +76,6 @@ public class TfTrainer implements Serializable{
 		this.primary = primary;
 		this.coTrainer = coTrainer;
 	}
-	
-	
 
 	public TfUser getTfUser() {
 		return user;
@@ -165,30 +163,40 @@ public class TfTrainer implements Serializable{
 		if (coTrainer == null) {
 			if (other.coTrainer != null)
 				return false;
-		} else if (!coTrainer.equals(other.coTrainer))
+		} else if (!coTrainer.equals(other.coTrainer)) {
 			return false;
+		}
+		
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
-		} else if (!firstName.equals(other.firstName))
+		} else if (!firstName.equals(other.firstName)) {
 			return false;
+		}
+		
 		if (id != other.id)
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;
-		} else if (!lastName.equals(other.lastName))
+		} else if (!lastName.equals(other.lastName)) {
 			return false;
+		}
+		
 		if (primary == null) {
 			if (other.primary != null)
 				return false;
-		} else if (!primary.equals(other.primary))
+		} else if (!primary.equals(other.primary)) {
 			return false;
+		}
+		
 		if (user == null) {
 			if (other.user != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!user.equals(other.user)) {
 			return false;
+		}
+			
 		return true;
 	}
 }

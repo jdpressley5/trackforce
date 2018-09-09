@@ -132,33 +132,44 @@ public class TfPlacement implements java.io.Serializable {
 		if (associate == null) {
 			if (other.associate != null)
 				return false;
-		} else if (!associate.equals(other.associate))
+		} else if (!associate.equals(other.associate)) {
 			return false;
+		}
+		
 		if (client == null) {
 			if (other.client != null)
 				return false;
-		} else if (!client.equals(other.client))
+		} else if (!client.equals(other.client)) {
 			return false;
+		}
+		
 		if (end == null) {
 			if (other.end != null)
 				return false;
-		} else if (!end.equals(other.end))
+		} else if (!end.equals(other.end)) {
 			return false;
+		}
+		
 		if (endClient == null) {
 			if (other.endClient != null)
 				return false;
-		} else if (!endClient.equals(other.endClient))
+		} else if (!endClient.equals(other.endClient)) {
 			return false;
+		}
+		
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
+		
 		if (start == null) {
 			if (other.start != null)
 				return false;
-		} else if (!start.equals(other.start))
+		} else if (!start.equals(other.start)) {
 			return false;
+		}
 		return true;
 	}
 

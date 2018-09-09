@@ -29,7 +29,7 @@ public class TfRole implements java.io.Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "TfRole")
 	@JsonIgnore
-	private Set<TfUser> users = new HashSet<TfUser>(0);
+	private Set<TfUser> users = new HashSet<>(0);
 
 	public TfRole() {
 		super();
@@ -92,18 +92,23 @@ public class TfRole implements java.io.Serializable {
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
+			
 		if (name == null) {
 			if (other.name != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!name.equals(other.name)) {
 			return false;
+		}
+		
 		if (users == null) {
 			if (other.users != null)
 				return false;
-		} else if (!users.equals(other.users))
+		} else if (!users.equals(other.users)) {
 			return false;
+		}
 		return true;
 	}
 

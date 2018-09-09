@@ -26,6 +26,9 @@ import com.revature.utils.Sessional;
  * @author Josh P. Chris S. Paul C. -1807 iteration */
 public class AssociateDaoImpl implements AssociateDao {
 	
+	private static final String MKTSTS = "marketingStatus";
+	private static final String CLIENT = "client";
+	
 	/** Gets list of associates matching criteria. Used by updated angular front end to perform 
 	 * Pagination of results and improve performance.
 	 * @author Joshua Pressley-1807
@@ -43,13 +46,13 @@ public class AssociateDaoImpl implements AssociateDao {
 		List<TfAssociate> results;
 		
 		if (clientId == -1 && mktStatus != -1) {
-			criteria.where(builder.equal(root.get("marketingStatus"), mktStatus));
+			criteria.where(builder.equal(root.get(MKTSTS), mktStatus));
 		} else if (mktStatus == -1 && clientId != -1) {
-			criteria.where(builder.equal(root.get("client"), clientId));
+			criteria.where(builder.equal(root.get(CLIENT), clientId));
 		} else if (mktStatus != -1 && clientId != -1) {
 			criteria.where(builder.and(
-					builder.equal(root.get("marketingStatus"), mktStatus),
-					builder.equal(root.get("client"), clientId)));
+					builder.equal(root.get(MKTSTS), mktStatus),
+					builder.equal(root.get(CLIENT), clientId)));
 		}
 		
 		if (startIdx==1) { startIdx = 0; }		
@@ -60,7 +63,7 @@ public class AssociateDaoImpl implements AssociateDao {
 				.getResultList();
 		
 		session.close(); //close out the session
-		if (results == null || results.size() == 0) { return null; }
+		if (results == null || results.isEmpty()) { return null; }
 		return results;
 	}//end getNAssociateMatchingCriteria()
 	
@@ -118,23 +121,22 @@ public class AssociateDaoImpl implements AssociateDao {
 			
 			switch(tfmsid) {	
 				case 11: 
-						qr.where(builder.or(builder.or(builder.equal(root.get("marketingStatus"), 1), 
-								builder.equal(root.get("marketingStatus"), 2)), builder.or(builder.equal(
-								root.get("marketingStatus"), 3), builder.equal(root.get("marketingStatus"), 4))));
+						qr.where(builder.or(builder.or(builder.equal(root.get(MKTSTS), 1), 
+								builder.equal(root.get(MKTSTS), 2)), builder.or(builder.equal(
+								root.get(MKTSTS), 3), builder.equal(root.get(MKTSTS), 4))));
 						break;
 				case 12:  
-						qr.where(builder.or(builder.or(builder.equal(root.get("marketingStatus"), 6), 
-								builder.equal(root.get("marketingStatus"), 7)), builder.or(builder.equal(
-								root.get("marketingStatus"), 8), builder.equal(root.get("marketingStatus"), 9))));
+						qr.where(builder.or(builder.or(builder.equal(root.get(MKTSTS), 6), 
+								builder.equal(root.get(MKTSTS), 7)), builder.or(builder.equal(
+								root.get(MKTSTS), 8), builder.equal(root.get(MKTSTS), 9))));
 						break;
 				default:
-						qr.where(builder.equal(root.get("marketingStatus"), tfmsid));
+						qr.where(builder.equal(root.get(MKTSTS), tfmsid));
 						break;
 			}//end switch
 			
 			results = session.createQuery(qr).setCacheable(true).getResultList();
 			count = results.get(0);
-			//System.out.println(tfmsid + " > " + count);
 		}catch(HibernateException e) {
 			e.printStackTrace();
 		}finally {
@@ -267,8 +269,8 @@ public class AssociateDaoImpl implements AssociateDao {
 
 			Root<TfAssociate> root = query.from(TfAssociate.class);
 
-			Join<TfAssociate, TfClient> clientJoin = root.join("client");
-			Join<TfAssociate, TfMarketingStatus> msJoin = root.join("marketingStatus");
+			Join<TfAssociate, TfClient> clientJoin = root.join(CLIENT);
+			Join<TfAssociate, TfMarketingStatus> msJoin = root.join(MKTSTS);
 
 			Path<?> clientId = clientJoin.get("id");
 			Path<?> clientName = clientJoin.get("name");
@@ -291,8 +293,8 @@ public class AssociateDaoImpl implements AssociateDao {
 				Root<TfAssociate> root = query.from(TfAssociate.class);
 				
 				if (which.equals("mapped")) {
-					Join<TfAssociate, TfClient> clientJoin = root.join("client");
-					Join<TfAssociate, TfMarketingStatus> msJoin = root.join("marketingStatus");
+					Join<TfAssociate, TfClient> clientJoin = root.join(CLIENT);
+					Join<TfAssociate, TfMarketingStatus> msJoin = root.join(MKTSTS);
 		
 					Path<?> clientId = clientJoin.get("id");
 					Path<?> clientName = clientJoin.get("name");
@@ -306,7 +308,7 @@ public class AssociateDaoImpl implements AssociateDao {
 				else if (which.equals("unmapped")) {
 					Join<TfAssociate, TfBatch> batchJoin = root.join("batch");
 					Join<TfBatch, TfCurriculum> curriculumJoin = batchJoin.join("curriculumName");
-					Join<TfAssociate, TfMarketingStatus> msJoin = root.join("marketingStatus");
+					Join<TfAssociate, TfMarketingStatus> msJoin = root.join(MKTSTS);
 		
 					Path<?> curriculumid = curriculumJoin.get("id");
 					Path<?> curriculumName = curriculumJoin.get("name");
