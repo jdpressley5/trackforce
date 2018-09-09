@@ -159,7 +159,5 @@ public class TfBatch implements java.io.Serializable, Comparable<TfBatch> {
 	@Override
 	public int compareTo(TfBatch o) {
 		return this.id-o.getId();
-	}
-	
-	
+	}	
 }
