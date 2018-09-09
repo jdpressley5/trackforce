@@ -33,7 +33,7 @@ public class TfBatchLocation implements java.io.Serializable {
 	private String name;
 	
 	@XmlElement
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "location")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
 	@JsonIgnore
 	private Set<TfBatch> batches = new HashSet<>(0);
 
